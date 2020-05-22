@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+
+    //========================================================
+    // @memo
+    // - read
+    // 他人にreadされてはいけないクローズドな情報にはしっかりとセキュリティを書く
+    // -------------------------------------------------------
+    // - write
+    // writeは原則使用禁止 cerate / update / deleteを書き分ける
+    //========================================================
+		match /databases/{database}/documents {
+
+  	//======================================
+    // function
+    //======================================
+  	// @func ログインしているかどうか
+  	function isAuth() {
+    	return request.auth.uid != null
+    }
+
+    // @func リクエストしているuidを返す
+    function authUid() {
+    	return request.auth.uid;
+		}
+
+    // @func 更新が期待される未来のフィールドを返す */
+    function reqResourceData() {
+    	return request.resource.data;
+    }
+
+    // @func 現在の存在するフィールドを返す
+    function resourceData() {
+    	return resource.data;
+    }
+
+    // @func postの本文の文字数制限をする
+    function validPostData(postBody, maxNum) {
+      return postBody.size() <= maxNum
+    }
+
+    //======================================
+    // matchPath
+    //======================================
+    // @path users
+    match /users/{userId} {
+      allow read: if isAuth();
+      allow create: if !exists(/databases/$(database)/documents/users/$(userId));
+      allow update, delete: if authUid() == userId;
+    }
+
+    // @path social - followers
+    match /social/{userId}/followers/{followersId} {
+    	allow read;
+      allow create, update, delete: if isAuth() && authUid() == userId;
+    }
+
+    // @path social - following
+    match /social/{userId}/following/{followingId} {
+    	allow read;
+      allow create, update, delete: if isAuth() && authUid() == userId && authUid() == followingId;
+    }
+
+    // @path posts
+    match /posts/{postId} {
+      allow read;
+      allow update, delete: if isAuth() && authUid() == resourceData().authorId;
+    	allow create: if isAuth() && reqResourceData().authorId == authUid() && validPostData(reqResourceData().postBody, 10);
+    }
+  }
+}

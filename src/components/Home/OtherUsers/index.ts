@@ -1,0 +1,1 @@
+export { StyledOtherUsers } from './styles'

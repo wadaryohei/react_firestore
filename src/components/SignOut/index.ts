@@ -1,0 +1,1 @@
+export { StyledSignOut } from './styles'

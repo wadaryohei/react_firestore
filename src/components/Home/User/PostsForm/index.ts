@@ -1,0 +1,1 @@
+export { StyledPostsForm } from './styles'

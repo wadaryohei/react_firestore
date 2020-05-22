@@ -1,0 +1,1 @@
+export { StyledLayout } from './styles'

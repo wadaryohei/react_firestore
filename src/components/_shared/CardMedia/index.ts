@@ -1,0 +1,1 @@
+export { StyledCardMedia } from './styles'
