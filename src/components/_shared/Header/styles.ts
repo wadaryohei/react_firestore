@@ -7,6 +7,8 @@
 import styled from 'styled-components'
 import { Header } from './doms'
 import { Colors } from '../../../const/Colors'
+import { Padding } from '../../../const/Padding'
+import { BreakPoints } from '../../../const/BreakPoints'
 
 export const StyledHeader = styled(Header)`
   position: fixed;
@@ -26,7 +28,12 @@ export const StyledHeader = styled(Header)`
     max-width: 960px;
     margin: 0 auto;
 
+    @media (max-width: ${BreakPoints.md}) {
+      padding: 0 ${Padding.p24};
+    }
+
     > img {
+      border: solid 2px ${Colors.white};
       width: 45px;
       height: 45px;
     }
