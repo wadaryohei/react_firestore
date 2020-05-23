@@ -7,18 +7,25 @@
  */
 import React from 'react'
 import { StyledTypography } from '../Typography/index'
-import { HeaderProps } from './types'
+import { HeaderDomsProps } from './types'
+import { StyledCardMedia } from '../CardMedia'
 
 //----------------------------------
 // component
 //----------------------------------
-export const Header = (props: HeaderProps) => (
+export const Header = (props: HeaderDomsProps) => (
   //----------------------------------
   // render
   //----------------------------------
   <div className={props.className}>
-    <StyledTypography variant={'h1'} color={'white'}>
-      React × Firebase
-    </StyledTypography>
+    <div>
+      <StyledTypography variant={'h1'} color={'white'}>
+        React × Firebase
+      </StyledTypography>
+      <StyledCardMedia
+        imgSrc={props.user?.photoURL}
+        alt={props.user?.photoURL}
+      />
+    </div>
   </div>
 )

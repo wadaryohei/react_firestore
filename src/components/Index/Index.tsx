@@ -8,7 +8,6 @@ import { Route } from 'react-router-dom'
 import { Home } from '../Home/index'
 import { SignIn } from '../SignIn/index'
 import { StyledSignOut } from '../SignOut/index'
-import { StyledLayout } from '../_shared/Layout/index'
 import { IndexProps } from './types'
 
 //----------------------------------
@@ -19,7 +18,7 @@ export const Index = (props: IndexProps) => {
   // render
   //----------------------------------
   return (
-    <StyledLayout>
+    <>
       {/** @Route Home */}
       <Route
         exact
@@ -32,6 +31,6 @@ export const Index = (props: IndexProps) => {
 
       {/** @Route SignOut */}
       <Route exact path="/signout" component={StyledSignOut} />
-    </StyledLayout>
+    </>
   )
 }

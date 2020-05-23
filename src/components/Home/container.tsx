@@ -11,6 +11,7 @@ import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { useAuth } from '../../hooks/useAuth'
 import { StyledHome } from './styles'
+import { StyledLayout } from '../_shared/Layout'
 import { HomeContainerProps } from './types'
 
 //----------------------------------
@@ -35,7 +36,7 @@ export const Home = (props: HomeContainerProps) => {
   // render
   //----------------------------------
   return (
-    <>
+    <StyledLayout firebaseUser={props.firebaseUser}>
       {!fetchProfile._isUserLoading && (
         <StyledHome
           user={presenter.viewDatas().user}
@@ -49,6 +50,6 @@ export const Home = (props: HomeContainerProps) => {
           presenter={presenter}
         />
       )}
-    </>
+    </StyledLayout>
   )
 }

@@ -7,8 +7,6 @@
 import styled from 'styled-components'
 import { Header } from './doms'
 import { Colors } from '../../../const/Colors'
-import { Padding } from '../../../const/Padding'
-// import { BreakPoints } from '../../../const/BreakPoints'
 
 export const StyledHeader = styled(Header)`
   position: fixed;
@@ -20,5 +18,17 @@ export const StyledHeader = styled(Header)`
   line-height: 72px;
   background-color: ${Colors.primary};
   color: ${Colors.white};
-  padding: 0 ${Padding.p112};
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 960px;
+    margin: 0 auto;
+
+    > img {
+      width: 45px;
+      height: 45px;
+    }
+  }
 `

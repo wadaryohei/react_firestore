@@ -17,7 +17,7 @@ export const Layout = (props: LayoutProps) => (
   // render
   //----------------------------------
   <div className={props.className}>
-    <Header />
+    <Header firebaseUser={props.firebaseUser} />
     {props.children}
   </div>
 )
