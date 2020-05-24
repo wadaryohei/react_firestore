@@ -7,6 +7,7 @@
 import styled from 'styled-components'
 import { Loading } from './doms'
 import { Colors } from '../../../const/Colors'
+import { Margin } from '../../../const/Margin'
 
 export const StyledLoading = styled(Loading)`
   position: fixed;
@@ -16,7 +17,12 @@ export const StyledLoading = styled(Loading)`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: ${Colors.white};
+
+  > div {
+    margin-top: ${Margin.m8};
+  }
 `

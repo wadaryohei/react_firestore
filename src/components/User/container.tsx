@@ -8,7 +8,7 @@ import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useAuth } from '../../hooks/useAuth'
 import { useModal } from '../../hooks/useModal'
 import { useDelete } from '../../hooks/useDelete'
-import { Container, Box } from '@material-ui/core'
+import { Container, Box, CircularProgress } from '@material-ui/core'
 import { Profile } from '../Home/User/Profile'
 import { DeleteModal } from './DeleteModal/doms'
 import { StyledLayout } from '../_shared/Layout'
@@ -33,7 +33,12 @@ export const User = (props: UserProps) => {
   return (
     <StyledLayout firebaseUser={props.firebaseUser}>
       <>
-        {deleteLoading() && <StyledLoading text={'ユーザーを削除しています'} />}
+        {deleteLoading() && (
+          <>
+            <CircularProgress />
+            <StyledLoading text={'ユーザーを削除しています'} />
+          </>
+        )}
         {modal.showModal() && (
           <DeleteModal modal={modal} onDeleteUser={onDeleteUser} />
         )}
