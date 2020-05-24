@@ -24,7 +24,7 @@ export const App = () => {
   //----------------------------------
   return (
     <>
-      {authenticate.loading && <StyledLoading />}
+      {authenticate.loading && <StyledLoading text={'Loading...'} />}
       {!authenticate.loading && <StyledApp viewDatas={presenter.viewDatas()} />}
     </>
   )

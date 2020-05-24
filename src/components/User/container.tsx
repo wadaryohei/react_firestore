@@ -14,6 +14,7 @@ import { DeleteModal } from './DeleteModal/doms'
 import { StyledLayout } from '../_shared/Layout'
 import { StyledCard } from '../_shared/Card'
 import { StyledButton } from '../_shared/Button'
+import { StyledLoading } from '../_shared/Loading'
 import { Margin } from '../../const/Margin'
 import { UserProps } from './types'
 
@@ -23,7 +24,7 @@ export const User = (props: UserProps) => {
   //----------------------------------
   const fetchProfile = useFetchUsers('users', props.firebaseUser)
   const { signOut } = useAuth()
-  const { onDeleteUser } = useDelete()
+  const { onDeleteUser, deleteLoading } = useDelete()
   const modal = useModal()
 
   //----------------------------------
@@ -31,35 +32,38 @@ export const User = (props: UserProps) => {
   //----------------------------------
   return (
     <StyledLayout firebaseUser={props.firebaseUser}>
-      {modal.showModal() && (
-        <DeleteModal modal={modal} onDeleteUser={onDeleteUser} />
-      )}
-      <Container maxWidth={'md'}>
-        <StyledCard>
-          <Profile
-            user={fetchProfile.fetchUserData()}
-            firebaseUser={props.firebaseUser}
-          />
-          <Box my={Margin.m8}>
-            <StyledButton
-              size={'sm'}
-              color={'primary'}
-              onClick={() => signOut()}
-            >
-              ログアウトする
-            </StyledButton>
-          </Box>
-          <Box my={Margin.m4}>
-            <StyledButton
-              size={'sm'}
-              color={'cancel'}
-              onClick={() => modal.onOpenModal()}
-            >
-              アカウントを削除する
-            </StyledButton>
-          </Box>
-        </StyledCard>
-      </Container>
+      <>
+        {deleteLoading() && <StyledLoading text={'ユーザーを削除しています'} />}
+        {modal.showModal() && (
+          <DeleteModal modal={modal} onDeleteUser={onDeleteUser} />
+        )}
+        <Container maxWidth={'md'}>
+          <StyledCard>
+            <Profile
+              user={fetchProfile.fetchUserData()}
+              firebaseUser={props.firebaseUser}
+            />
+            <Box my={Margin.m8}>
+              <StyledButton
+                size={'sm'}
+                color={'primary'}
+                onClick={() => signOut()}
+              >
+                ログアウトする
+              </StyledButton>
+            </Box>
+            <Box my={Margin.m4}>
+              <StyledButton
+                size={'sm'}
+                color={'cancel'}
+                onClick={() => modal.onOpenModal()}
+              >
+                アカウントを削除する
+              </StyledButton>
+            </Box>
+          </StyledCard>
+        </Container>
+      </>
     </StyledLayout>
   )
 }

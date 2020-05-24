@@ -1,16 +1,20 @@
 import firebase from '../model/_shared/firebase'
+import { useState } from 'react'
 
 //----------------------------------
 // interface
 //----------------------------------
 export interface Delete {
   onDeleteUser: () => Promise<void>
+  deleteLoading: () => boolean
 }
 
 //----------------------------------
 // hooks
 //----------------------------------
 export const useDelete = (): Delete => {
+  const [_deleteLoading, _setDeleteLoading] = useState<boolean>(false)
+
   /**
    * ユーザーを削除を実行するハンドラー
    */
@@ -27,6 +31,9 @@ export const useDelete = (): Delete => {
      * @todo ゆくゆくはFunctionでの一括削除に書き換える
      * 参考記事 https://firebase.google.com/products/extensions/delete-user-data?hl=ja
      */
+
+    _setDeleteLoading(true)
+
     const batch = firebase.firestore().batch()
 
     // Userコレクション
@@ -75,7 +82,15 @@ export const useDelete = (): Delete => {
     await firebase.auth().currentUser?.delete()
   }
 
+  /**
+   * ローディング状態を返す
+   */
+  const deleteLoading = (): boolean => {
+    return _deleteLoading
+  }
+
   return {
-    onDeleteUser
+    onDeleteUser,
+    deleteLoading
   }
 }

@@ -16,6 +16,6 @@ export const Loading = (props: LoadingProps) => (
   // render
   //----------------------------------
   <div className={props.className}>
-    <div>Loading...</div>
+    <div>{props.text}</div>
   </div>
 )
