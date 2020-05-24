@@ -1,7 +1,6 @@
-import { Modal } from '../../../hooks/useModal'
-
 export interface ModalProps {
-  modal: Modal
-  onDeleteUser: () => void
+  open: boolean
+  onClose: () => void
+  children: React.ReactNode
   className?: string
 }

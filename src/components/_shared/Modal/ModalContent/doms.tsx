@@ -6,28 +6,15 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { Dialog } from '@material-ui/core'
-import { ModalProps } from './types'
+import { DialogContent } from '@material-ui/core'
+import { ModalContentProps } from './types'
 
 //----------------------------------
 // component
 //----------------------------------
-export const Modal = (props: ModalProps) => (
+export const ModalContent = (props: ModalContentProps) => (
   //----------------------------------
   // render
   //----------------------------------
-  <Dialog
-    className={props.className}
-    open={props.open}
-    onClose={props.onClose}
-    PaperProps={{
-      style: {
-        width: '320px',
-        margin: '16px',
-        padding: '0'
-      }
-    }}
-  >
-    {props.children}
-  </Dialog>
+  <DialogContent>{props.children}</DialogContent>
 )
