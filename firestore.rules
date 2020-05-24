@@ -49,16 +49,22 @@ service cloud.firestore {
       allow update, delete: if authUid() == userId;
     }
 
-    // @path social - followers
-    match /social/{userId}/followers/{followersId} {
+    // @path social - social
+    match /social/{userId} {
     	allow read;
       allow create, update, delete: if isAuth() && authUid() == userId;
-    }
 
-    // @path social - following
-    match /social/{userId}/following/{followingId} {
-    	allow read;
-      allow create, update, delete: if isAuth() && authUid() == userId && authUid() == followingId;
+    	// @path social - followers
+      match /followers/{followersId} {
+        allow read;
+        allow create, update, delete: if isAuth() && authUid() == userId;
+      }
+
+      // @path social - following
+      match /following/{followingId} {
+    		allow read;
+      	allow create, update, delete: if isAuth() && authUid() == userId && authUid() == followingId;
+      }
     }
 
     // @path posts
