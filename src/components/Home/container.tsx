@@ -98,9 +98,8 @@ export const Home = (props: HomeContainerProps) => {
                    */}
                   {presenter.viewDatas().otherUsers?.map((otherUser, index) => {
                     return (
-                      <>
+                      <div key={index}>
                         <StyledOtherUsers
-                          key={index}
                           otherUser={otherUser}
                           follow={follow}
                           firebaseUser={props.firebaseUser}
@@ -111,7 +110,7 @@ export const Home = (props: HomeContainerProps) => {
                             <Divider />
                           </Box>
                         )}
-                      </>
+                      </div>
                     )
                   })}
                 </>

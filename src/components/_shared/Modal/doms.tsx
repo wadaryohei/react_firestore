@@ -17,7 +17,13 @@ import { StyledButton } from '../Button'
 import { StyledButtonList } from '../ButtonList'
 import { ModalProps } from './types'
 
+//----------------------------------
+// component
+//----------------------------------
 export const Modal = (props: ModalProps) => (
+  //----------------------------------
+  // render
+  //----------------------------------
   <Dialog
     className={`${props.className} modal`}
     maxWidth={'lg'}
@@ -49,7 +55,7 @@ export const Modal = (props: ModalProps) => (
         <StyledButton
           size={'sm'}
           color={'cancel'}
-          onClick={() => props.modal.onOpenModal()}
+          onClick={() => props.onDeleteUser()}
         >
           削除する
         </StyledButton>

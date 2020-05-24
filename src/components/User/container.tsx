@@ -15,6 +15,7 @@ import { StyledCard } from '../_shared/Card'
 import { Profile } from '../Home/User/Profile'
 import { StyledButton } from '../_shared/Button'
 import { Margin } from '../../const/Margin'
+import { useDelete } from '../../hooks/useDelete'
 
 export const User = (props: UserContainerProps) => {
   //----------------------------------
@@ -22,6 +23,7 @@ export const User = (props: UserContainerProps) => {
   //----------------------------------
   const fetchProfile = useFetchUsers('users', props.firebaseUser)
   const { signOut } = useAuth()
+  const { onDeleteUser } = useDelete()
   const modal = useModal()
 
   //----------------------------------
@@ -29,7 +31,9 @@ export const User = (props: UserContainerProps) => {
   //----------------------------------
   return (
     <StyledLayout firebaseUser={props.firebaseUser}>
-      {modal.showModal() && <StyledModal modal={modal} />}
+      {modal.showModal() && (
+        <StyledModal modal={modal} onDeleteUser={onDeleteUser} />
+      )}
       <Container maxWidth={'md'}>
         <StyledCard>
           <Profile
