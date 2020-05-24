@@ -80,6 +80,7 @@ export const useDelete = (): Delete => {
     })
     await batch.commit()
     await firebase.auth().currentUser?.delete()
+    await deleteLoadingDelay(2)
   }
 
   /**
@@ -87,6 +88,17 @@ export const useDelete = (): Delete => {
    */
   const deleteLoading = (): boolean => {
     return _deleteLoading
+  }
+
+  /**
+   * ユーザー削除時のインタラクション用に非同期処理をスリープさせる
+   */
+  const deleteLoadingDelay = (waitSeconds: number) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(_setDeleteLoading(false))
+      }, waitSeconds * 1000)
+    })
   }
 
   return {
