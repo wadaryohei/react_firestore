@@ -6,14 +6,16 @@ import nanoid from 'nanoid'
 // interface
 //----------------------------------
 export interface Form {
-  setText: (text: string) => void
-  setData: (text: string) => Promise<void>
-  onSubmit: (event: React.FormEvent) => void
+  onChangeText: (text: string) => void
+  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>, text: string) => void
+  onClick: (text: string) => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   onDelete: (docId: string | undefined) => Promise<void>
+  visibilityStatus: (text: string) => string
   text: () => string
   error: () => string
   disabled: () => boolean
-  visibilityStatus: (text: string) => string
+  setTextData: (text: string) => Promise<void>
 }
 
 //----------------------------------
@@ -32,9 +34,9 @@ export const useForm = (
   const maxLen = 10
 
   /**
-   * フィールドに入力されたテキストをセットする
+   * フィールドに入力されたテキストをチェックする
    */
-  const setText = (text: string): void => {
+  const onChangeText = (text: string): void => {
     if (text.length > maxLen) {
       _setErrorText(`${maxLen}文字以内で入力してください`)
       _setText(text)
@@ -47,9 +49,31 @@ export const useForm = (
   }
 
   /**
+   * 押したキーがエンターだった場合フィールドのテキストを保存する
+   */
+  const onKeyPress = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    text: string
+  ): void => {
+    // キーがエンターだった場合
+    if (e.which === 13) {
+      e.preventDefault()
+      setTextData(text)
+    }
+    return
+  }
+
+  /**
+   * クリックボタンを押したときフィールドのテキストを保存する
+   */
+  const onClick = (text: string): void => {
+    setTextData(text)
+  }
+
+  /**
    * フィールドのテキストを保存する
    */
-  const setData = async (text: string): Promise<void> => {
+  const setTextData = async (text: string): Promise<void> => {
     // フォームが空だった場合は何もしない
     if (text === '') return
 
@@ -83,6 +107,31 @@ export const useForm = (
   }
 
   /**
+   * フォームのSubmitボタンを押したときにフォームのイベントをストップする
+   */
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+  }
+
+  /**
+   * フォームのDeleteボタンを押したときDBから削除する
+   */
+  const onDelete = async (docId: string | undefined): Promise<void> => {
+    const snapShot = firebase
+      .firestore()
+      .collection(collection)
+      .doc(docId)
+    await snapShot.delete()
+  }
+
+  /**
+   * フィールドに入力されたテキスト文字数でクラスを付け替える
+   */
+  const visibilityStatus = (text: string): string => {
+    return text ? 'visible' : 'hidden'
+  }
+
+  /**
    * フィールドに入力されたテキストを返す
    */
   const text = (): string => {
@@ -103,39 +152,16 @@ export const useForm = (
     return _disabled
   }
 
-  /**
-   * フィールドに入力されたテキスト文字数でクラスを付け替える
-   */
-  const visibilityStatus = (text: string): string => {
-    return text ? 'visible' : 'hidden'
-  }
-
-  /**
-   * フォームのSubmitボタンを押したときにフォームのイベントをストップする
-   */
-  const onSubmit = (event: React.FormEvent): void => {
-    event.preventDefault()
-  }
-
-  /**
-   * フォームのDeleteボタンを押したときDBから削除する
-   */
-  const onDelete = async (docId: string | undefined): Promise<void> => {
-    const snapShot = firebase
-      .firestore()
-      .collection(collection)
-      .doc(docId)
-    await snapShot.delete()
-  }
-
   return {
-    setText,
-    setData,
+    onChangeText,
+    onKeyPress,
+    onClick,
+    onSubmit,
+    onDelete,
+    visibilityStatus,
     text,
     error,
     disabled,
-    visibilityStatus,
-    onSubmit,
-    onDelete
+    setTextData
   }
 }

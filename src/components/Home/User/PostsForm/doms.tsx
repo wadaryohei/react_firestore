@@ -20,12 +20,13 @@ export const PostsForm = (props: PostsFormProps) => (
     <input
       value={props.form.text()}
       type="text"
-      onChange={e => props.form.setText(e.target.value)}
+      onChange={e => props.form.onChangeText(e.target.value)}
+      onKeyPress={e => props.form.onKeyPress(e, props.form.text())}
     />
     <input
       type="submit"
       disabled={props.form.disabled()}
-      onClick={() => props.form.setData(props.form.text())}
+      onClick={() => props.form.onClick(props.form.text())}
     />
     <StyledTypography
       variant={'p'}
