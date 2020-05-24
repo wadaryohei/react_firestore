@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { UserPostsData } from '../model/Datas/UserPostsData'
 
 //----------------------------------
@@ -17,6 +17,7 @@ export const useFetchPosts = (
   user: firebase.User | null
 ): FetchPosts => {
   const [_fetchPostData, _setFetchPostData] = useState<UserPostsData[]>([])
+  const mounted = useRef(true)
 
   //----------------------------------
   // lifeCycle
@@ -38,10 +39,15 @@ export const useFetchPosts = (
             postBody: doc.data().postBody as string
           }
         })
-        _setFetchPostData(snapDocs)
+        if (mounted.current) {
+          _setFetchPostData(snapDocs)
+        }
       })
 
-    return () => unsubscribe()
+    return () => {
+      mounted.current = false
+      unsubscribe()
+    }
   }, [collection, user])
 
   /**

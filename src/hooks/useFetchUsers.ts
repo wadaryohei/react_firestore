@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { UserData } from '../model/Datas/UserData'
 import { OtherUsersData } from '../model/Datas/OtherUsersData'
 
@@ -26,6 +26,7 @@ export const useFetchUsers = (
   const [_fetchUser, _setFetchUser] = useState<UserData>()
   const [_fetchOtherUsers, _setOtherFetchUsers] = useState<OtherUsersData[]>([])
   const [_isUserLoading, _setIsUserLoading] = useState<boolean>(true)
+  const mounted = useRef(true)
 
   //----------------------------------
   // lifeCycle
@@ -61,14 +62,20 @@ export const useFetchUsers = (
             }
           })
           const datas = await Promise.all(_datas)
-          _setOtherFetchUsers([...datas])
-          _setIsUserLoading(false)
+          if (mounted.current) {
+            _setOtherFetchUsers([...datas])
+            _setIsUserLoading(false)
+          }
         })
       return () => {
         unsubscribe()
       }
     }
     init()
+
+    return () => {
+      mounted.current = false
+    }
     // eslint-disable-next-line
   }, [collection, user])
 
@@ -90,7 +97,9 @@ export const useFetchUsers = (
       name: docs.data()?.name as string,
       photoURL: docs.data()?.photoURL as string
     }
-    _setFetchUser(_datas)
+    if (mounted.current) {
+      _setFetchUser(_datas)
+    }
   }
 
   /**
