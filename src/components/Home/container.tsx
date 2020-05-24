@@ -55,12 +55,14 @@ export const Home = (props: HomeContainerProps) => {
                 user={presenter.viewDatas().user}
                 firebaseUser={props.firebaseUser}
               />
-              <StyledPostsForm form={form} />
-              {presenter.isPostsDividerShow() && (
-                <Box my={Margin.m24}>
-                  <Divider />
-                </Box>
-              )}
+              <Box mt={Margin.m8}>
+                <StyledPostsForm form={form} />
+                {presenter.isPostsDividerShow() && (
+                  <Box my={Margin.m24}>
+                    <Divider />
+                  </Box>
+                )}
+              </Box>
 
               {/**
                * ==========================================
