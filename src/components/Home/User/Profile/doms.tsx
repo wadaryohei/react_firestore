@@ -8,7 +8,6 @@
 import React from 'react'
 import { StyledCardMedia } from '../../../_shared/CardMedia/index'
 import { StyledTypography } from '../../../_shared/Typography/index'
-import { StyledButton } from '../../../_shared/Button/index'
 import { ProfileProps } from './types'
 
 //----------------------------------
@@ -26,8 +25,5 @@ export const Profile = (props: ProfileProps) => (
     <StyledTypography variant={'p'}>
       UserId / {props.firebaseUser?.uid}
     </StyledTypography>
-    <StyledButton size={'sm'} color={'primary'} onClick={props.signOut}>
-      ログアウト
-    </StyledButton>
   </>
 )

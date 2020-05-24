@@ -32,10 +32,13 @@ export const StyledHeader = styled(Header)`
       padding: 0 ${Padding.p24};
     }
 
-    > img {
-      border: solid 2px ${Colors.white};
-      width: 45px;
-      height: 45px;
+    > a {
+      display: flex;
+      img {
+        border: solid 2px ${Colors.white};
+        width: 45px;
+        height: 45px;
+      }
     }
   }
 `

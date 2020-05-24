@@ -11,8 +11,6 @@ import { Margin } from '../../../../const/Margin'
 import { Padding } from '../../../../const/Padding'
 
 export const StyledPostsForm = styled(PostsForm)`
-  margin-bottom: ${Margin.m16};
-
   > input[type='text'] {
     padding: ${Padding.p8};
     border-radius: 4px;

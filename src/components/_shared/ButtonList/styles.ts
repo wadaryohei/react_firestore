@@ -5,18 +5,18 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { SignOut } from './doms'
+import { Margin } from '../../../const/Margin'
 
-export const StyledSignOut = styled(SignOut)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
+export const StyledButtonList = styled('div')`
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  width: 100%;
+
+  & > button {
+    width: 50%;
+  }
+
+  & > button:nth-of-type(n + 2) {
+    margin-left: ${Margin.m8};
+  }
 `
-export default StyledSignOut

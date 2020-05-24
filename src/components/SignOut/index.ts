@@ -1,1 +1,1 @@
-export { StyledSignOut } from './styles'
+export { SignOut } from './doms'

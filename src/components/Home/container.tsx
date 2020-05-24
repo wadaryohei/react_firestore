@@ -9,10 +9,16 @@ import { useFollow } from '../../hooks/useFollow'
 import { useHomePresenter } from './Presenter/UseHomePresenter'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useFetchPosts } from '../../hooks/useFetchPosts'
-import { useAuth } from '../../hooks/useAuth'
-import { StyledHome } from './styles'
-import { StyledLayout } from '../_shared/Layout'
 import { HomeContainerProps } from './types'
+import { Grid, Divider, Box } from '@material-ui/core'
+import { Profile } from './User/Profile'
+import { Posts } from './User/Posts'
+import { StyledLayout } from '../_shared/Layout'
+import { StyledCard } from '../_shared/Card'
+import { StyledTypography } from '../_shared/Typography'
+import { StyledPostsForm } from './User/PostsForm'
+import { StyledOtherUsers } from './OtherUsers'
+import { Margin } from '../../const/Margin'
 
 //----------------------------------
 // component
@@ -21,7 +27,6 @@ export const Home = (props: HomeContainerProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
-  const { signOut } = useAuth()
   const follow = useFollow()
   const form = useForm(props.firebaseUser, 'posts')
   const fetchProfile = useFetchUsers('users', props.firebaseUser)
@@ -38,17 +43,93 @@ export const Home = (props: HomeContainerProps) => {
   return (
     <StyledLayout firebaseUser={props.firebaseUser}>
       {!fetchProfile._isUserLoading && (
-        <StyledHome
-          user={presenter.viewDatas().user}
-          otherUsers={presenter.viewDatas().otherUsers}
-          posts={presenter.viewDatas().posts}
-          firebaseUser={props.firebaseUser}
-          userLoading={fetchProfile._isUserLoading}
-          signOut={signOut}
-          follow={follow}
-          form={form}
-          presenter={presenter}
-        />
+        <Grid container spacing={3}>
+          {/**
+           * ==========================================
+           * @Section Profile
+           * ==========================================
+           */}
+          <Grid item xs={12} md={4}>
+            <StyledCard>
+              <Profile
+                user={presenter.viewDatas().user}
+                firebaseUser={props.firebaseUser}
+              />
+              <StyledPostsForm form={form} />
+              {presenter.isPostsDividerShow() && (
+                <Box my={Margin.m24}>
+                  <Divider />
+                </Box>
+              )}
+
+              {/**
+               * ==========================================
+               * @Section 自分の投稿情報一覧
+               * ==========================================
+               */}
+              <Box
+                display={'flex'}
+                flexDirection={'column'}
+                alignItems={'flex-start'}
+                justifyContent={'flex-start'}
+              >
+                {presenter.viewDatas().posts?.map((post, index) => (
+                  <Posts key={index} post={post} form={form} />
+                ))}
+              </Box>
+            </StyledCard>
+          </Grid>
+
+          {/**
+           * ==========================================
+           * @Section Users
+           * ==========================================
+           */}
+          <Grid item xs={12} md={8}>
+            <StyledCard>
+              {!presenter.isEmptyUsers() && (
+                <>
+                  <StyledTypography variant={'h1'}>Users</StyledTypography>
+
+                  {/**
+                   * ==========================================
+                   * @Section Users情報一覧
+                   * ==========================================
+                   */}
+                  {presenter.viewDatas().otherUsers?.map((otherUser, index) => {
+                    return (
+                      <>
+                        <StyledOtherUsers
+                          key={index}
+                          otherUser={otherUser}
+                          follow={follow}
+                          firebaseUser={props.firebaseUser}
+                          userLoading={fetchProfile._isUserLoading}
+                        />
+                        {presenter.isUsersDividerShow(index) && (
+                          <Box my={Margin.m24}>
+                            <Divider />
+                          </Box>
+                        )}
+                      </>
+                    )
+                  })}
+                </>
+              )}
+
+              {/**
+               * ==========================================
+               * @Section Users情報が存在しない場合のメッセージ
+               * ==========================================
+               */}
+              {presenter.isEmptyUsers() && (
+                <StyledTypography variant={'h2'}>
+                  {presenter.emptyUsersMessage()}
+                </StyledTypography>
+              )}
+            </StyledCard>
+          </Grid>
+        </Grid>
       )}
     </StyledLayout>
   )

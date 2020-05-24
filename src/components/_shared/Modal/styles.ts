@@ -4,12 +4,15 @@
  * - styledの引数でコンポーネントを受け取る
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
-import { Home } from './doms'
 import styled from 'styled-components'
-import { Margin } from '../../const/Margin'
+import { Modal } from './doms'
+import { Padding } from '../../../const/Padding'
 
-export const StyledHome = styled(Home)`
-  hr {
-    margin: ${Margin.m32} 0;
+export const StyledModal = styled(Modal)`
+  .title {
+    padding: 0 0 ${Padding.p16} 0;
+    > h2 {
+      font-weight: bold;
+    }
   }
 `

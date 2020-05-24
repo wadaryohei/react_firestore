@@ -9,6 +9,7 @@ import React from 'react'
 import { StyledTypography } from '../Typography/index'
 import { HeaderDomsProps } from './types'
 import { StyledCardMedia } from '../CardMedia'
+import { Link } from 'react-router-dom'
 
 //----------------------------------
 // component
@@ -22,10 +23,12 @@ export const Header = (props: HeaderDomsProps) => (
       <StyledTypography variant={'h1'} color={'white'}>
         React × Firebase
       </StyledTypography>
-      <StyledCardMedia
-        imgSrc={props.user?.photoURL}
-        alt={props.user?.photoURL}
-      />
+      <Link to={`/user/${props.user?.id}`}>
+        <StyledCardMedia
+          imgSrc={props.user?.photoURL}
+          alt={props.user?.photoURL}
+        />
+      </Link>
     </div>
   </div>
 )

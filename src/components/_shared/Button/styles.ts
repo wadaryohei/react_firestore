@@ -7,7 +7,6 @@
 import styled from 'styled-components'
 import { Button } from './doms'
 import { Colors } from '../../../const/Colors'
-import { Margin } from '../../../const/Margin'
 import { Padding } from '../../../const/Padding'
 import { FontSize } from '../../../const/FontSize'
 
@@ -16,7 +15,6 @@ export const StyledButton = styled(Button)`
   outline: none;
   font-weight: bold;
   border-radius: 4px;
-  margin: ${Margin.m8} ${Margin.m16};
   color: ${Colors.white};
   cursor: pointer;
   transition: 0.4s ease;

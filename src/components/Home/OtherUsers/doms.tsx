@@ -10,6 +10,8 @@ import { StyledCardMedia } from '../../_shared/CardMedia/index'
 import { StyledTypography } from '../../_shared/Typography/index'
 import { StyledButton } from '../../_shared/Button/index'
 import { OtherUsersProps } from './types'
+import { Box } from '@material-ui/core'
+import { Margin } from '../../../const/Margin'
 
 //----------------------------------
 // component
@@ -27,28 +29,30 @@ export const OtherUsers = (props: OtherUsersProps) => (
       UserId / {props.otherUser?.id}
     </StyledTypography>
     <div>
-      {props.otherUser?.isFollow && (
-        <StyledButton
-          size={'sm'}
-          color={'border'}
-          onClick={() =>
-            props.follow.unFollow(props.firebaseUser?.uid, props.otherUser)
-          }
-        >
-          フォロー中
-        </StyledButton>
-      )}
-      {!props.otherUser?.isFollow && (
-        <StyledButton
-          size={'sm'}
-          color={'primary'}
-          onClick={() =>
-            props.follow.follow(props.firebaseUser?.uid, props.otherUser)
-          }
-        >
-          フォローする
-        </StyledButton>
-      )}
+      <Box my={Margin.m8}>
+        {props.otherUser?.isFollow && (
+          <StyledButton
+            size={'sm'}
+            color={'border'}
+            onClick={() =>
+              props.follow.unFollow(props.firebaseUser?.uid, props.otherUser)
+            }
+          >
+            フォロー中
+          </StyledButton>
+        )}
+        {!props.otherUser?.isFollow && (
+          <StyledButton
+            size={'sm'}
+            color={'primary'}
+            onClick={() =>
+              props.follow.follow(props.firebaseUser?.uid, props.otherUser)
+            }
+          >
+            フォローする
+          </StyledButton>
+        )}
+      </Box>
     </div>
   </div>
 )

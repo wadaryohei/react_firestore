@@ -5,9 +5,8 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { SignIn } from './doms'
 
-export const StyledSignIn = styled(SignIn)`
+export const StyledSignIn = styled('div')`
   position: fixed;
   top: 0;
   left: 0;
@@ -15,7 +14,7 @@ export const StyledSignIn = styled(SignIn)`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 `
