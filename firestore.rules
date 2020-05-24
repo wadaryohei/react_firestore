@@ -63,7 +63,7 @@ service cloud.firestore {
       // @path social - following
       match /following/{followingId} {
     		allow read;
-      	allow create, update, delete: if isAuth() && authUid() == userId && authUid() == followingId;
+      	allow create, update, delete: if isAuth() && authUid() == followingId;
       }
     }
 
