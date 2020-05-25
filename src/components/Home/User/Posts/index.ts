@@ -1,1 +1,1 @@
-export { Posts } from './doms'
+export { StyledPosts } from './styles'

@@ -9,8 +9,6 @@ import React from 'react'
 import { StyledTypography } from '../../../_shared/Typography/index'
 import { StyledButton } from '../../../_shared/Button/index'
 import { PostsFormProps } from './types'
-import { Box } from '@material-ui/core'
-import { Margin } from '../../../../const/Margin'
 
 //----------------------------------
 // component
@@ -19,10 +17,10 @@ export const Posts = (props: PostsFormProps) => (
   //----------------------------------
   // render
   //----------------------------------
-  <Box my={Margin.m8}>
+  <div className={props.className}>
+    <StyledTypography variant={'p'}>{props.post?.postBody}</StyledTypography>
     <StyledTypography variant={'p'}>
-      {props.post?.postBody}
-      <Box component={'span'} ml={Margin.m8}>
+      <div>
         <StyledButton
           size={'sm'}
           color={'cancel'}
@@ -30,7 +28,7 @@ export const Posts = (props: PostsFormProps) => (
         >
           削除する
         </StyledButton>
-      </Box>
+      </div>
     </StyledTypography>
-  </Box>
+  </div>
 )

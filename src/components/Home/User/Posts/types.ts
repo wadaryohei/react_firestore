@@ -4,4 +4,5 @@ import { UserPostsData } from '../../../../model/Datas/UserPostsData'
 export interface PostsFormProps {
   post: UserPostsData | undefined
   form: Form
+  className?: string
 }

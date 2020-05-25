@@ -12,10 +12,10 @@ import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { HomeContainerProps } from './types'
 import { Grid, Divider, Box } from '@material-ui/core'
 import { Profile } from './User/Profile'
-import { Posts } from './User/Posts'
 import { StyledLayout } from '../_shared/Layout'
 import { StyledCard } from '../_shared/Card'
 import { StyledTypography } from '../_shared/Typography'
+import { StyledPosts } from './User/Posts'
 import { StyledPostsForm } from './User/PostsForm'
 import { StyledOtherUsers } from './OtherUsers'
 import { Margin } from '../../const/Margin'
@@ -69,14 +69,9 @@ export const Home = (props: HomeContainerProps) => {
                * @Section 自分の投稿情報一覧
                * ==========================================
                */}
-              <Box
-                display={'flex'}
-                flexDirection={'column'}
-                alignItems={'flex-start'}
-                justifyContent={'flex-start'}
-              >
+              <Box mt={Margin.m8}>
                 {presenter.viewDatas().posts?.map((post, index) => (
-                  <Posts key={index} post={post} form={form} />
+                  <StyledPosts key={index} post={post} form={form} />
                 ))}
               </Box>
             </StyledCard>
