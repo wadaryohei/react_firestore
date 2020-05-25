@@ -33,40 +33,13 @@ export const useFetchUsers = (
   //----------------------------------
   useEffect(() => {
     const init = async () => {
+      // ユーザー情報を取得
       await fetchUser(collection, user)
 
-      // usersコレクションを全件取得
-      const usersRef = await firebase
-        .firestore()
-        .collection(collection)
-        .get()
+      // ユーザー情報をonSnapShotでリアルタイム取得
+      const unsubscribe = await usersSnapShot()
 
-      // ログイン中のユーザー（自分以外の）ユーザーIDを抽出
-      const docs = usersRef.docs.filter(doc => doc.id !== user?.uid)
-
-      // socialコレクションのfollowingサブコレクションから自分がフォロー中のユーザーデータを抽出
-      const unsubscribe = firebase
-        .firestore()
-        .collection('social')
-        .doc(user?.uid)
-        .collection('following')
-        .doc(user?.uid)
-        .onSnapshot(async snap => {
-          const _datas = docs.map(async doc => {
-            const followers = await snap.data()?.[doc.id]
-            return {
-              id: doc.id as string,
-              isFollow: followers as boolean,
-              name: doc.data().name as string,
-              photoURL: doc.data().photoURL as string
-            }
-          })
-          const datas = await Promise.all(_datas)
-          if (mounted.current) {
-            _setOtherFetchUsers([...datas])
-            _setIsUserLoading(false)
-          }
-        })
+      // コンポーネントのアンマウント時にはonSnapShotをUnsubscribeする
       return () => {
         unsubscribe()
       }
@@ -78,6 +51,44 @@ export const useFetchUsers = (
     }
     // eslint-disable-next-line
   }, [collection, user])
+
+  /**
+   * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
+   */
+  const usersSnapShot = async (): Promise<() => void> => {
+    // usersコレクションを全件取得
+    const usersRef = await firebase
+      .firestore()
+      .collection(collection)
+      .get()
+
+    // ログイン中のユーザー（自分以外の）ユーザーIDを抽出
+    const docs = usersRef.docs.filter(doc => doc.id !== user?.uid)
+
+    // socialコレクションのfollowingサブコレクションから自分がフォロー中のユーザーデータを抽出
+    return firebase
+      .firestore()
+      .collection('social')
+      .doc(user?.uid)
+      .collection('following')
+      .doc(user?.uid)
+      .onSnapshot(async snap => {
+        const _datas = docs.map(async doc => {
+          const followers = await snap.data()?.[doc.id]
+          return {
+            id: doc.id as string,
+            isFollow: followers as boolean,
+            name: doc.data().name as string,
+            photoURL: doc.data().photoURL as string
+          }
+        })
+        const datas = await Promise.all(_datas)
+        if (mounted.current) {
+          _setOtherFetchUsers([...datas])
+          _setIsUserLoading(false)
+        }
+      })
+  }
 
   /**
    * fireStoreからユーザーを取得する
