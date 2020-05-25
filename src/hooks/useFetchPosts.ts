@@ -23,6 +23,7 @@ export const useFetchPosts = (
    * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
    */
   const fetchUserPostonSnapShot = useCallback((): (() => void) => {
+    // ログイン中のユーザー（自分自身の）ポスト情報をpostコレクションのauthorIdから抽出
     return firebase
       .firestore()
       .collection(collection)
@@ -52,13 +53,13 @@ export const useFetchPosts = (
   // lifeCycle
   //----------------------------------
   useEffect(() => {
-    /**
-     * ログイン中のユーザー（自分自身の）ポスト情報をpostコレクションのauthorIdから抽出
-     */
+    // ポスト情報をonSnapShot
     const unsubscribe = fetchUserPostonSnapShot()
 
     return () => {
       mounted.current = false
+
+      // コンポーネントのアンマウント時にonSnapShotをUnsubscribe
       unsubscribe()
     }
   }, [collection, user, fetchUserPostonSnapShot])
