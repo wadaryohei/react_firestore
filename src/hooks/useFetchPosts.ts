@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { UserPostsData } from '../model/Datas/UserPostsData'
 
 //----------------------------------
@@ -19,14 +19,11 @@ export const useFetchPosts = (
   const [_fetchPostData, _setFetchPostData] = useState<UserPostsData[]>([])
   const mounted = useRef(true)
 
-  //----------------------------------
-  // lifeCycle
-  //----------------------------------
-  useEffect(() => {
-    /**
-     * ログイン中のユーザー（自分自身の）ポスト情報をpostコレクションのauthorIdから抽出
-     */
-    const unsubscribe = firebase
+  /**
+   * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
+   */
+  const fetchUserPostonSnapShot = useCallback((): (() => void) => {
+    return firebase
       .firestore()
       .collection(collection)
       .where('authorId', '==', user?.uid)
@@ -43,19 +40,28 @@ export const useFetchPosts = (
           _setFetchPostData(snapDocs)
         }
       })
-
-    return () => {
-      mounted.current = false
-      unsubscribe()
-    }
   }, [collection, user])
-
   /**
    * DBから取得したポストデータを返す
    */
   const fetchUserPostData = (): UserPostsData[] | undefined => {
     return _fetchPostData
   }
+
+  //----------------------------------
+  // lifeCycle
+  //----------------------------------
+  useEffect(() => {
+    /**
+     * ログイン中のユーザー（自分自身の）ポスト情報をpostコレクションのauthorIdから抽出
+     */
+    const unsubscribe = fetchUserPostonSnapShot()
+
+    return () => {
+      mounted.current = false
+      unsubscribe()
+    }
+  }, [collection, user, fetchUserPostonSnapShot])
 
   return {
     fetchUserPostData
