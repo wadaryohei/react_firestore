@@ -20,15 +20,13 @@ export const Posts = (props: PostsFormProps) => (
   <div className={props.className}>
     <StyledTypography variant={'p'}>{props.post?.postBody}</StyledTypography>
     <StyledTypography variant={'p'}>
-      <div>
-        <StyledButton
-          size={'sm'}
-          color={'cancel'}
-          onClick={() => props.form.onDelete(props.post?.docId)}
-        >
-          削除する
-        </StyledButton>
-      </div>
+      <StyledButton
+        size={'sm'}
+        color={'cancel'}
+        onClick={() => props.form.onDelete(props.post?.docId)}
+      >
+        削除する
+      </StyledButton>
     </StyledTypography>
   </div>
 )
