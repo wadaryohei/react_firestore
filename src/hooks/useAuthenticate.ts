@@ -66,6 +66,12 @@ export const useAuthenticate = () => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       const result = await firebase.auth().getRedirectResult()
       if (result.credential) {
+        const credential = result?.credential as firebase.auth.OAuthCredential
+        // localStorageにaccessTokenを入れる
+        localStorage.setItem(
+          'credential',
+          JSON.stringify(credential.accessToken)
+        )
         const theUser = await findUser(result.user?.uid)
         if (!theUser) {
           await writeUser(result.user)
