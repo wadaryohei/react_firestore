@@ -68,10 +68,7 @@ export const useAuthenticate = () => {
       if (result.credential) {
         const credential = result?.credential as firebase.auth.OAuthCredential
         // localStorageにaccessTokenを入れる
-        localStorage.setItem(
-          'credential',
-          JSON.stringify(credential.accessToken)
-        )
+        localStorage.setItem('token', JSON.stringify(credential.idToken))
         const theUser = await findUser(result.user?.uid)
         if (!theUser) {
           await writeUser(result.user)
