@@ -46,7 +46,7 @@ export const useDelete = (): Delete => {
       .firestore()
       .doc(`social/${firebase.auth().currentUser?.uid}`)
 
-    // // Followersドキュメント
+    // Followersドキュメント
     const followersDocs = await firebase
       .firestore()
       .doc(`social/${firebase.auth().currentUser?.uid}`)
@@ -54,14 +54,14 @@ export const useDelete = (): Delete => {
       .where(`${firebase.auth().currentUser?.uid}`, '==', true)
       .get()
 
-    // // Followingコレクション
+    // Followingコレクション
     const followingRef = firebase
       .firestore()
       .doc(`social/${firebase.auth().currentUser?.uid}`)
       .collection('following')
       .doc(`${firebase.auth().currentUser?.uid}`)
 
-    // // Postsドキュメント
+    // Postsドキュメント
     const postsDocs = await firebase
       .firestore()
       .collection('posts')
@@ -81,21 +81,26 @@ export const useDelete = (): Delete => {
     await batch.commit()
 
     try {
+      // 1.普通に削除処理を実行
+      // 2.失敗したらlocalStorageからtokenを取得して再認証後に再度削除処理を実行
+      // ３.tokenの有効期限が1時間なので再認証が失敗した場合は最終再ログインを促す
       await firebase.auth().currentUser?.delete()
       console.log('success the user deleted.')
       _setDeleteLoading(false)
     } catch (error) {
       console.log(error)
       try {
-        // ユーザー削除時にエラーで例外処理に入った場合ユーザーの再認証をする
-        // @see https://firebase.google.com/docs/auth/web/manage-users?hl=ja#re-authenticate_a_user
+        /**
+         * Providerから再認証する
+         * ユーザー削除時にエラーで例外処理に入った場合ユーザーの再認証をする
+         * @see https://firebase.google.com/docs/auth/web/manage-users?hl=ja#re-authenticate_a_user
+         */
         await firebase
           .auth()
           .currentUser?.reauthenticateWithCredential(await reAuthProvider())
         await firebase.auth().currentUser?.delete()
         console.log('reAuth to success the user deleted.')
       } catch (error) {
-        // ユーザーの再認証がエラーだった場合最終再ログインする
         const provider = new firebase.auth.GoogleAuthProvider()
         firebase.auth().currentUser?.reauthenticateWithPopup(provider)
       }
@@ -116,7 +121,7 @@ export const useDelete = (): Delete => {
    * 再ログインさせるのもアリだがstorageにtokenを保存して持ち回す
    * @see https://stackoverflow.com/questions/52249546/reauthenticating-firebase-user-with-google-provider-in-react
    */
-  const reAuthProvider = async () => {
+  const reAuthProvider = async (): Promise<firebase.auth.OAuthCredential> => {
     const token = localStorage.getItem('token')
     const accessToken = JSON.parse(token!)
     const credential = firebase.auth.GoogleAuthProvider.credential(
