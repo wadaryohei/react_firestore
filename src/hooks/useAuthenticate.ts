@@ -70,6 +70,7 @@ export const useAuthenticate = () => {
         if (!theUser) {
           await writeUser(result.user)
         }
+        history.push('/home')
       }
 
       setLocation(user ? user : null)
@@ -104,7 +105,9 @@ export const useAuthenticate = () => {
   const setLocation = useCallback(
     (user: firebase.User | null): void => {
       if (mounted.current) {
-        user ? history.push('/home') : history.push('/signin')
+        if (!user) {
+          history.push('/signin')
+        }
       }
     },
     [history]
