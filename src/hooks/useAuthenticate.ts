@@ -63,20 +63,9 @@ export const useAuthenticate = () => {
   // lifeCycle
   //----------------------------------
   useEffect(() => {
-    const helloFunc = firebase.functions().httpsCallable('helloWorld')
-    helloFunc({ hello: 'world' })
-      .then(result => {
-        console.log(result.data)
-      })
-      .catch(e => {
-        console.log(e.details)
-      })
     const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       const result = await firebase.auth().getRedirectResult()
       if (result.credential) {
-        const credential = result?.credential as firebase.auth.OAuthCredential
-        // localStorageにaccessTokenを入れる
-        localStorage.setItem('token', JSON.stringify(credential.idToken))
         const theUser = await findUser(result.user?.uid)
         if (!theUser) {
           await writeUser(result.user)
