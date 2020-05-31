@@ -63,6 +63,14 @@ export const useAuthenticate = () => {
   // lifeCycle
   //----------------------------------
   useEffect(() => {
+    const helloFunc = firebase.functions().httpsCallable('helloWorld')
+    helloFunc({ hello: 'world' })
+      .then(result => {
+        console.log(result.data)
+      })
+      .catch(e => {
+        console.log(e.details)
+      })
     const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       const result = await firebase.auth().getRedirectResult()
       if (result.credential) {
