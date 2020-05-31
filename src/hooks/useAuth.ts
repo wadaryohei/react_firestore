@@ -22,15 +22,15 @@ export const useAuth = () => {
         prompt: 'select_account'
       }
     )
-    firebase.auth().signInWithRedirect(provider)
+    await firebase.auth().signInWithRedirect(provider)
   }
 
   /**
    * ログアウト処理
    * @access public
    */
-  const signOut = (): void => {
-    firebase.auth().signOut()
+  const signOut = async (): Promise<void> => {
+    await firebase.auth().signOut()
   }
 
   return {
