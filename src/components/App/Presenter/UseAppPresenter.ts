@@ -1,5 +1,3 @@
-import firebase from '../../../model/_shared/firebase'
-
 //----------------------------------
 // type
 //----------------------------------
@@ -13,7 +11,6 @@ export interface AppPresenter {
 export const useAppPresenter = (
   _firebaseUser: firebase.User | null
 ): AppPresenter => {
-
   /**
    * ユーザーを返す
    */

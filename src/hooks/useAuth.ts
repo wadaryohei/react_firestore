@@ -14,7 +14,6 @@ export interface Auth {
 export const useAuth = () => {
   /**
    * ログイン処理
-   * @access public
    */
   const signIn = async (): Promise<void> => {
     const provider = new firebase.auth.GoogleAuthProvider().setCustomParameters(
@@ -27,7 +26,6 @@ export const useAuth = () => {
 
   /**
    * ログアウト処理
-   * @access public
    */
   const signOut = async (): Promise<void> => {
     await firebase.auth().signOut()
