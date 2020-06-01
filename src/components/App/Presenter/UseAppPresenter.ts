@@ -1,11 +1,10 @@
 import firebase from '../../../model/_shared/firebase'
-import { AppPresenterViewData } from './AppPresenterViewData'
 
 //----------------------------------
 // type
 //----------------------------------
 export interface AppPresenter {
-  viewDatas: () => AppPresenterViewData
+  firebaseUser: () => firebase.User | null
 }
 
 //----------------------------------
@@ -14,14 +13,6 @@ export interface AppPresenter {
 export const useAppPresenter = (
   _firebaseUser: firebase.User | null
 ): AppPresenter => {
-  /**
-   * viewDatas
-   */
-  const viewDatas = (): AppPresenterViewData => {
-    return {
-      firebaseUser: firebaseUser()
-    }
-  }
 
   /**
    * ユーザーを返す
@@ -30,5 +21,5 @@ export const useAppPresenter = (
     return _firebaseUser
   }
 
-  return { viewDatas }
+  return { firebaseUser }
 }

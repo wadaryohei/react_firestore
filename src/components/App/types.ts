@@ -1,6 +1,4 @@
-import { AppPresenterViewData } from './Presenter/AppPresenterViewData'
-
 export interface AppProps {
-  viewDatas: AppPresenterViewData
+  firebaseUser: firebase.User | null
   className?: string
 }

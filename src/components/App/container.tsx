@@ -25,7 +25,9 @@ export const App = () => {
   return (
     <>
       {authenticate.loading && <StyledLoading text={'Loading...'} />}
-      {!authenticate.loading && <StyledApp viewDatas={presenter.viewDatas()} />}
+      {!authenticate.loading && (
+        <StyledApp firebaseUser={presenter.firebaseUser()} />
+      )}
     </>
   )
 }

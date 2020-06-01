@@ -6,7 +6,7 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { Index } from '../Index/Index'
+import { Routes } from '../Routes/Index'
 import { Route } from 'react-router-dom'
 import { AppProps } from './types'
 
@@ -15,6 +15,9 @@ import { AppProps } from './types'
 //----------------------------------
 export const App = (props: AppProps) => (
   <div className={props.className}>
-    <Route path="/" render={() => <Index viewDatas={props.viewDatas} />} />
+    <Route
+      path="/"
+      render={() => <Routes firebaseUser={props.firebaseUser} />}
+    />
   </div>
 )
