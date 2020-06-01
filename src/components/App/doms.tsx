@@ -6,7 +6,7 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { Routes } from '../Routes/Index'
+import { Routes } from '../Routes/index'
 import { Route } from 'react-router-dom'
 import { AppProps } from './types'
 
