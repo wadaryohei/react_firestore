@@ -7,12 +7,20 @@
  */
 import React from 'react'
 import { Typography } from '../../../_shared/Typography/index'
-import { PostsFormProps } from './types'
+import { useFormProps } from '../../../../hooks/useForm'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface PostsFormProps {
+  form: useFormProps
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const PostsForm = (props: PostsFormProps) => (
+export const PostsFormDoms = (props: PostsFormProps) => (
   //----------------------------------
   // render
   //----------------------------------

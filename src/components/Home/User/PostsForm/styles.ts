@@ -5,12 +5,12 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { PostsForm } from './doms'
+import { PostsFormDoms } from './doms'
 import { Colors } from '../../../../const/Colors'
 import { Margin } from '../../../../const/Margin'
 import { Padding } from '../../../../const/Padding'
 
-export const StyledPostsForm = styled(PostsForm)`
+export const PostsForm = styled(PostsFormDoms)`
   > input[type='text'] {
     padding: ${Padding.p8};
     border-radius: 4px;

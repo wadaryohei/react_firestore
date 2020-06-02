@@ -5,10 +5,10 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Posts } from './doms'
+import { PostsDoms } from './doms'
 import { Margin } from '../../../../const/Margin'
 
-export const StyledPosts = styled(Posts)`
+export const Posts = styled(PostsDoms)`
   display: flex;
   justify-content: space-between;
   align-items: center;

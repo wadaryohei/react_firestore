@@ -1,1 +1,1 @@
-export { StyledPostsForm } from './styles'
+export { PostsForm } from './styles'

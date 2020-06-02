@@ -9,21 +9,27 @@ import { useFollow } from '../../hooks/useFollow'
 import { useHomePresenter } from './Presenter/UseHomePresenter'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useFetchPosts } from '../../hooks/useFetchPosts'
-import { HomeContainerProps } from './types'
 import { Grid, Divider, Box } from '@material-ui/core'
 import { Profile } from './User/Profile'
 import { Layout } from '../_shared/Layout'
 import { Card } from '../_shared/Card'
 import { Typography } from '../_shared/Typography'
-import { StyledPosts } from './User/Posts'
-import { StyledPostsForm } from './User/PostsForm'
-import { StyledOtherUsers } from './OtherUsers'
+import { Posts } from './User/Posts'
+import { PostsForm } from './User/PostsForm'
+import { OtherUsers } from './OtherUsers'
 import { Margin } from '../../const/Margin'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface HomeProps {
+  firebaseUser: firebase.User | null
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Home = (props: HomeContainerProps) => {
+export const Home = (props: HomeProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
@@ -48,7 +54,7 @@ export const Home = (props: HomeContainerProps) => {
             <Card>
               {/**
                * ==========================================
-               * @Section Profile
+               * @Section 自分のユーザー情報
                * ==========================================
                */}
               <Profile
@@ -56,7 +62,7 @@ export const Home = (props: HomeContainerProps) => {
                 firebaseUser={props.firebaseUser}
               />
               <Box mt={Margin.m8}>
-                <StyledPostsForm form={form} />
+                <PostsForm form={form} />
                 {presenter.isPostsDividerShow() && (
                   <Box my={Margin.m24}>
                     <Divider />
@@ -66,12 +72,12 @@ export const Home = (props: HomeContainerProps) => {
 
               {/**
                * ==========================================
-               * @Section 自分の投稿情報一覧
+               * @Section 自分の投稿情報
                * ==========================================
                */}
               <Box mt={Margin.m8}>
                 {presenter.viewDatas().posts?.map((post, index) => (
-                  <StyledPosts key={index} post={post} form={form} />
+                  <Posts key={index} post={post} form={form} />
                 ))}
               </Box>
             </Card>
@@ -79,7 +85,7 @@ export const Home = (props: HomeContainerProps) => {
 
           {/**
            * ==========================================
-           * @Section Users
+           * @Section 自分以外のユーザーの情報
            * ==========================================
            */}
           <Grid item xs={12} md={8}>
@@ -88,15 +94,10 @@ export const Home = (props: HomeContainerProps) => {
                 <>
                   <Typography variant={'h1'}>Users</Typography>
 
-                  {/**
-                   * ==========================================
-                   * @Section Users情報一覧
-                   * ==========================================
-                   */}
                   {presenter.viewDatas().otherUsers?.map((otherUser, index) => {
                     return (
                       <div key={index}>
-                        <StyledOtherUsers
+                        <OtherUsers
                           otherUser={otherUser}
                           follow={follow}
                           firebaseUser={props.firebaseUser}

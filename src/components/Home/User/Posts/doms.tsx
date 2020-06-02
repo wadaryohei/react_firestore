@@ -8,12 +8,22 @@
 import React from 'react'
 import { Typography } from '../../../_shared/Typography/index'
 import { Button } from '../../../_shared/Button/index'
-import { PostsFormProps } from './types'
+import { useFormProps } from '../../../../hooks/useForm'
+import { UserPostsData } from '../../../../model/Datas/UserPostsData'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface PostsFormProps {
+  post: UserPostsData | undefined
+  form: useFormProps
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Posts = (props: PostsFormProps) => (
+export const PostsDoms = (props: PostsFormProps) => (
   //----------------------------------
   // render
   //----------------------------------

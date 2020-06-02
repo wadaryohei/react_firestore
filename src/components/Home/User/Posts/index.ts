@@ -1,1 +1,1 @@
-export { StyledPosts } from './styles'
+export { Posts } from './styles'

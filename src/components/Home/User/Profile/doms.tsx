@@ -8,7 +8,16 @@
 import React from 'react'
 import { CardMedia } from '../../../_shared/CardMedia/index'
 import { Typography } from '../../../_shared/Typography/index'
-import { ProfileProps } from './types'
+import { UserData } from '../../../../model/Datas/UserData'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ProfileProps {
+  user: UserData | undefined
+  firebaseUser: firebase.User | null
+  className?: string
+}
 
 //----------------------------------
 // component

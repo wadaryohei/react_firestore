@@ -9,14 +9,26 @@ import React from 'react'
 import { CardMedia } from '../../_shared/CardMedia/index'
 import { Typography } from '../../_shared/Typography/index'
 import { Button } from '../../_shared/Button/index'
-import { OtherUsersProps } from './types'
 import { Box } from '@material-ui/core'
 import { Margin } from '../../../const/Margin'
+import { useFollowProps } from '../../../hooks/useFollow'
+import { OtherUsersData } from '../../../model/Datas/OtherUsersData'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface OtherUsersProps {
+  firebaseUser: firebase.User | null
+  otherUser: OtherUsersData | undefined
+  follow: useFollowProps
+  userLoading: boolean
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const OtherUsers = (props: OtherUsersProps) => (
+export const OtherUsersDoms = (props: OtherUsersProps) => (
   <div className={props.className}>
     <CardMedia
       imgSrc={props.otherUser?.photoURL}
