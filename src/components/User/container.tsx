@@ -5,25 +5,22 @@
  */
 import React from 'react'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
-import { useAuth } from '../../hooks/useAuth'
 import { useModal } from '../../hooks/useModal'
 import { useDelete } from '../../hooks/useDelete'
-import { Container, Box, CircularProgress } from '@material-ui/core'
+import { CircularProgress, Grid, Container } from '@material-ui/core'
 import { Profile } from '../Home/User/Profile'
 import { DeleteModal } from './DeleteModal/doms'
 import { StyledLayout } from '../_shared/Layout'
 import { StyledCard } from '../_shared/Card'
-import { StyledButton } from '../_shared/Button'
 import { StyledLoading } from '../_shared/Loading'
-import { Margin } from '../../const/Margin'
 import { UserProps } from './types'
+import { SideBar } from './SideBar'
 
 export const User = (props: UserProps) => {
   //----------------------------------
   //  hooks
   //----------------------------------
   const fetchProfile = useFetchUsers('users', props.firebaseUser)
-  const { signOut } = useAuth()
   const { onDeleteUser, deleteLoading } = useDelete()
   const modal = useModal()
 
@@ -42,31 +39,27 @@ export const User = (props: UserProps) => {
         {modal.showModal() && (
           <DeleteModal modal={modal} onDeleteUser={onDeleteUser} />
         )}
+
         <Container maxWidth={'md'}>
-          <StyledCard>
-            <Profile
-              user={fetchProfile.fetchUserData()}
-              firebaseUser={props.firebaseUser}
-            />
-            <Box my={Margin.m8}>
-              <StyledButton
-                size={'sm'}
-                color={'primary'}
-                onClick={() => signOut()}
-              >
-                ログアウトする
-              </StyledButton>
-            </Box>
-            <Box my={Margin.m4}>
-              <StyledButton
-                size={'sm'}
-                color={'cancel'}
-                onClick={() => modal.onOpenModal()}
-              >
-                アカウントを削除する
-              </StyledButton>
-            </Box>
-          </StyledCard>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <StyledCard>
+                <SideBar
+                  firebaseUser={props.firebaseUser}
+                  onOpenModal={modal.onOpenModal}
+                />
+              </StyledCard>
+            </Grid>
+
+            <Grid item xs={12} md={8}>
+              <StyledCard>
+                <Profile
+                  user={fetchProfile.fetchUserData()}
+                  firebaseUser={props.firebaseUser}
+                />
+              </StyledCard>
+            </Grid>
+          </Grid>
         </Container>
       </>
     </StyledLayout>
