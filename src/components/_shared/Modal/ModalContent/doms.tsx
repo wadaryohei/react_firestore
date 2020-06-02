@@ -7,7 +7,13 @@
  */
 import React from 'react'
 import { DialogContent } from '@material-ui/core'
-import { ModalContentProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ModalContentProps {
+  children: React.ReactNode
+}
 
 //----------------------------------
 // component

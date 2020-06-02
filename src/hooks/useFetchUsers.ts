@@ -6,7 +6,7 @@ import { OtherUsersData } from '../model/Datas/OtherUsersData'
 //----------------------------------
 // interface
 //----------------------------------
-interface FetchUsers {
+export interface userFetchUsersProps {
   _isUserLoading: boolean
   fetchUser: (
     collection: string,
@@ -22,7 +22,7 @@ interface FetchUsers {
 export const useFetchUsers = (
   collection: string,
   user: firebase.User | null
-): FetchUsers => {
+): userFetchUsersProps => {
   const [_fetchUser, _setFetchUser] = useState<UserData>()
   const [_fetchOtherUsers, _setOtherFetchUsers] = useState<OtherUsersData[]>([])
   const [_isUserLoading, _setIsUserLoading] = useState<boolean>(true)

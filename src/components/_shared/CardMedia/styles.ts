@@ -5,9 +5,9 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { CardMedia } from './doms'
+import { CardMediaDoms } from './doms'
 
-export const StyledCardMedia = styled(CardMedia)`
+export const CardMedia = styled(CardMediaDoms)`
   width: 120px;
   height: 120px;
   border-radius: 50%;

@@ -6,8 +6,8 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { StyledTypography } from '../../../_shared/Typography/index'
-import { StyledButton } from '../../../_shared/Button/index'
+import { Typography } from '../../../_shared/Typography/index'
+import { Button } from '../../../_shared/Button/index'
 import { PostsFormProps } from './types'
 
 //----------------------------------
@@ -18,15 +18,15 @@ export const Posts = (props: PostsFormProps) => (
   // render
   //----------------------------------
   <div className={props.className}>
-    <StyledTypography variant={'p'}>{props.post?.postBody}</StyledTypography>
-    <StyledTypography variant={'p'}>
-      <StyledButton
+    <Typography variant={'p'}>{props.post?.postBody}</Typography>
+    <Typography variant={'p'}>
+      <Button
         size={'sm'}
         color={'cancel'}
         onClick={() => props.form.onDelete(props.post?.docId)}
       >
         削除する
-      </StyledButton>
-    </StyledTypography>
+      </Button>
+    </Typography>
   </div>
 )

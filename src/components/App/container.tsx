@@ -6,13 +6,21 @@
 import React from 'react'
 import { useAuthenticate } from '../../hooks/useAuthenticate'
 import { useAppPresenter } from './Presenter/UseAppPresenter'
-import { StyledApp } from './styles'
-import { StyledLoading } from '../_shared/Loading/index'
+import { Loading } from '../_shared/Loading/index'
+import { Routes } from '../Routes/index'
+import { Route } from 'react-router-dom'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface AppProps {
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const App = () => {
+export const AppContainer = (props: AppProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
@@ -24,9 +32,14 @@ export const App = () => {
   //----------------------------------
   return (
     <>
-      {authenticate.loading && <StyledLoading text={'Loading...'} />}
+      {authenticate.loading && <Loading text={'Loading...'} />}
       {!authenticate.loading && (
-        <StyledApp firebaseUser={presenter.firebaseUser()} />
+        <div className={props.className}>
+          <Route
+            path="/"
+            render={() => <Routes firebaseUser={presenter.firebaseUser()} />}
+          />
+        </div>
       )}
     </>
   )

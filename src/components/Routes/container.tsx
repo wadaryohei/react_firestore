@@ -9,8 +9,14 @@ import { Home } from '../Home'
 import { SignIn } from '../SignIn'
 import { User } from '../User'
 import { SignOut } from '../SignOut'
-import { RoutesProps } from './types'
 import { useRoute } from '../../hooks/useRoute'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface RoutesProps {
+  firebaseUser: firebase.User | null
+}
 
 //----------------------------------
 // component

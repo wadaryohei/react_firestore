@@ -5,7 +5,7 @@ import { UserPostsData } from '../model/Datas/UserPostsData'
 //----------------------------------
 // interface
 //----------------------------------
-interface FetchPosts {
+export interface useFetchPostsProps {
   fetchUserPostData: () => UserPostsData[] | undefined
 }
 
@@ -15,7 +15,7 @@ interface FetchPosts {
 export const useFetchPosts = (
   collection: string,
   user: firebase.User | null
-): FetchPosts => {
+): useFetchPostsProps => {
   const [_fetchPostData, _setFetchPostData] = useState<UserPostsData[]>([])
   const mounted = useRef(true)
 

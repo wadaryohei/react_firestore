@@ -6,13 +6,20 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { LoadingProps } from './types'
 import { CircularProgress } from '@material-ui/core'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface LoadingProps {
+  text: string
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Loading = (props: LoadingProps) => (
+export const LoadingDoms = (props: LoadingProps) => (
   //----------------------------------
   // render
   //----------------------------------

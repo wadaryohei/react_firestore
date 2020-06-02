@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 //----------------------------------
 // interface
 //----------------------------------
-export interface Authenticate {
+export interface useAuthenticateProps {
   firebaseUser: firebase.User | null
   loading: boolean
 }
@@ -13,7 +13,7 @@ export interface Authenticate {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useAuthenticate = () => {
+export const useAuthenticate = (): useAuthenticateProps => {
   const [firebaseUser, setFirebaseUser] = useState<firebase.User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const mounted = useRef(true)

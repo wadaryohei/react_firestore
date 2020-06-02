@@ -7,7 +7,13 @@
  */
 import React from 'react'
 import { DialogActions } from '@material-ui/core'
-import { ModalActionsProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ModalActionsProps {
+  children: React.ReactNode
+}
 
 //----------------------------------
 // component

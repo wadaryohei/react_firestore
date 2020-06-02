@@ -5,10 +5,10 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Modal } from './doms'
+import { ModalDoms } from './doms'
 import { Padding } from '../../../const/Padding'
 
-export const StyledModal = styled(Modal)`
+export const Modal = styled(ModalDoms)`
   .title {
     padding: 0 0 ${Padding.p16} 0;
     > h2 {

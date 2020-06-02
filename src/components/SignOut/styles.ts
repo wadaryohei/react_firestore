@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Padding } from '../../const/Padding'
 import { Colors } from '../../const/Colors'
 
-export const StyledSignOut = styled('div')`
+export const SignOutWrapper = styled('div')`
   position: fixed;
   top: 0;
   left: 0;

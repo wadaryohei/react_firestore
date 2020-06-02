@@ -4,7 +4,7 @@ import { useState } from 'react'
 //----------------------------------
 // interface
 //----------------------------------
-export interface Delete {
+export interface useDeleteProps {
   onDeleteUser: () => Promise<void>
   deleteLoading: () => boolean
 }
@@ -12,7 +12,7 @@ export interface Delete {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useDelete = (): Delete => {
+export const useDelete = (): useDeleteProps => {
   const [_deleteLoading, _setDeleteLoading] = useState<boolean>(false)
 
   /**

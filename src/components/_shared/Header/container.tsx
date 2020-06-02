@@ -4,14 +4,23 @@
  * - ロジックが必要な場合は、ここに記述する
  */
 import React from 'react'
-import { StyledHeader } from './styles'
-import { HeaderContainerProps } from './types'
+import { Link } from 'react-router-dom'
+import { Typography } from '../Typography'
+import { CardMedia } from '../CardMedia'
 import { useFetchUsers } from '../../../hooks/useFetchUsers'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface HeaderProps {
+  firebaseUser: firebase.User | null
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Header = (props: HeaderContainerProps) => {
+export const HeaderContainer = (props: HeaderProps) => {
   //----------------------------------
   //  hooks
   //----------------------------------
@@ -20,5 +29,19 @@ export const Header = (props: HeaderContainerProps) => {
   //----------------------------------
   // render
   //----------------------------------
-  return <StyledHeader user={fetchProfile.fetchUserData()} />
+  return (
+    <header className={props.className}>
+      <div>
+        <Typography variant={'h1'} color={'white'}>
+          React × Firebase
+        </Typography>
+        <Link to={`/user/${fetchProfile.fetchUserData()?.id}`}>
+          <CardMedia
+            imgSrc={fetchProfile.fetchUserData()?.photoURL}
+            alt={fetchProfile.fetchUserData()?.photoURL}
+          />
+        </Link>
+      </div>
+    </header>
+  )
 }

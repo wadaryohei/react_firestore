@@ -6,12 +6,22 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { ButtonProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ButtonProps {
+  children: React.ReactNode
+  color: 'primary' | 'secondary' | 'cancel' | 'default' | 'border'
+  size: 'lg' | 'md' | 'sm'
+  className?: string
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Button = (props: ButtonProps) => {
+export const ButtonDoms = (props: ButtonProps) => {
   switch (props.color) {
     case 'primary':
       return (

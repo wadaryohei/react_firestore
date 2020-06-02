@@ -1,1 +1,1 @@
-export { Header } from './container'
+export { Header } from './styles'

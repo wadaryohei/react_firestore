@@ -12,9 +12,9 @@ import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { HomeContainerProps } from './types'
 import { Grid, Divider, Box } from '@material-ui/core'
 import { Profile } from './User/Profile'
-import { StyledLayout } from '../_shared/Layout'
-import { StyledCard } from '../_shared/Card'
-import { StyledTypography } from '../_shared/Typography'
+import { Layout } from '../_shared/Layout'
+import { Card } from '../_shared/Card'
+import { Typography } from '../_shared/Typography'
 import { StyledPosts } from './User/Posts'
 import { StyledPostsForm } from './User/PostsForm'
 import { StyledOtherUsers } from './OtherUsers'
@@ -41,16 +41,16 @@ export const Home = (props: HomeContainerProps) => {
   // render
   //----------------------------------
   return (
-    <StyledLayout firebaseUser={props.firebaseUser}>
+    <Layout firebaseUser={props.firebaseUser}>
       {!fetchProfile._isUserLoading && (
         <Grid container spacing={3}>
-          {/**
-           * ==========================================
-           * @Section Profile
-           * ==========================================
-           */}
           <Grid item xs={12} md={4}>
-            <StyledCard>
+            <Card>
+              {/**
+               * ==========================================
+               * @Section Profile
+               * ==========================================
+               */}
               <Profile
                 user={presenter.viewDatas().user}
                 firebaseUser={props.firebaseUser}
@@ -74,7 +74,7 @@ export const Home = (props: HomeContainerProps) => {
                   <StyledPosts key={index} post={post} form={form} />
                 ))}
               </Box>
-            </StyledCard>
+            </Card>
           </Grid>
 
           {/**
@@ -83,10 +83,10 @@ export const Home = (props: HomeContainerProps) => {
            * ==========================================
            */}
           <Grid item xs={12} md={8}>
-            <StyledCard>
+            <Card>
               {!presenter.isEmptyUsers() && (
                 <>
-                  <StyledTypography variant={'h1'}>Users</StyledTypography>
+                  <Typography variant={'h1'}>Users</Typography>
 
                   {/**
                    * ==========================================
@@ -119,14 +119,14 @@ export const Home = (props: HomeContainerProps) => {
                * ==========================================
                */}
               {presenter.isEmptyUsers() && (
-                <StyledTypography variant={'h2'}>
+                <Typography variant={'h2'}>
                   {presenter.emptyUsersMessage()}
-                </StyledTypography>
+                </Typography>
               )}
-            </StyledCard>
+            </Card>
           </Grid>
         </Grid>
       )}
-    </StyledLayout>
+    </Layout>
   )
 }

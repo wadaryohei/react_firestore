@@ -7,12 +7,20 @@
  */
 import React from 'react'
 import { Header } from '../Header/index'
-import { LayoutProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface LayoutProps {
+  children: React.ReactNode
+  firebaseUser: firebase.User | null
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Layout = (props: LayoutProps) => (
+export const LayoutDoms = (props: LayoutProps) => (
   //----------------------------------
   // render
   //----------------------------------

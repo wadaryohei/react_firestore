@@ -6,8 +6,8 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { StyledCardMedia } from '../../../_shared/CardMedia/index'
-import { StyledTypography } from '../../../_shared/Typography/index'
+import { CardMedia } from '../../../_shared/CardMedia/index'
+import { Typography } from '../../../_shared/Typography/index'
 import { ProfileProps } from './types'
 
 //----------------------------------
@@ -18,12 +18,8 @@ export const Profile = (props: ProfileProps) => (
   // render
   //----------------------------------
   <>
-    <StyledCardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
-    <StyledTypography variant={'p'}>
-      LoginName / {props.user?.name}
-    </StyledTypography>
-    <StyledTypography variant={'p'}>
-      UserId / {props.firebaseUser?.uid}
-    </StyledTypography>
+    <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
+    <Typography variant={'p'}>LoginName / {props.user?.name}</Typography>
+    <Typography variant={'p'}>UserId / {props.firebaseUser?.uid}</Typography>
   </>
 )

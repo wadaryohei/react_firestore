@@ -6,7 +6,7 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { StyledTypography } from '../../../_shared/Typography/index'
+import { Typography } from '../../../_shared/Typography/index'
 import { PostsFormProps } from './types'
 
 //----------------------------------
@@ -28,11 +28,11 @@ export const PostsForm = (props: PostsFormProps) => (
       disabled={props.form.disabled()}
       onClick={() => props.form.onClick(props.form.text())}
     />
-    <StyledTypography
+    <Typography
       variant={'p'}
       className={props.form.visibilityStatus(props.form.error())}
     >
       {props.form.error()}
-    </StyledTypography>
+    </Typography>
   </form>
 )

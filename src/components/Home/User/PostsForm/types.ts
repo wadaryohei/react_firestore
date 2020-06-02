@@ -1,6 +1,6 @@
-import { Form } from '../../../../hooks/useForm'
+import { useFormProps } from '../../../../hooks/useForm'
 
 export interface PostsFormProps {
-  form: Form
+  form: useFormProps
   className?: string
 }

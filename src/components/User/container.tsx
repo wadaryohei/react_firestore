@@ -4,18 +4,29 @@
  * - ロジックが必要な場合は、ここに記述する
  */
 import React from 'react'
+import { CircularProgress, Grid, Container } from '@material-ui/core'
+import { Profile } from '../Home/User/Profile'
+import { Layout } from '../_shared/Layout'
+import { Card } from '../_shared/Card'
+import { Loading } from '../_shared/Loading'
+import { SideBar } from '../_shared/SideBar'
+import { Link } from 'react-router-dom'
+import { Button } from '../_shared/Button/styles'
+import { DeleteModal } from './DeleteModal/doms'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useModal } from '../../hooks/useModal'
 import { useDelete } from '../../hooks/useDelete'
-import { CircularProgress, Grid, Container } from '@material-ui/core'
-import { Profile } from '../Home/User/Profile'
-import { DeleteModal } from './DeleteModal/doms'
-import { StyledLayout } from '../_shared/Layout'
-import { StyledCard } from '../_shared/Card'
-import { StyledLoading } from '../_shared/Loading'
-import { UserProps } from './types'
-import { SideBar } from './SideBar'
 
+//----------------------------------
+// props
+//----------------------------------
+export interface UserProps {
+  firebaseUser: firebase.User | null
+}
+
+//----------------------------------
+// component
+//----------------------------------
 export const User = (props: UserProps) => {
   //----------------------------------
   //  hooks
@@ -28,12 +39,12 @@ export const User = (props: UserProps) => {
   // render
   //----------------------------------
   return (
-    <StyledLayout firebaseUser={props.firebaseUser}>
+    <Layout firebaseUser={props.firebaseUser}>
       <>
         {deleteLoading() && (
           <>
             <CircularProgress />
-            <StyledLoading text={'ユーザーを削除しています'} />
+            <Loading text={'ユーザーを削除しています'} />
           </>
         )}
         {modal.showModal() && (
@@ -43,25 +54,33 @@ export const User = (props: UserProps) => {
         <Container maxWidth={'md'}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
-              <StyledCard>
-                <SideBar
-                  firebaseUser={props.firebaseUser}
-                  onOpenModal={modal.onOpenModal}
-                />
-              </StyledCard>
+              <SideBar>
+                <Card>
+                  <Link to={'/signout'}>
+                    {props.firebaseUser?.displayName}からログアウト
+                  </Link>
+                  <Button
+                    size={'sm'}
+                    color={'cancel'}
+                    onClick={() => modal.onOpenModal()}
+                  >
+                    アカウントを削除する
+                  </Button>
+                </Card>
+              </SideBar>
             </Grid>
 
             <Grid item xs={12} md={8}>
-              <StyledCard>
+              <Card>
                 <Profile
                   user={fetchProfile.fetchUserData()}
                   firebaseUser={props.firebaseUser}
                 />
-              </StyledCard>
+              </Card>
             </Grid>
           </Grid>
         </Container>
       </>
-    </StyledLayout>
+    </Layout>
   )
 }

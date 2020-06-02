@@ -6,14 +6,19 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { DeleteModalProps } from './types'
-import { Modal } from '../../_shared/Modal/doms'
+import { Modal } from '../../_shared/Modal/index'
 import { ModalHeader } from '../../_shared/Modal/ModalHeader/doms'
 import { ModalContent } from '../../_shared/Modal/ModalContent/doms'
 import { ModalContentText } from '../../_shared/Modal/ModalContentText/doms'
 import { ModalActions } from '../../_shared/Modal/ModalActions/doms'
-import { StyledButtonList } from '../../_shared/ButtonList'
-import { StyledButton } from '../../_shared/Button'
+import { ButtonList } from '../../_shared/ButtonList'
+import { Button } from '../../_shared/Button'
+import { useModalProps } from '../../../hooks/useModal'
+
+export interface DeleteModalProps {
+  modal: useModalProps
+  onDeleteUser: () => void
+}
 
 //----------------------------------
 // component
@@ -29,22 +34,22 @@ export const DeleteModal = (props: DeleteModalProps) => (
         text={'投稿やフォロー情報などの全てのデータが削除されます。'}
       />
       <ModalActions>
-        <StyledButtonList>
-          <StyledButton
+        <ButtonList>
+          <Button
             size={'sm'}
             color={'default'}
             onClick={() => props.modal.onCloseModal()}
           >
             キャンセルする
-          </StyledButton>
-          <StyledButton
+          </Button>
+          <Button
             size={'sm'}
             color={'cancel'}
             onClick={() => props.onDeleteUser()}
           >
             削除する
-          </StyledButton>
-        </StyledButtonList>
+          </Button>
+        </ButtonList>
       </ModalActions>
     </ModalContent>
   </Modal>

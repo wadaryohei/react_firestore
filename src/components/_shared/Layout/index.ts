@@ -1,1 +1,1 @@
-export { StyledLayout } from './styles'
+export { Layout } from './styles'

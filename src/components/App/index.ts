@@ -1,1 +1,1 @@
-export { App } from './container'
+export { App } from './styles'

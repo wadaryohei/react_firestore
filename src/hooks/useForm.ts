@@ -5,7 +5,7 @@ import nanoid from 'nanoid'
 //----------------------------------
 // interface
 //----------------------------------
-export interface Form {
+export interface useFormProps {
   onChangeText: (text: string) => void
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>, text: string) => void
   onClick: (text: string) => void
@@ -24,7 +24,7 @@ export interface Form {
 export const useForm = (
   user: firebase.User | null,
   collection: string
-): Form => {
+): useFormProps => {
   /**
    * テキスト入力のステート
    */

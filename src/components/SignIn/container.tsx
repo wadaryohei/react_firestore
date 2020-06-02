@@ -5,9 +5,9 @@
  */
 import React from 'react'
 import { useAuth } from '../../hooks/useAuth'
-import { StyledTypography } from '../_shared/Typography'
-import { StyledButton } from '../_shared/Button'
-import { StyledSignIn } from './styles'
+import { Typography } from '../_shared/Typography'
+import { Button } from '../_shared/Button'
+import { SignInWrapper } from './styles'
 import { Margin } from '../../const/Margin'
 import { Box } from '@material-ui/core'
 
@@ -23,13 +23,13 @@ export const SignIn = () => {
   // render
   //----------------------------------
   return (
-    <StyledSignIn>
-      <StyledTypography variant={'h1'}>Firebase × React</StyledTypography>
+    <SignInWrapper>
+      <Typography variant={'h1'}>Firebase × React</Typography>
       <Box mt={Margin.m4}>
-        <StyledButton size={'sm'} color={'primary'} onClick={() => signIn()}>
+        <Button size={'sm'} color={'primary'} onClick={() => signIn()}>
           ログインする
-        </StyledButton>
+        </Button>
       </Box>
-    </StyledSignIn>
+    </SignInWrapper>
   )
 }

@@ -1,1 +1,1 @@
-export { StyledButtonList } from './styles'
+export { ButtonList } from './styles'

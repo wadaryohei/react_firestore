@@ -5,11 +5,11 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Loading } from './doms'
+import { LoadingDoms } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Margin } from '../../../const/Margin'
 
-export const StyledLoading = styled(Loading)`
+export const Loading = styled(LoadingDoms)`
   position: fixed;
   top: 0;
   left: 0;

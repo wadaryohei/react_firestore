@@ -1,1 +1,1 @@
-export { StyledLoading } from './styles'
+export { Loading } from './styles'

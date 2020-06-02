@@ -7,12 +7,24 @@
  */
 
 import React from 'react'
-import { TypographyProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface TypographyProps {
+  children: React.ReactNode
+  variant: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span'
+  className?: string | undefined
+  color?: string | undefined
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Typography = (props: TypographyProps) => {
+export const TypographyDoms = (props: TypographyProps) => {
+  //----------------------------------
+  // render
+  //----------------------------------
   switch (props.variant) {
     case 'h1':
       return (

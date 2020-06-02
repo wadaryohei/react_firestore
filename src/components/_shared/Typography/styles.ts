@@ -5,12 +5,12 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Typography } from './doms'
+import { TypographyDoms } from './doms'
 import { FontSize } from '../../../const/FontSize'
 import { Margin } from '../../../const/Margin'
 import { Colors } from '../../../const/Colors'
 
-export const StyledTypography = styled(Typography)`
+export const Typography = styled(TypographyDoms)`
   color: ${Colors.black};
   margin: ${Margin.m0};
 

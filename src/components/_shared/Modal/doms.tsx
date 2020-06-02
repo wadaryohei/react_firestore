@@ -7,12 +7,21 @@
  */
 import React from 'react'
 import { Dialog } from '@material-ui/core'
-import { ModalProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ModalProps {
+  open: boolean
+  onClose: () => void
+  children: React.ReactNode
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const Modal = (props: ModalProps) => (
+export const ModalDoms = (props: ModalProps) => (
   //----------------------------------
   // render
   //----------------------------------

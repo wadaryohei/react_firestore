@@ -1,1 +1,1 @@
-export { StyledCardMedia } from './styles'
+export { CardMedia } from './styles'

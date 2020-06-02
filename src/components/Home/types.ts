@@ -1,8 +1,8 @@
 import { UserData } from '../../model/Datas/UserData'
 import { UserPostsData } from '../../model/Datas/UserPostsData'
 import { OtherUsersData } from '../../model/Datas/OtherUsersData'
-import { Form } from '../../hooks/useForm'
-import { Follow } from '../../hooks/useFollow'
+import { useFormProps } from '../../hooks/useForm'
+import { useFollowProps } from '../../hooks/useFollow'
 import { HomePresenter } from './Presenter/UseHomePresenter'
 
 export interface HomeDomsProps {
@@ -12,8 +12,8 @@ export interface HomeDomsProps {
   firebaseUser: firebase.User | null
   userLoading: boolean
   signOut: () => void
-  form: Form
-  follow: Follow
+  form: useFormProps
+  follow: useFollowProps
   presenter: HomePresenter
   className?: string
 }

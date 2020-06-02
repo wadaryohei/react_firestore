@@ -6,12 +6,20 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { CardMediaProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface CardMediaProps {
+  imgSrc: string | undefined
+  alt: string | undefined
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const CardMedia = (props: CardMediaProps) => (
+export const CardMediaDoms = (props: CardMediaProps) => (
   //----------------------------------
   // render
   //----------------------------------

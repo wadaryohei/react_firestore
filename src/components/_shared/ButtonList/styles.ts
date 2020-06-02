@@ -7,7 +7,7 @@
 import styled from 'styled-components'
 import { Margin } from '../../../const/Margin'
 
-export const StyledButtonList = styled('div')`
+export const ButtonList = styled('div')`
   display: flex;
   justify-content: center;
   width: 100%;

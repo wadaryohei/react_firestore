@@ -5,12 +5,12 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Button } from './doms'
+import { ButtonDoms } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Padding } from '../../../const/Padding'
 import { FontSize } from '../../../const/FontSize'
 
-export const StyledButton = styled(Button)`
+export const Button = styled(ButtonDoms)`
   border: none;
   outline: none;
   font-weight: bold;

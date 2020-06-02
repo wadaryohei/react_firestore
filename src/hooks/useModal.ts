@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 //----------------------------------
-export interface Modal {
+export interface useModalProps {
   showModal: () => boolean
   onOpenModal: () => void
   onCloseModal: () => void
@@ -10,7 +10,7 @@ export interface Modal {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useModal = (): Modal => {
+export const useModal = (): useModalProps => {
   const [_showModal, _setShowModal] = useState<boolean>(false)
 
   /**

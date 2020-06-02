@@ -7,7 +7,13 @@
  */
 import React from 'react'
 import { DialogContentText } from '@material-ui/core'
-import { ModalContentTextProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ModalContentTextProps {
+  text?: string | undefined
+}
 
 //----------------------------------
 // component

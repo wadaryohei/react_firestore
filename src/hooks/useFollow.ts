@@ -4,7 +4,7 @@ import { OtherUsersData } from '../model/Datas/OtherUsersData'
 //----------------------------------
 // interface
 //----------------------------------
-export interface Follow {
+export interface useFollowProps {
   follow: (
     followerId: string | undefined,
     otherUser: OtherUsersData | undefined
@@ -18,7 +18,7 @@ export interface Follow {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFollow = (): Follow => {
+export const useFollow = (): useFollowProps => {
   /**
    * フォローをするときの処理
    */

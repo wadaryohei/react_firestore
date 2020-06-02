@@ -6,9 +6,9 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { StyledCardMedia } from '../../_shared/CardMedia/index'
-import { StyledTypography } from '../../_shared/Typography/index'
-import { StyledButton } from '../../_shared/Button/index'
+import { CardMedia } from '../../_shared/CardMedia/index'
+import { Typography } from '../../_shared/Typography/index'
+import { Button } from '../../_shared/Button/index'
 import { OtherUsersProps } from './types'
 import { Box } from '@material-ui/core'
 import { Margin } from '../../../const/Margin'
@@ -18,20 +18,16 @@ import { Margin } from '../../../const/Margin'
 //----------------------------------
 export const OtherUsers = (props: OtherUsersProps) => (
   <div className={props.className}>
-    <StyledCardMedia
+    <CardMedia
       imgSrc={props.otherUser?.photoURL}
       alt={props.otherUser?.photoURL}
     />
-    <StyledTypography variant={'p'}>
-      LoginName / {props.otherUser?.name}
-    </StyledTypography>
-    <StyledTypography variant={'p'}>
-      UserId / {props.otherUser?.id}
-    </StyledTypography>
+    <Typography variant={'p'}>LoginName / {props.otherUser?.name}</Typography>
+    <Typography variant={'p'}>UserId / {props.otherUser?.id}</Typography>
     <div>
       <Box my={Margin.m8}>
         {props.otherUser?.isFollow && (
-          <StyledButton
+          <Button
             size={'sm'}
             color={'border'}
             onClick={() =>
@@ -39,10 +35,10 @@ export const OtherUsers = (props: OtherUsersProps) => (
             }
           >
             フォロー中
-          </StyledButton>
+          </Button>
         )}
         {!props.otherUser?.isFollow && (
-          <StyledButton
+          <Button
             size={'sm'}
             color={'primary'}
             onClick={() =>
@@ -50,7 +46,7 @@ export const OtherUsers = (props: OtherUsersProps) => (
             }
           >
             フォローする
-          </StyledButton>
+          </Button>
         )}
       </Box>
     </div>

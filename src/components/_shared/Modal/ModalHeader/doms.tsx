@@ -7,7 +7,13 @@
  */
 import React from 'react'
 import { DialogTitle } from '@material-ui/core'
-import { ModalHeaderProps } from './types'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface ModalHeaderProps {
+  title: string
+}
 
 //----------------------------------
 // component
