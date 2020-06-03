@@ -5,11 +5,11 @@
  */
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { Home } from '../Home'
-import { SignIn } from '../SignIn'
-import { User } from '../User'
-import { SignOut } from '../SignOut'
 import { useRoute } from '../../hooks/useRoute'
+import { SignOut } from '../../containers/SignOutContainer'
+import { SignIn } from '../../containers/SignInContainer'
+import { Home } from '../../containers/HomeContainer'
+import { User } from '../../containers/UserContainer'
 
 //----------------------------------
 // props

@@ -5,12 +5,12 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { HeaderContainer } from './container'
+import { HeaderDoms } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Padding } from '../../../const/Padding'
 import { BreakPoints } from '../../../const/BreakPoints'
 
-export const Header = styled(HeaderContainer)`
+export const Header = styled(HeaderDoms)`
   position: fixed;
   top: 0;
   left: 0;
