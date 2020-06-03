@@ -5,9 +5,9 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { OtherUsersDoms } from './doms'
-import { Margin } from '../../../../const/Margin'
+import { UsersDoms } from './doms'
+import { Margin } from '../../../const/Margin'
 
-export const OtherUsers = styled(OtherUsersDoms)`
+export const Users = styled(UsersDoms)`
   margin-top: ${Margin.m40};
 `

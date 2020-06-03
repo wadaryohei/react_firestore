@@ -6,10 +6,10 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { useRoute } from '../../hooks/useRoute'
-import { SignOut } from '../../containers/SignOutContainer'
-import { SignIn } from '../../containers/SignInContainer'
-import { Home } from '../../containers/HomeContainer'
-import { User } from '../../containers/UserContainer'
+import { SignOutContainer } from '../../containers/SignOutContainer'
+import { SignInContainer } from '../../containers/SignInContainer'
+import { HomeContainer } from '../../containers/HomeContainer'
+import { UserContainer } from '../../containers/UserContainer'
 
 //----------------------------------
 // props
@@ -25,29 +25,31 @@ export const Routes = (props: RoutesProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
+  // ルーティングに関するロジックをCustom Hooksに集約
   useRoute(props.firebaseUser)
+
   //----------------------------------
   // render
   //----------------------------------
   return (
     <>
       {/** @Route SignIn */}
-      <Route exact path="/signin" component={SignIn} />
+      <Route exact path="/signin" component={SignInContainer} />
 
       {/** @Route SignOut */}
-      <Route exact path="/signout" component={SignOut} />
+      <Route exact path="/signout" component={SignOutContainer} />
 
       {/** @Route Home */}
       <Route
         exact
         path="/home"
-        render={() => <Home firebaseUser={props.firebaseUser} />}
+        render={() => <HomeContainer firebaseUser={props.firebaseUser} />}
       />
 
       {/** @Route User */}
       <Route
         path="/user/:id"
-        render={() => <User firebaseUser={props.firebaseUser} />}
+        render={() => <UserContainer firebaseUser={props.firebaseUser} />}
       />
     </>
   )

@@ -6,8 +6,8 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { Typography } from '../../Typography/index'
-import { useFormProps } from '../../../../hooks/useForm'
+import { Typography } from '../Typography/index'
+import { useFormProps } from '../../../hooks/useForm'
 
 //----------------------------------
 // props

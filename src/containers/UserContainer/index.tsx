@@ -12,7 +12,7 @@ import { SideBar } from '../../components/_shared/SideBar'
 import { Card } from '../../components/_shared/Card'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/_shared/Button'
-import { Profile } from '../../components/_shared/User/Profile'
+import { User } from '../../components/_shared/User'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useDelete } from '../../hooks/useDelete'
 import { useModal } from '../../hooks/useModal'
@@ -28,7 +28,7 @@ export interface UserProps {
 //----------------------------------
 // component
 //----------------------------------
-export const User = (props: UserProps) => {
+export const UserContainer = (props: UserProps) => {
   //----------------------------------
   //  hooks
   //----------------------------------
@@ -77,7 +77,7 @@ export const User = (props: UserProps) => {
 
             <Grid item xs={12} md={8}>
               <Card>
-                <Profile
+                <User
                   user={fetchProfile.fetchUserData()}
                   firebaseUser={props.firebaseUser}
                 />

@@ -6,20 +6,20 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { CardMedia } from '../../CardMedia/index'
-import { Typography } from '../../Typography/index'
-import { Button } from '../../Button/index'
+import { User } from '../User'
+import { Button } from '../Button'
 import { Box } from '@material-ui/core'
-import { Margin } from '../../../../const/Margin'
-import { useFollowProps } from '../../../../hooks/useFollow'
-import { OtherUsersData } from '../../../../model/Datas/OtherUsersData'
+import { Margin } from '../../../const/Margin'
+import { useFollowProps } from '../../../hooks/useFollow'
+import { UserData } from '../../../model/Datas/User/types'
+
 
 //----------------------------------
 // props
 //----------------------------------
-export interface OtherUsersProps {
+export interface UsersProps {
   firebaseUser: firebase.User | null
-  otherUser: OtherUsersData | undefined
+  user: UserData | undefined
   follow: useFollowProps
   userLoading: boolean
   className?: string
@@ -28,39 +28,33 @@ export interface OtherUsersProps {
 //----------------------------------
 // component
 //----------------------------------
-export const OtherUsersDoms = (props: OtherUsersProps) => (
+export const UsersDoms = (props: UsersProps) => (
   <div className={props.className}>
-    <CardMedia
-      imgSrc={props.otherUser?.photoURL}
-      alt={props.otherUser?.photoURL}
-    />
-    <Typography variant={'p'}>LoginName / {props.otherUser?.name}</Typography>
-    <Typography variant={'p'}>UserId / {props.otherUser?.id}</Typography>
-    <div>
+    <User user={props.user} firebaseUser={props.firebaseUser}>
       <Box my={Margin.m8}>
-        {props.otherUser?.isFollow && (
+        {props.user?.isFollow && (
           <Button
             size={'sm'}
             color={'border'}
             onClick={() =>
-              props.follow.unFollow(props.firebaseUser?.uid, props.otherUser)
+              props.follow.unFollow(props.firebaseUser?.uid, props.user)
             }
           >
             フォロー中
           </Button>
         )}
-        {!props.otherUser?.isFollow && (
+        {!props.user?.isFollow && (
           <Button
             size={'sm'}
             color={'primary'}
             onClick={() =>
-              props.follow.follow(props.firebaseUser?.uid, props.otherUser)
+              props.follow.follow(props.firebaseUser?.uid, props.user)
             }
           >
             フォローする
           </Button>
         )}
       </Box>
-    </div>
+    </User>
   </div>
 )

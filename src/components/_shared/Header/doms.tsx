@@ -7,7 +7,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Typography } from '../Typography'
 import { CardMedia } from '../CardMedia'
-import { UserData } from '../../../model/Datas/UserData'
+import { UserData } from '../../../model/Datas/User/types'
 
 //----------------------------------
 // props

@@ -1,6 +1,6 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { UserPostsData } from '../model/Datas/UserPostsData'
+import { UserPostsData } from '../model/Datas/User/types'
 
 //----------------------------------
 // interface

@@ -1,4 +1,4 @@
-import { UserData } from '../../../model/Datas/UserData'
+import { UserData } from '../../../model/Datas/User/types'
 import { UserPresenterViewData } from './UserPresenterViewData'
 
 //----------------------------------

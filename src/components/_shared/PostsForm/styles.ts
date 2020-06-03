@@ -6,9 +6,9 @@
  */
 import styled from 'styled-components'
 import { PostsFormDoms } from './doms'
-import { Colors } from '../../../../const/Colors'
-import { Margin } from '../../../../const/Margin'
-import { Padding } from '../../../../const/Padding'
+import { Colors } from '../../../const/Colors'
+import { Margin } from '../../../const/Margin'
+import { Padding } from '../../../const/Padding'
 
 export const PostsForm = styled(PostsFormDoms)`
   > input[type='text'] {

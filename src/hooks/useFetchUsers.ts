@@ -1,7 +1,7 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef } from 'react'
-import { UserData } from '../model/Datas/UserData'
-import { OtherUsersData } from '../model/Datas/OtherUsersData'
+import { UserData } from '../model/Datas/User/types'
+
 
 //----------------------------------
 // interface
@@ -13,7 +13,7 @@ export interface userFetchUsersProps {
     user: firebase.User | null
   ) => Promise<void | undefined>
   fetchUserData: () => UserData | undefined
-  fetchOtherUsersData: () => OtherUsersData[] | undefined
+  fetchUsersData: () => UserData[] | undefined
 }
 
 //----------------------------------
@@ -24,7 +24,7 @@ export const useFetchUsers = (
   user: firebase.User | null
 ): userFetchUsersProps => {
   const [_fetchUser, _setFetchUser] = useState<UserData>()
-  const [_fetchOtherUsers, _setOtherFetchUsers] = useState<OtherUsersData[]>([])
+  const [_fetchOtherUsers, _setOtherFetchUsers] = useState<UserData[]>([])
   const [_isUserLoading, _setIsUserLoading] = useState<boolean>(true)
   const mounted = useRef(true)
 
@@ -123,7 +123,7 @@ export const useFetchUsers = (
   /**
    * DBからログイン中のユーザー以外の取得したユーザーデータを返す
    */
-  const fetchOtherUsersData = (): OtherUsersData[] | undefined => {
+  const fetchUsersData = (): UserData[] | undefined => {
     return _fetchOtherUsers
   }
 
@@ -131,6 +131,6 @@ export const useFetchUsers = (
     _isUserLoading,
     fetchUser,
     fetchUserData,
-    fetchOtherUsersData
+    fetchUsersData
   }
 }

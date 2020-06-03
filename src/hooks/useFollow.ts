@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { OtherUsersData } from '../model/Datas/OtherUsersData'
+import { UserData } from '../model/Datas/User/types'
 
 //----------------------------------
 // interface
@@ -7,11 +7,11 @@ import { OtherUsersData } from '../model/Datas/OtherUsersData'
 export interface useFollowProps {
   follow: (
     followerId: string | undefined,
-    otherUser: OtherUsersData | undefined
+    otherUser: UserData | undefined
   ) => void
   unFollow: (
     followerId: string | undefined,
-    profle: OtherUsersData | undefined
+    profle: UserData | undefined
   ) => void
 }
 
@@ -24,9 +24,9 @@ export const useFollow = (): useFollowProps => {
    */
   const follow = (
     followerId: string | undefined,
-    otherUser: OtherUsersData | undefined
+    userId: UserData | undefined
   ): void => {
-    console.log(`Follow ${otherUser?.id}`)
+    console.log(`Follow ${userId?.id}`)
 
     const batch = firebase.firestore().batch()
 
@@ -34,7 +34,7 @@ export const useFollow = (): useFollowProps => {
       .firestore()
       .doc(`social/${followerId}`)
       .collection('followers')
-      .doc(otherUser?.id)
+      .doc(userId?.id)
 
     const followingRef = firebase
       .firestore()
@@ -46,8 +46,8 @@ export const useFollow = (): useFollowProps => {
       followersRef,
       {
         [followerId as string]: true,
-        name: otherUser?.name,
-        photoURL: otherUser?.photoURL,
+        name: userId?.name,
+        photoURL: userId?.photoURL,
         createdAt: firebase.firestore.Timestamp.now(),
         updatedAt: firebase.firestore.Timestamp.now()
       },
@@ -57,7 +57,7 @@ export const useFollow = (): useFollowProps => {
     batch.set(
       followingRef,
       {
-        [otherUser?.id as string]: true
+        [userId?.id as string]: true
       },
       { merge: true }
     )
@@ -70,9 +70,9 @@ export const useFollow = (): useFollowProps => {
    */
   const unFollow = (
     followerId: string | undefined,
-    profile: OtherUsersData | undefined
+    user: UserData | undefined
   ): void => {
-    console.log(`unFollow ${profile?.id}`)
+    console.log(`unFollow ${user?.id}`)
 
     const batch = firebase.firestore().batch()
 
@@ -80,7 +80,7 @@ export const useFollow = (): useFollowProps => {
       .firestore()
       .doc(`social/${followerId}`)
       .collection('followers')
-      .doc(profile?.id)
+      .doc(user?.id)
 
     const followingRef = firebase
       .firestore()
@@ -90,7 +90,7 @@ export const useFollow = (): useFollowProps => {
 
     batch.delete(followersRef)
     batch.update(followingRef, {
-      [profile?.id as string]: firebase.firestore.FieldValue.delete()
+      [user?.id as string]: firebase.firestore.FieldValue.delete()
     })
 
     batch.commit()

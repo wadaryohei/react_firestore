@@ -6,10 +6,10 @@
  *   - props => ()とすることにより、余計なロジックが入らないようにする
  */
 import React from 'react'
-import { Typography } from '../../Typography/index'
-import { Button } from '../../Button/index'
-import { useFormProps } from '../../../../hooks/useForm'
-import { UserPostsData } from '../../../../model/Datas/UserPostsData'
+import { Typography } from '../Typography/index'
+import { Button } from '../Button/index'
+import { useFormProps } from '../../../hooks/useForm'
+import { UserPostsData } from '../../../model/Datas/User/types'
 
 //----------------------------------
 // props

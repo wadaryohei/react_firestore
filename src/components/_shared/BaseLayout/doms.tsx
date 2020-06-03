@@ -7,7 +7,7 @@
  */
 import React from 'react'
 import { Header } from '../Header/index'
-import { UserData } from '../../../model/Datas/UserData'
+import { UserData } from '../../../model/Datas/User/types'
 
 //----------------------------------
 // props

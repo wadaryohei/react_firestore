@@ -16,7 +16,7 @@ import { SignOutWrapper } from './styles'
 //----------------------------------
 // component
 //----------------------------------
-export const SignOut = () => {
+export const SignOutContainer = () => {
   //----------------------------------
   // hooks
   //----------------------------------

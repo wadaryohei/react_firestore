@@ -6,7 +6,7 @@
  */
 import styled from 'styled-components'
 import { PostsDoms } from './doms'
-import { Margin } from '../../../../const/Margin'
+import { Margin } from '../../../const/Margin'
 
 export const Posts = styled(PostsDoms)`
   display: flex;

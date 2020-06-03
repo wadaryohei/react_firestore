@@ -1,6 +1,4 @@
-import { UserData } from '../../../model/Datas/UserData'
-import { UserPostsData } from '../../../model/Datas/UserPostsData'
-import { OtherUsersData } from '../../../model/Datas/OtherUsersData'
+import { UserData, UserPostsData } from '../../../model/Datas/User/types'
 import { HomePresenterViewData } from './HomePresenterViewData'
 
 //----------------------------------
@@ -19,8 +17,8 @@ export interface HomePresenter {
 //----------------------------------
 export const useHomePresenter = (
   _user: UserData | undefined,
-  _posts: UserPostsData[] | undefined,
-  _otherUsers: OtherUsersData[] | undefined
+  _users: UserData[] | undefined,
+  _posts: UserPostsData[] | undefined
 ): HomePresenter => {
   /**
    * viewData
@@ -29,7 +27,7 @@ export const useHomePresenter = (
     return {
       posts: posts(),
       user: user(),
-      otherUsers: otherUsers()
+      users: users()
     }
   }
 
@@ -60,14 +58,14 @@ export const useHomePresenter = (
   /**
    * ログイン中のユーザーデータ以外を返す
    */
-  const otherUsers = (): OtherUsersData[] | undefined => {
-    return _otherUsers?.map(
-      (_otherUser): OtherUsersData => {
+  const users = (): UserData[] | undefined => {
+    return _users?.map(
+      (_user): UserData => {
         return {
-          id: _otherUser?.id,
-          isFollow: _otherUser?.isFollow as boolean,
-          name: _otherUser?.name,
-          photoURL: _otherUser?.photoURL
+          id: _user?.id,
+          isFollow: _user?.isFollow as boolean,
+          name: _user?.name,
+          photoURL: _user?.photoURL
         }
       }
     )
@@ -84,8 +82,8 @@ export const useHomePresenter = (
    * 最後のUsers情報にはDividerを表示しない
    */
   const isUsersDividerShow = (index: number): boolean | undefined => {
-    if (_otherUsers !== undefined) {
-      return _otherUsers.length - 1 !== index
+    if (_users !== undefined) {
+      return _users.length - 1 !== index
     }
   }
 
@@ -93,14 +91,14 @@ export const useHomePresenter = (
    * ユーザーが誰もいないかどうかを判定
    */
   const isEmptyUsers = (): boolean => {
-    return _otherUsers === undefined || _otherUsers?.length === 0 ? true : false
+    return _users === undefined || _users?.length === 0 ? true : false
   }
 
   /**
    * ユーザーが存在しない場合に表示する文言
    */
   const emptyUsersMessage = (): string | undefined => {
-    if (_otherUsers === undefined || _otherUsers?.length === 0) {
+    if (_users === undefined || _users?.length === 0) {
       return '他にユーザーが存在しません'
     } else {
       return

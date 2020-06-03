@@ -10,14 +10,14 @@ import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { Grid, Divider, Box } from '@material-ui/core'
 import { useHomePresenter } from './HomePresenter/UseHomePresenter'
-import { Profile } from '../../components/_shared/User/Profile'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Card } from '../../components/_shared/Card'
 import { Typography } from '../../components/_shared/Typography'
-import { Posts } from '../../components/_shared/User/Posts'
-import { PostsForm } from '../../components/_shared/User/PostsForm'
-import { OtherUsers } from '../../components/_shared/User/Users'
+import { Posts } from '../../components/_shared/Posts'
+import { PostsForm } from '../../components/_shared/PostsForm'
+import { Users } from '../../components/_shared/Users'
 import { Margin } from '../../const/Margin'
+import { User } from '../../components/_shared/User/doms'
 
 //----------------------------------
 // props
@@ -29,7 +29,7 @@ export interface HomeProps {
 //----------------------------------
 // component
 //----------------------------------
-export const Home = (props: HomeProps) => {
+export const HomeContainer = (props: HomeProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
@@ -39,8 +39,8 @@ export const Home = (props: HomeProps) => {
   const fetchPosts = useFetchPosts('posts', props.firebaseUser)
   const presenter = useHomePresenter(
     fetchProfile.fetchUserData(),
-    fetchPosts.fetchUserPostData(),
-    fetchProfile.fetchOtherUsersData()
+    fetchProfile.fetchUsersData(),
+    fetchPosts.fetchUserPostData()
   )
 
   //----------------------------------
@@ -60,7 +60,7 @@ export const Home = (props: HomeProps) => {
                * @Section 自分のユーザー情報
                * ==========================================
                */}
-              <Profile
+              <User
                 user={presenter.viewDatas().user}
                 firebaseUser={props.firebaseUser}
               />
@@ -97,11 +97,11 @@ export const Home = (props: HomeProps) => {
                 <>
                   <Typography variant={'h1'}>Users</Typography>
 
-                  {presenter.viewDatas().otherUsers?.map((otherUser, index) => {
+                  {presenter.viewDatas().users?.map((user, index) => {
                     return (
                       <div key={index}>
-                        <OtherUsers
-                          otherUser={otherUser}
+                        <Users
+                          user={user}
                           follow={follow}
                           firebaseUser={props.firebaseUser}
                           userLoading={fetchProfile._isUserLoading}
