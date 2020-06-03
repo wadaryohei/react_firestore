@@ -5,10 +5,10 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { Padding } from '../../const/Padding'
-import { Colors } from '../../const/Colors'
+import { Padding } from '../../../const/Padding'
+import { Colors } from '../../../const/Colors'
 
-export const SignOutWrapper = styled('div')`
+export const AuthLayout = styled('div')`
   position: fixed;
   top: 0;
   left: 0;
@@ -19,11 +19,17 @@ export const SignOutWrapper = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
-  background-color: ${Colors.gray};
+  flex-direction: column;
 
-  > div {
-    max-width: 340px;
-    padding: ${Padding.p40} ${Padding.p24};
+  &.signIn {
+    background-color: ${Colors.white};
+  }
+
+  &.signOut {
+    background-color: ${Colors.gray};
+    > div {
+      max-width: 340px;
+      padding: ${Padding.p40} ${Padding.p24};
+    }
   }
 `

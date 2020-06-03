@@ -11,7 +11,7 @@ import { Margin } from '../../const/Margin'
 import { Card } from '../../components/_shared/Card'
 import { Typography } from '../../components/_shared/Typography'
 import { Button } from '../../components/_shared/Button'
-import { SignOutWrapper } from './styles'
+import { AuthLayout } from '../../components/_shared/AuthLayout'
 
 //----------------------------------
 // component
@@ -26,7 +26,7 @@ export const SignOutContainer = () => {
   // render
   //----------------------------------
   return (
-    <SignOutWrapper>
+    <AuthLayout className={'signOut'}>
       <Card>
         <Typography variant={'h1'}>React × Firebase</Typography>
         <Box my={Margin.m16}>
@@ -62,6 +62,6 @@ export const SignOutContainer = () => {
           </Box>
         </Box>
       </Card>
-    </SignOutWrapper>
+    </AuthLayout>
   )
 }

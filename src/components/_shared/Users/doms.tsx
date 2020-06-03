@@ -13,7 +13,6 @@ import { Margin } from '../../../const/Margin'
 import { useFollowProps } from '../../../hooks/useFollow'
 import { UserData } from '../../../model/Datas/User/types'
 
-
 //----------------------------------
 // props
 //----------------------------------

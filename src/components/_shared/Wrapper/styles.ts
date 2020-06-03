@@ -5,16 +5,10 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
+import { Padding } from '../../../const/Padding'
 
-export const SignInWrapper = styled('div')`
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
+export const Wrapper = styled('div')`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: ${Padding.p24};
 `

@@ -15,6 +15,9 @@ import { ButtonList } from '../ButtonList'
 import { Button } from '../Button'
 import { useModalProps } from '../../../hooks/useModal'
 
+//----------------------------------
+// props
+//----------------------------------
 export interface DeleteModalProps {
   modal: useModalProps
   onDeleteUser: () => void
