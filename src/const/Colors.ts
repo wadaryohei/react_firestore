@@ -1,9 +1,9 @@
 export enum Colors {
-  white = '#fff',
+  white = '#ffffff',
   black = '#272727',
-  primary = '#0A7BFF',
-  secondary = '#6C757D',
-  gray = '#39424C',
-  cancel = '#DC3545',
-  default = '#E6E6E6'
+  primary = '#0a7bff',
+  secondary = '#6c757d',
+  gray = '#39424c',
+  cancel = '#dc3545',
+  default = '#e6e6e6'
 }
