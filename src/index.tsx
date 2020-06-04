@@ -8,9 +8,8 @@ import { App } from './pages/_App'
 
 ReactDOM.render(
   <Router>
-    <GlobalStyle>
-      <CssBaseline />
-    </GlobalStyle>
+    <CssBaseline />
+    <GlobalStyle />
     <App />
   </Router>,
   document.getElementById('root')
