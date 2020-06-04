@@ -4,19 +4,21 @@
  * - ロジックが必要な場合は、ここに記述する
  */
 import React from 'react'
-import { CircularProgress, Grid, Container } from '@material-ui/core'
+import { CircularProgress, Grid, Container, Box } from '@material-ui/core'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Loading } from '../../components/_shared/Loading'
 import { DeleteModal } from '../../components/_shared/DeleteModal/doms'
 import { SideBar } from '../../components/_shared/SideBar'
 import { Card } from '../../components/_shared/Card'
-import { Link } from 'react-router-dom'
+import { Link } from '../../components/_shared/Link'
+// import { Link } from 'react-router-dom'
 import { Button } from '../../components/_shared/Button'
 import { User } from '../../components/_shared/User'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useDelete } from '../../hooks/useDelete'
 import { useModal } from '../../hooks/useModal'
 import { useUserPresenter } from './UserPresenter/UseUserPresenter'
+import { Margin } from '../../const/Margin'
 
 //----------------------------------
 // props
@@ -61,9 +63,11 @@ export const UserContainer = (props: UserProps) => {
             <Grid item xs={12} md={4}>
               <SideBar>
                 <Card>
-                  <Link to={'/signout'}>
-                    {props.firebaseUser?.displayName}からログアウト
-                  </Link>
+                  <Box mb={Margin.m16}>
+                    <Link to={'/signout'}>
+                      {props.firebaseUser?.displayName}からログアウト
+                    </Link>
+                  </Box>
                   <Button
                     size={'sm'}
                     color={'cancel'}
