@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
 import * as serviceWorker from './serviceWorker'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import { GlobalStyle } from './components/_shared/GlobalStyle/styles'
 import { App } from './pages/_App'
 
 ReactDOM.render(
   <Router>
-    <CssBaseline />
+    <GlobalStyle>
+      <CssBaseline />
+    </GlobalStyle>
     <App />
   </Router>,
   document.getElementById('root')
