@@ -1,6 +1,6 @@
 import { useLocation, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
-import { Routes } from '../const/Routes'
+import { Routing } from '../const/Routing'
 
 //----------------------------------
 // hooks
@@ -24,8 +24,8 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
     if (firebaseUser) {
       history.push(location.pathname)
       // ログインしている状態でSignInページに遷移した場合'/home'にリダイレクトする
-      if (location.pathname === Routes.signIn) {
-        history.push(Routes.home)
+      if (location.pathname === Routing.signIn) {
+        history.push(Routing.home)
       }
     }
   }

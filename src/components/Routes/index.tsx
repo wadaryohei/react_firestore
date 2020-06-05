@@ -10,6 +10,7 @@ import { SignOutContainer } from '../../containers/SignOutContainer'
 import { SignInContainer } from '../../containers/SignInContainer'
 import { HomeContainer } from '../../containers/HomeContainer'
 import { UserContainer } from '../../containers/UserContainer'
+import { Routing } from '../../const/Routing'
 
 //----------------------------------
 // props
@@ -34,21 +35,21 @@ export const Routes = (props: RoutesProps) => {
   return (
     <>
       {/** @Route SignIn */}
-      <Route exact path="/signin" component={SignInContainer} />
+      <Route exact path={Routing.signIn} component={SignInContainer} />
 
       {/** @Route SignOut */}
-      <Route exact path="/signout" component={SignOutContainer} />
+      <Route exact path={Routing.signOut} component={SignOutContainer} />
 
       {/** @Route Home */}
       <Route
         exact
-        path="/home"
+        path={Routing.home}
         render={() => <HomeContainer firebaseUser={props.firebaseUser} />}
       />
 
       {/** @Route User */}
       <Route
-        path="/user/:id"
+        path={Routing.userId}
         render={() => <UserContainer firebaseUser={props.firebaseUser} />}
       />
     </>
