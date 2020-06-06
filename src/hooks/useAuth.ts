@@ -5,7 +5,7 @@ import firebase from '../model/_shared/firebase'
 //----------------------------------
 export interface useAuthProps {
   signIn: () => Promise<void>
-  signOut: () => void
+  signOut: () => Promise<void>
 }
 
 //----------------------------------
