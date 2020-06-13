@@ -30,7 +30,7 @@ export const User = (props: UserProps) => (
   <>
     <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
     <Typography variant={'p'}>LoginName / {props.user?.name}</Typography>
-    <Typography variant={'p'}>UserId / {props.firebaseUser?.uid}</Typography>
+    <Typography variant={'p'}>UserId / {props.user?.id}</Typography>
     {props.children}
   </>
 )

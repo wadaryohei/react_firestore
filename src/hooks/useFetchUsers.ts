@@ -24,7 +24,7 @@ export const useFetchUsers = (
   user: firebase.User | null
 ): userFetchUsersProps => {
   const [_fetchUser, _setFetchUser] = useState<UserData>()
-  const [_fetchOtherUsers, _setOtherFetchUsers] = useState<UserData[]>([])
+  const [_fetchUsers, _setFetchUsers] = useState<UserData[]>([])
   const [_isUserLoading, _setIsUserLoading] = useState<boolean>(true)
   const mounted = useRef(true)
 
@@ -84,7 +84,7 @@ export const useFetchUsers = (
         })
         const datas = await Promise.all(_datas)
         if (mounted.current) {
-          _setOtherFetchUsers([...datas])
+          _setFetchUsers([...datas])
           _setIsUserLoading(false)
         }
       })
@@ -124,7 +124,7 @@ export const useFetchUsers = (
    * DBからログイン中のユーザー以外の取得したユーザーデータを返す
    */
   const fetchUsersData = (): UserData[] | undefined => {
-    return _fetchOtherUsers
+    return _fetchUsers
   }
 
   return {
