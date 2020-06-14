@@ -51,6 +51,8 @@ export const useAuthenticate = (): useAuthenticateProps => {
           {
             name: user?.displayName,
             photoURL: user?.photoURL,
+            followerCount: 0,
+            followingCount: 0,
             createdAt: firebase.firestore.Timestamp.now(),
             updatedAt: firebase.firestore.Timestamp.now()
           },

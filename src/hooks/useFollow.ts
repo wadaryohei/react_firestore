@@ -30,6 +30,8 @@ export const useFollow = (): useFollowProps => {
 
     const batch = firebase.firestore().batch()
 
+    callFollowCount(userId?.id, followerId)
+
     const followersRef = firebase
       .firestore()
       .doc(`social/${followerId}`)
@@ -76,6 +78,8 @@ export const useFollow = (): useFollowProps => {
 
     const batch = firebase.firestore().batch()
 
+    callUnFollowCount(user?.id, followerId)
+
     const followersRef = firebase
       .firestore()
       .doc(`social/${followerId}`)
@@ -94,6 +98,46 @@ export const useFollow = (): useFollowProps => {
     })
 
     batch.commit()
+  }
+
+  /**
+   * ユーザーのフォロー時のフォロー・フォロワー数をカウント
+   * @function userFollowCount functionsからフォロー・フォロワー数をカウントする
+   */
+  const callFollowCount = async (
+    followeredId: string | undefined,
+    followingId: string | undefined
+  ): Promise<void> => {
+    // cloud functionsのfunctionをアプリ側からcall
+    const userFollowCountFunc = firebase
+      .functions()
+      .httpsCallable('userFollowCount')
+    await userFollowCountFunc({
+      followeredId: followeredId,
+      followingId: followingId
+    }).catch(e => {
+      console.log(e)
+    })
+  }
+
+  /**
+   * ユーザーのアンフォロー時のフォロー・フォロワー数をカウント
+   * @function userUnFollowCount functionsからフォロー・フォロワー数をカウントする
+   */
+  const callUnFollowCount = async (
+    followeredId: string | undefined,
+    followingId: string | undefined
+  ): Promise<void> => {
+    // cloud functionsのfunctionをアプリ側からcall
+    const userUnFollowCountFunc = firebase
+      .functions()
+      .httpsCallable('userUnFollowCount')
+    await userUnFollowCountFunc({
+      followeredId: followeredId,
+      followingId: followingId
+    }).catch(e => {
+      console.log(e)
+    })
   }
 
   return { follow, unFollow }

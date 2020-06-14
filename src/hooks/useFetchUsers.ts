@@ -2,16 +2,11 @@ import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef } from 'react'
 import { UserData } from '../model/Datas/User/types'
 
-
 //----------------------------------
 // interface
 //----------------------------------
 export interface userFetchUsersProps {
   _isUserLoading: boolean
-  fetchUser: (
-    collection: string,
-    user: firebase.User | null
-  ) => Promise<void | undefined>
   fetchUserData: () => UserData | undefined
   fetchUsersData: () => UserData[] | undefined
 }
@@ -33,15 +28,16 @@ export const useFetchUsers = (
   //----------------------------------
   useEffect(() => {
     const init = async () => {
-      // ユーザー情報を取得
-      await fetchUser(collection, user)
+      // 自分のユーザー情報をonSnapShotでリアルタイム取得
+      const userUnsubscribe = await userSnapShot(collection, user)
 
-      // ユーザー情報をonSnapShotでリアルタイム取得
-      const unsubscribe = await usersSnapShot()
+      // 自分以外のユーザー情報をonSnapShotでリアルタイム取得
+      const usersUnsubscribe = await usersSnapShot(collection, user)
 
       // コンポーネントのアンマウント時にはonSnapShotをUnsubscribeする
       return () => {
-        unsubscribe()
+        userUnsubscribe()
+        usersUnsubscribe()
       }
     }
     init()
@@ -55,7 +51,10 @@ export const useFetchUsers = (
   /**
    * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
    */
-  const usersSnapShot = async (): Promise<() => void> => {
+  const usersSnapShot = async (
+    collection: string,
+    user: firebase.User | null
+  ): Promise<() => void> => {
     // usersコレクションを全件取得
     const usersRef = await firebase
       .firestore()
@@ -93,24 +92,26 @@ export const useFetchUsers = (
   /**
    * fireStoreからユーザーを取得する
    */
-  const fetchUser = async (
+  const userSnapShot = async (
     collection: string,
     user: firebase.User | null
-  ): Promise<void | undefined> => {
-    const snapShot = firebase
+  ): Promise<() => void> => {
+    return firebase
       .firestore()
       .collection(collection)
       .doc(user?.uid)
-
-    const docs = await snapShot.get()
-    const _datas = {
-      id: docs.id,
-      name: docs.data()?.name as string,
-      photoURL: docs.data()?.photoURL as string
-    }
-    if (mounted.current) {
-      _setFetchUser(_datas)
-    }
+      .onSnapshot(snap => {
+        const _datas = {
+          id: snap.id,
+          name: snap.data()?.name as string,
+          followerCount: snap.data()?.followerCount as number,
+          followingCount: snap.data()?.followingCount as number,
+          photoURL: snap.data()?.photoURL as string
+        }
+        if (mounted.current) {
+          _setFetchUser(_datas)
+        }
+      })
   }
 
   /**
@@ -129,7 +130,6 @@ export const useFetchUsers = (
 
   return {
     _isUserLoading,
-    fetchUser,
     fetchUserData,
     fetchUsersData
   }
