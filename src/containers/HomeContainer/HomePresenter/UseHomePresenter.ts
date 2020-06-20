@@ -50,8 +50,8 @@ export const useHomePresenter = (
   const user = (): UserData => {
     return {
       id: _user?.id as string,
-      followerCount: followerCount() as number,
-      followingCount: followingCount() as number,
+      followerCount: followerCount(_user) as number,
+      followingCount: followingCount(_user) as number,
       name: _user?.name as string,
       photoURL: _user?.photoURL as string | undefined
     }
@@ -76,15 +76,15 @@ export const useHomePresenter = (
   /**
    * フォローが何人いるかどうか
    */
-  const followingCount = () => {
-    return _user?.followingCount === 0 ? 0 : _user?.followingCount
+  const followingCount = (users: UserData | undefined) => {
+    return users?.followingCount === 0 ? 0 : users?.followingCount
   }
 
   /**
    * フォロワーが何人いるかどうか
    */
-  const followerCount = () => {
-    return _user?.followerCount === 0 ? 0 : _user?.followerCount
+  const followerCount = (users: UserData | undefined) => {
+    return users?.followerCount === 0 ? 0 : users?.followerCount
   }
 
   /**
