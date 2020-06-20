@@ -35,11 +35,11 @@ export const HomeContainer = (props: HomeProps) => {
   //----------------------------------
   const follow = useFollow()
   const form = useForm(props.firebaseUser, 'posts')
-  const fetchProfile = useFetchUsers('users', props.firebaseUser)
+  const fetchUsers = useFetchUsers('users', props.firebaseUser)
   const fetchPosts = useFetchPosts('posts', props.firebaseUser)
   const presenter = useHomePresenter(
-    fetchProfile.fetchUserData(),
-    fetchProfile.fetchUsersData(),
+    fetchUsers.fetchUserData(),
+    fetchUsers.fetchUsersData(),
     fetchPosts.fetchUserPostData()
   )
 
@@ -51,7 +51,7 @@ export const HomeContainer = (props: HomeProps) => {
       firebaseUser={props.firebaseUser}
       user={presenter.viewDatas().user}
     >
-      {!fetchProfile._isUserLoading && (
+      {!fetchUsers._isUserLoading && (
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Card>
@@ -104,7 +104,7 @@ export const HomeContainer = (props: HomeProps) => {
                           user={user}
                           follow={follow}
                           firebaseUser={props.firebaseUser}
-                          userLoading={fetchProfile._isUserLoading}
+                          userLoading={fetchUsers._isUserLoading}
                         />
                         {presenter.isUsersDividerShow(index) && (
                           <Box my={Margin.m24}>
