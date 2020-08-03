@@ -27,7 +27,7 @@ export const HeaderDoms = (props: HeaderProps) => {
   return (
     <header className={props.className}>
       <div>
-        <Typography variant={'h1'} color={'white'}>
+        <Typography component={'h1'} color={'white'}>
           React × Firebase
         </Typography>
         <Link to={`/user/${props.user?.id}`}>

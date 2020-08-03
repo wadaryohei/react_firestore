@@ -27,6 +27,7 @@ export const Header = styled(HeaderDoms)`
     align-items: center;
     max-width: 960px;
     margin: 0 auto;
+    height: 72px;
 
     @media (max-width: ${BreakPoints.md}) {
       padding: 0 ${Padding.p24};
