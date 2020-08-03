@@ -7,7 +7,7 @@ import { PostType } from '../../../model/Post/type'
 //----------------------------------
 // props
 //----------------------------------
-export interface PostsFormProps {
+export interface PostProps {
   post: PostType
   form: useFormType
   user: firebase.User | null
@@ -17,7 +17,7 @@ export interface PostsFormProps {
 //----------------------------------
 // component
 //----------------------------------
-export const PostsComponent = (props: PostsFormProps) => (
+export const PostComponent = (props: PostProps) => (
   <div className={props.className}>
     <div>
       <img src={props.post?.userImages} alt={props.post?.userImages} width={80} height={80} />

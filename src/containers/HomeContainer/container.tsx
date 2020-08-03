@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box } from '@material-ui/core'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
-import { Posts } from '../../components/_shared/Posts'
-import { PostsForm } from '../../components/_shared/PostsForm'
+import { Post } from '../../components/_shared/Post'
+import { PostForm } from '../../components/_shared/PostForm'
 import { User } from '../../components/_shared/User/doms'
 import { SideBar } from '../../components/_shared/SideBar'
 import { Main } from '../../components/_shared/Main'
@@ -54,11 +54,11 @@ export const HomeContainer = (props: HomeProps) => {
           <Box className={'l-timeline-inner'}>
             {presenter.viewDatas().posts?.map((post, index) => (
               <Box key={index} mb={Margin.m32}>
-                <Posts post={post} form={form} user={props.firebaseUser} className={'l-timeline-post'} />
+                <Post post={post} form={form} user={props.firebaseUser} className={'l-timeline-post'} />
               </Box>
             ))}
             <Box py={Padding.p16}>
-              <PostsForm form={form} />
+              <PostForm form={form} />
             </Box>
           </Box>
         </Main>

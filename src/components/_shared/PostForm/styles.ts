@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { PostsFormComponent } from './doms'
+import { PostFormComponent } from './doms'
 import { Colors } from '../../../const/Colors'
 
-export const PostsFormStyle = styled(PostsFormComponent)`
+export const PostFormStyle = styled(PostFormComponent)`
   width: 100%;
 
   .formInner {

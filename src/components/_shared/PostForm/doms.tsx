@@ -5,7 +5,7 @@ import { useFormType } from '../../../hooks/useForm'
 //----------------------------------
 // props
 //----------------------------------
-export interface PostsFormProps {
+export interface PostFormProps {
   form: useFormType
   className?: string
 }
@@ -13,7 +13,7 @@ export interface PostsFormProps {
 //----------------------------------
 // component
 //----------------------------------
-export const PostsFormComponent = (props: PostsFormProps) => (
+export const PostFormComponent = (props: PostFormProps) => (
   <form className={props.className} onSubmit={e => props.form.onSubmit(e)}>
     <div className={'formInner'}>
       <input

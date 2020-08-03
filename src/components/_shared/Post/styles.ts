@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { PostsComponent } from './doms'
+import { PostComponent } from './doms'
 import { Margin } from '../../../const/Margin'
 
-export const PostsStyle = styled(PostsComponent)`
+export const PostStyle = styled(PostComponent)`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
