@@ -1,4 +1,5 @@
-import { UserData, UserPostsData } from '../../../model/Datas/User/types'
+import { UserData } from '../../../model/Datas/User/types'
+import { PostsData } from '../../../model/Datas/Post/type'
 import { HomePresenterViewData } from './HomePresenterViewData'
 
 //----------------------------------
@@ -18,7 +19,7 @@ export interface HomePresenter {
 export const useHomePresenter = (
   _user: UserData | undefined,
   _users: UserData[] | undefined,
-  _posts: UserPostsData[] | undefined
+  _posts: PostsData[] | undefined
 ): HomePresenter => {
   /**
    * viewData
@@ -34,12 +35,15 @@ export const useHomePresenter = (
   /**
    * ポストデータを返す
    */
-  const posts = (): UserPostsData[] | undefined => {
-    return _posts?.map((post: UserPostsData) => {
+  const posts = (): PostsData[] | undefined => {
+    return _posts?.map((post: PostsData) => {
       return {
         docId: post?.docId,
         authorId: post?.authorId,
-        postBody: post?.postBody
+        userName: post?.userName,
+        userImages: post?.userImages,
+        postBody: post?.postBody,
+        createdAt: post?.createdAt,
       }
     })
   }
