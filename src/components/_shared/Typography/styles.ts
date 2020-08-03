@@ -16,6 +16,7 @@ export const Typography = styled(TypographyDoms)`
 
   &.h1 {
     font-size: ${FontSize.h1};
+    font-weight: bold;
   }
 
   &.h2 {
