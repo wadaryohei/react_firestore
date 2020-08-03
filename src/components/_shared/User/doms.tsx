@@ -1,5 +1,6 @@
 import React from 'react'
-import { Typography } from '../Typography/index'
+import { Typography } from '../Typography'
+import { Image } from '../Image'
 import { UserType } from '../../../model/User/types'
 
 //----------------------------------
@@ -17,7 +18,7 @@ export interface UserProps {
 //----------------------------------
 export const User = (props: UserProps) => (
   <>
-    <img src={props.user?.photoURL} alt={props.user?.photoURL} />
+    <Image src={props.user?.photoURL} alt={props.user?.photoURL} width={120} height={120} />
     <Typography component={'p'}>{props.user?.name}</Typography>
 
     <div>

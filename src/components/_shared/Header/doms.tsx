@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Typography } from '../Typography'
+import { Image } from '../Image'
 import { UserType } from '../../../model/User/types'
 
 //----------------------------------
@@ -22,7 +23,7 @@ export const HeaderComponent = (props: HeaderProps) => {
           React × Firebase
         </Typography>
         <Link to={`/user/${props.user?.id}`}>
-          <img src={props.user?.photoURL} alt={props.user?.photoURL} />
+          <Image src={props.user?.photoURL} alt={props.user?.photoURL} width={80} height={80} />
         </Link>
       </div>
     </header>
