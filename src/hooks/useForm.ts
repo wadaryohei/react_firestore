@@ -104,6 +104,8 @@ export const useForm = (
     }
     _setText('')
     _setDisabled(false)
+
+    window.scroll(0, 0)
   }
 
   /**
