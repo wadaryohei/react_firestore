@@ -7,14 +7,20 @@
 import styled from 'styled-components'
 import { PostsFormDoms } from './doms'
 import { Colors } from '../../../const/Colors'
-import { Margin } from '../../../const/Margin'
-import { Padding } from '../../../const/Padding'
 
 export const PostsForm = styled(PostsFormDoms)`
-  > input[type='text'] {
-    padding: ${Padding.p8};
-    border-radius: 4px;
-    border: solid 2px ${Colors.default};
+  width: 100%;
+
+  .formInner {
+    display: flex;
+    width: 100%;
+  }
+
+  input[type='text'] {
+    padding: 14px;
+    border-radius: 4px 0 0 4px;
+    border: none;
+    width: 90%;
     background-color: ${Colors.default};
 
     &:focus {
@@ -22,12 +28,12 @@ export const PostsForm = styled(PostsFormDoms)`
     }
   }
 
-  > input[type='submit'] {
-    padding: ${Padding.p8} ${Padding.p16};
-    margin-left: ${Margin.m8};
+  input[type='submit'] {
+    padding: 14px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0 4px 4px 0;
     outline: none;
+    width: 10%;
     color: ${Colors.white};
     background-color: ${Colors.primary};
     cursor: pointer;
