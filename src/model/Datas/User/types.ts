@@ -6,9 +6,3 @@ export interface UserData {
   name: string | undefined
   photoURL: string | undefined
 }
-
-export interface UserPostsData {
-  docId: string
-  authorId: string
-  postBody: string
-}
