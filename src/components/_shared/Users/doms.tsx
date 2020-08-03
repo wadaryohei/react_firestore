@@ -30,7 +30,7 @@ export interface UsersProps {
 export const UsersDoms = (props: UsersProps) => (
   <div className={props.className}>
     <User user={props.user} firebaseUser={props.firebaseUser}>
-      <Box my={Margin.m8}>
+      {/* <Box my={Margin.m8}>
         {props.user?.isFollow && (
           <Button
             size={'sm'}
@@ -53,7 +53,7 @@ export const UsersDoms = (props: UsersProps) => (
             フォローする
           </Button>
         )}
-      </Box>
+      </Box> */}
     </User>
   </div>
 )

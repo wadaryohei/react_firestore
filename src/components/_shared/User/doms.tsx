@@ -29,18 +29,20 @@ export const User = (props: UserProps) => (
   //----------------------------------
   <>
     <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
-    <Typography variant={'p'}>LoginName / {props.user?.name}</Typography>
-    <Typography variant={'p'}>UserId / {props.user?.id}</Typography>
-    {props.user?.followingCount !== undefined && (
-      <Typography variant={'p'}>
-        フォロー / {props.user?.followingCount}
-      </Typography>
-    )}
-    {props.user?.followerCount !== undefined && (
-      <Typography variant={'p'}>
-        フォロワー / {props.user?.followerCount}
-      </Typography>
-    )}
+    <Typography component={'p'}>{props.user?.name}</Typography>
+
+    <div>
+      {props.user?.followingCount !== undefined && (
+        <Typography component={'p'}>
+          フォロー / {props.user?.followingCount}
+        </Typography>
+      )}
+      {props.user?.followerCount !== undefined && (
+        <Typography component={'p'}>
+          フォロワー / {props.user?.followerCount}
+        </Typography>
+      )}
+    </div>
     {props.children}
   </>
 )
