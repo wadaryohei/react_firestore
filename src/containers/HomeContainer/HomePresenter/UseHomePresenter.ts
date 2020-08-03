@@ -7,6 +7,7 @@ import { HomePresenterViewData } from './HomePresenterViewData'
 //----------------------------------
 export interface HomePresenter {
   viewDatas: () => HomePresenterViewData
+  isExsistsPosts: () => boolean
 }
 
 //----------------------------------
@@ -53,6 +54,13 @@ export const useHomePresenter = (
     }
   }
 
+  /**
+   * 取得したポストデータが存在するかどうか
+   */
+  const isExsistsPosts = (): boolean => {
+    return _posts !== undefined && _posts.length !== 0 ? true : false
+  }
+
   // /**
   //  * フォローが何人いるかどうか
   //  */
@@ -86,6 +94,7 @@ export const useHomePresenter = (
   // }
 
   return {
-    viewDatas
+    viewDatas,
+    isExsistsPosts
   }
 }

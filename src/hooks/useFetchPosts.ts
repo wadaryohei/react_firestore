@@ -34,7 +34,6 @@ export const useFetchPosts = (
           // PostsデータのauthorIdを元にUsersデータを取ってくる
           const _usersdoc = (await firebase.firestore().collection('users').doc(doc.data().authorId).get())
 
-          console.log(_usersdoc)
           return {
             docId: doc.id,
             authorId: _usersdoc.id as string,

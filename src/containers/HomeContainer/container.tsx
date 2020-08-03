@@ -4,6 +4,7 @@ import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Post } from '../../components/_shared/Post'
 import { PostForm } from '../../components/_shared/PostForm'
 import { User } from '../../components/_shared/User/doms'
+import { Typography } from '../../components/_shared/Typography'
 import { SideBar } from '../../components/_shared/SideBar'
 import { Main } from '../../components/_shared/Main'
 import { Margin } from '../../const/Margin'
@@ -12,6 +13,7 @@ import { useForm } from '../../hooks/useForm'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { useHomePresenter } from './HomePresenter/UseHomePresenter'
+import { PostType } from '../../model/Post/type'
 
 //----------------------------------
 // props
@@ -52,11 +54,15 @@ export const HomeContainer = (props: HomeProps) => {
 
         <Main className={'l-timeline'}>
           <Box className={'l-timeline-inner'}>
-            {presenter.viewDatas().posts?.map((post, index) => (
+          { !presenter.isExsistsPosts() && <Typography component={'p'}>投稿がまだありません</Typography> }
+          {
+            presenter.isExsistsPosts() &&
+            presenter.viewDatas().posts?.map((post: PostType, index: number) => (
               <Box key={index} mb={Margin.m32}>
                 <Post post={post} form={form} user={props.firebaseUser} className={'l-timeline-post'} />
               </Box>
-            ))}
+            ))
+          }
             <Box py={Padding.p16}>
               <PostForm form={form} />
             </Box>
