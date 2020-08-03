@@ -5,8 +5,8 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import styled from 'styled-components'
-import { SideBarDoms } from './doms'
+import { SideBarComponent } from './doms'
 
-export const SideBar = styled(SideBarDoms)`
+export const SideBarStyle = styled(SideBarComponent)`
   margin: 0;
 `
