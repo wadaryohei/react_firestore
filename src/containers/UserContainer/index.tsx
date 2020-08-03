@@ -1,24 +1,18 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
 import { CircularProgress, Grid, Container, Box } from '@material-ui/core'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Loading } from '../../components/_shared/Loading'
-import { DeleteModal } from '../../components/_shared/DeleteModal/doms'
+import { DeleteModal } from '../../components/_shared/DeleteModal'
 import { SideBar } from '../../components/_shared/SideBar'
 import { Card } from '../../components/_shared/Card'
 import { Link } from '../../components/_shared/Link'
-// import { Link } from 'react-router-dom'
 import { Button } from '../../components/_shared/Button'
 import { User } from '../../components/_shared/User'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useDelete } from '../../hooks/useDelete'
 import { useModal } from '../../hooks/useModal'
-import { useUserPresenter } from './UserPresenter/UseUserPresenter'
 import { Margin } from '../../const/Margin'
+import { useUserPresenter } from './UserPresenter/UseUserPresenter'
 
 //----------------------------------
 // props
@@ -39,9 +33,6 @@ export const UserContainer = (props: UserProps) => {
   const modal = useModal()
   const presenter = useUserPresenter(fetchProfile.fetchUserData())
 
-  //----------------------------------
-  // render
-  //----------------------------------
   return (
     <BaseLayout
       firebaseUser={props.firebaseUser}

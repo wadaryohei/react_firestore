@@ -1,8 +1,3 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { Typography } from '../../components/_shared/Typography'
@@ -17,9 +12,7 @@ export const SignInContainer = () => {
   // hooks
   //----------------------------------
   const { signIn } = useAuth()
-  //----------------------------------
-  // render
-  //----------------------------------
+
   return (
     <AuthLayout className={'signIn'}>
       <Typography component={'h1'}>Firebase × React</Typography>

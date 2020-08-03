@@ -4,7 +4,6 @@ import { Margin } from '../../const/Margin'
 import { Colors } from '../../const/Colors'
 import { Padding } from '../../const/Padding'
 
-
 export const HomeContainerStyle = styled(HomeContainer)`
 
   .l-wrapper {

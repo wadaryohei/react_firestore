@@ -3,9 +3,9 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useAuthenticateProps {
+export interface useAuthenticateType {
   firebaseUser: firebase.User | null
   loading: boolean
 }
@@ -13,7 +13,7 @@ export interface useAuthenticateProps {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useAuthenticate = (): useAuthenticateProps => {
+export const useAuthenticate = (): useAuthenticateType => {
   const [firebaseUser, setFirebaseUser] = useState<firebase.User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const mounted = useRef(true)

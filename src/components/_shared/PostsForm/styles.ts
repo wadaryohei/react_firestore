@@ -1,14 +1,8 @@
-/**
- * Style層
- * - CSSを記述する
- * - styledの引数でコンポーネントを受け取る
- * - CSSのネストが深くなったらコンポーネント分割を検討する
- */
 import styled from 'styled-components'
-import { PostsFormDoms } from './doms'
+import { PostsFormComponent } from './doms'
 import { Colors } from '../../../const/Colors'
 
-export const PostsForm = styled(PostsFormDoms)`
+export const PostsFormStyle = styled(PostsFormComponent)`
   width: 100%;
 
   .formInner {

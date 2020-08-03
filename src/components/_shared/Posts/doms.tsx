@@ -1,15 +1,15 @@
 import React from 'react'
 import { Typography } from '../Typography/index'
 import { Button } from '../Button/index'
-import { useFormProps } from '../../../hooks/useForm'
-import { PostsData } from '../../../model/Datas/Post/type'
+import { useFormType } from '../../../hooks/useForm'
+import { PostType } from '../../../model/Post/type'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface PostsFormProps {
-  post: PostsData
-  form: useFormProps
+  post: PostType
+  form: useFormType
   user: firebase.User | null
   className?: string
 }
@@ -17,7 +17,7 @@ export interface PostsFormProps {
 //----------------------------------
 // component
 //----------------------------------
-export const PostsDoms = (props: PostsFormProps) => (
+export const PostsComponent = (props: PostsFormProps) => (
   <div className={props.className}>
     <div>
       <img src={props.post?.userImages} alt={props.post?.userImages} width={80} height={80} />

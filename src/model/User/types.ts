@@ -1,6 +1,5 @@
-export interface UserData {
+export interface UserType {
   id: string
-  isFollow?: boolean
   followerCount?: number
   followingCount?: number
   name: string | undefined

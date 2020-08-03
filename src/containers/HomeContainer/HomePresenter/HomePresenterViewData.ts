@@ -1,8 +1,7 @@
-import { UserData } from '../../../model/Datas/User/types'
-import { PostsData } from '../../../model/Datas/Post/type';
+import { UserType } from '../../../model/User/types'
+import { PostType } from '../../../model/Post/type'
 
 export interface HomePresenterViewData {
-  user: UserData | undefined
-  users: UserData[] | undefined
-  posts: PostsData[] | undefined
+  user: UserType | undefined
+  posts: PostType[] | undefined
 }

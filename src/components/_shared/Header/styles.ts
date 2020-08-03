@@ -1,16 +1,10 @@
-/**
- * Style層
- * - CSSを記述する
- * - styledの引数でコンポーネントを受け取る
- * - CSSのネストが深くなったらコンポーネント分割を検討する
- */
 import styled from 'styled-components'
-import { HeaderDoms } from './doms'
+import { HeaderComponent } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Padding } from '../../../const/Padding'
 import { BreakPoints } from '../../../const/BreakPoints'
 
-export const Header = styled(HeaderDoms)`
+export const HeaderStyle = styled(HeaderComponent)`
   position: fixed;
   top: 0;
   left: 0;

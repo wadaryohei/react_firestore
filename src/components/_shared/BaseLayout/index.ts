@@ -1,1 +1,1 @@
-export { BaseLayout } from './styles'
+export { BaseLayoutStyle as BaseLayout } from './styles'

@@ -1,14 +1,8 @@
-/**
- * Style層
- * - CSSを記述する
- * - styledの引数でコンポーネントを受け取る
- * - CSSのネストが深くなったらコンポーネント分割を検討する
- */
 import styled from 'styled-components'
-import { PostsDoms } from './doms'
+import { PostsComponent } from './doms'
 import { Margin } from '../../../const/Margin'
 
-export const Posts = styled(PostsDoms)`
+export const PostsStyle = styled(PostsComponent)`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;

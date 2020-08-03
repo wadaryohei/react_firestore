@@ -2,9 +2,9 @@ import firebase from '../model/_shared/firebase'
 import { useState } from 'react'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useDeleteProps {
+export interface useDeleteType {
   onDeleteUser: () => Promise<void>
   deleteLoading: () => boolean
 }
@@ -12,7 +12,7 @@ export interface useDeleteProps {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useDelete = (): useDeleteProps => {
+export const useDelete = (): useDeleteType => {
   const [_deleteLoading, _setDeleteLoading] = useState<boolean>(false)
 
   /**

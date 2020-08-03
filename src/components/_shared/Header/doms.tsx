@@ -1,29 +1,20 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Typography } from '../Typography'
-import { CardMedia } from '../CardMedia'
-import { UserData } from '../../../model/Datas/User/types'
+import { UserType } from '../../../model/User/types'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface HeaderProps {
-  user: UserData | undefined
+  user: UserType | undefined
   className?: string
 }
 
 //----------------------------------
 // component
 //----------------------------------
-export const HeaderDoms = (props: HeaderProps) => {
-  //----------------------------------
-  // render
-  //----------------------------------
+export const HeaderComponent = (props: HeaderProps) => {
   return (
     <header className={props.className}>
       <div>
@@ -31,7 +22,7 @@ export const HeaderDoms = (props: HeaderProps) => {
           React × Firebase
         </Typography>
         <Link to={`/user/${props.user?.id}`}>
-          <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
+          <img src={props.user?.photoURL} alt={props.user?.photoURL} />
         </Link>
       </div>
     </header>

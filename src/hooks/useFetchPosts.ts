@@ -1,13 +1,13 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import dayjs from 'dayjs'
-import { PostsData } from '../model/Datas/Post/type'
+import { PostType } from '../model/Post/type'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useFetchPostsProps {
-  fetchPostDatas: () => PostsData[] | undefined
+export interface useFetchPostsType {
+  fetchPostDatas: () => PostType[] | undefined
 }
 
 //----------------------------------
@@ -16,8 +16,8 @@ export interface useFetchPostsProps {
 export const useFetchPosts = (
   collection: string,
   user: firebase.User | null
-): useFetchPostsProps => {
-  const [_fetchPostDatas, _setFetchPostDatas] = useState<PostsData[]>([])
+): useFetchPostsType => {
+  const [_fetchPostDatas, _setFetchPostDatas] = useState<PostType[]>([])
   const mounted = useRef(true)
 
   /**
@@ -53,7 +53,7 @@ export const useFetchPosts = (
   /**
    * DBから取得した全ユーザーのポストデータを返す
    */
-  const fetchPostDatas = (): PostsData[] | undefined => {
+  const fetchPostDatas = (): PostType[] | undefined => {
     return _fetchPostDatas
   }
 

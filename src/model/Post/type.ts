@@ -1,4 +1,4 @@
-export interface PostsData {
+export interface PostType {
   docId: string
   authorId: string
   userName: string

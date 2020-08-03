@@ -1,1 +1,1 @@
-export { AuthLayout } from './styles'
+export { AuthLayoutStyle as AuthLayout } from './styles'

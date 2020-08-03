@@ -1,25 +1,18 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
 import { User } from '../User'
 import { Button } from '../Button'
 import { Box } from '@material-ui/core'
 import { Margin } from '../../../const/Margin'
-import { useFollowProps } from '../../../hooks/useFollow'
-import { UserData } from '../../../model/Datas/User/types'
+import { useFollowType } from '../../../hooks/useFollow'
+import { UserType } from '../../../model/User/types'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface UsersProps {
   firebaseUser: firebase.User | null
-  user: UserData | undefined
-  follow: useFollowProps
+  user: UserType | undefined
+  follow: useFollowType
   userLoading: boolean
   className?: string
 }
@@ -27,7 +20,7 @@ export interface UsersProps {
 //----------------------------------
 // component
 //----------------------------------
-export const UsersDoms = (props: UsersProps) => (
+export const UsersComponent = (props: UsersProps) => (
   <div className={props.className}>
     <User user={props.user} firebaseUser={props.firebaseUser}>
       {/* <Box my={Margin.m8}>

@@ -1,5 +1,5 @@
-import { UserData } from '../../../model/Datas/User/types'
+import { UserType } from "../../../model/User/types";
 
 export interface UserPresenterViewData {
-  user: UserData | undefined
+  user: UserType | undefined
 }

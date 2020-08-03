@@ -21,7 +21,7 @@ export interface ModalProps {
 //----------------------------------
 // component
 //----------------------------------
-export const ModalDoms = (props: ModalProps) => (
+export const ModalComponent = (props: ModalProps) => (
   //----------------------------------
   // render
   //----------------------------------

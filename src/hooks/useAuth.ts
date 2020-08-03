@@ -1,9 +1,9 @@
 import firebase from '../model/_shared/firebase'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useAuthProps {
+export interface useAuthType {
   signIn: () => Promise<void>
   signOut: () => Promise<void>
 }
@@ -11,7 +11,7 @@ export interface useAuthProps {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useAuth = (): useAuthProps => {
+export const useAuth = (): useAuthType => {
   /**
    * ログイン処理
    */

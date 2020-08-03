@@ -1,1 +1,1 @@
-export { ButtonList } from './styles'
+export { ButtonListStyle as ButtonList } from './styles'

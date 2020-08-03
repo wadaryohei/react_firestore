@@ -1,4 +1,4 @@
-import { UserData } from '../../../model/Datas/User/types'
+import { UserType } from '../../../model/User/types'
 import { UserPresenterViewData } from './UserPresenterViewData'
 
 //----------------------------------
@@ -12,7 +12,7 @@ export interface UserPresenter {
 // presenter
 //----------------------------------
 export const useUserPresenter = (
-  _user: UserData | undefined
+  _user: UserType | undefined
 ): UserPresenter => {
   /**
    * viewData
@@ -26,7 +26,7 @@ export const useUserPresenter = (
   /**
    * ユーザーデータを返す
    */
-  const user = (): UserData => {
+  const user = (): UserType => {
     return {
       id: _user?.id as string,
       name: _user?.name as string,

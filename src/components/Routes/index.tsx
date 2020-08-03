@@ -1,16 +1,11 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { useRoute } from '../../hooks/useRoute'
+import { HomeContainer } from '../../containers/HomeContainer'
+import { UserContainer } from '../../containers/UserContainer'
 import { SignOutContainer } from '../../containers/SignOutContainer'
 import { SignInContainer } from '../../containers/SignInContainer'
-import { HomeContainer } from '../../containers/HomeContainer/'
-import { UserContainer } from '../../containers/UserContainer'
 import { Routing } from '../../const/Routing'
+import { useRoute } from '../../hooks/useRoute'
 
 //----------------------------------
 // props
@@ -29,9 +24,6 @@ export const Routes = (props: RoutesProps) => {
   // ルーティングに関するロジックをCustom Hooksに集約
   useRoute(props.firebaseUser)
 
-  //----------------------------------
-  // render
-  //----------------------------------
   return (
     <>
       {/** @Route SignIn */}

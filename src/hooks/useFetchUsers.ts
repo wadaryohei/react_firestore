@@ -1,14 +1,13 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef } from 'react'
-import { UserData } from '../model/Datas/User/types'
+import { UserType } from '../model/User/types'
+
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface userFetchUsersProps {
-  _isUserLoading: boolean
-  fetchUserData: () => UserData | undefined
-  fetchUsersData: () => UserData[] | undefined
+export interface userFetchUsersType {
+  fetchUserData: () => UserType | undefined
 }
 
 //----------------------------------
@@ -17,10 +16,8 @@ export interface userFetchUsersProps {
 export const useFetchUsers = (
   collection: string,
   user: firebase.User | null
-): userFetchUsersProps => {
-  const [_fetchUser, _setFetchUser] = useState<UserData>()
-  const [_fetchUsers, _setFetchUsers] = useState<UserData[]>([])
-  const [_isUserLoading, _setIsUserLoading] = useState<boolean>(true)
+): userFetchUsersType => {
+  const [_fetchUser, _setFetchUser] = useState<UserType>()
   const mounted = useRef(true)
 
   //----------------------------------
@@ -31,13 +28,9 @@ export const useFetchUsers = (
       // 自分のユーザー情報をonSnapShotでリアルタイム取得
       const userUnsubscribe = await userSnapShot(collection, user)
 
-      // 自分以外のユーザー情報をonSnapShotでリアルタイム取得
-      const usersUnsubscribe = await usersSnapShot(collection, user)
-
       // コンポーネントのアンマウント時にはonSnapShotをUnsubscribeする
       return () => {
         userUnsubscribe()
-        usersUnsubscribe()
       }
     }
     init()
@@ -47,47 +40,6 @@ export const useFetchUsers = (
     }
     // eslint-disable-next-line
   }, [collection, user])
-
-  /**
-   * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
-   */
-  const usersSnapShot = async (
-    collection: string,
-    user: firebase.User | null
-  ): Promise<() => void> => {
-    // usersコレクションを全件取得
-    const usersRef = await firebase
-      .firestore()
-      .collection(collection)
-      .get()
-
-    // ログイン中のユーザー（自分以外の）ユーザーIDを抽出
-    const docs = usersRef.docs.filter(doc => doc.id !== user?.uid)
-
-    // socialコレクションのfollowingサブコレクションから自分がフォロー中のユーザーデータを抽出
-    return firebase
-      .firestore()
-      .collection('social')
-      .doc(user?.uid)
-      .collection('following')
-      .doc(user?.uid)
-      .onSnapshot(async snap => {
-        const _datas = docs.map(async doc => {
-          const followers = await snap.data()?.[doc.id]
-          return {
-            id: doc.id as string,
-            isFollow: followers as boolean,
-            name: doc.data().name as string,
-            photoURL: doc.data().photoURL as string
-          }
-        })
-        const datas = await Promise.all(_datas)
-        if (mounted.current) {
-          _setFetchUsers([...datas])
-          _setIsUserLoading(false)
-        }
-      })
-  }
 
   /**
    * fireStoreからユーザーを取得する
@@ -117,20 +69,11 @@ export const useFetchUsers = (
   /**
    * DBから取得したユーザーデータを返す
    */
-  const fetchUserData = (): UserData | undefined => {
+  const fetchUserData = (): UserType | undefined => {
     return _fetchUser
   }
 
-  /**
-   * DBからログイン中のユーザー以外の取得したユーザーデータを返す
-   */
-  const fetchUsersData = (): UserData[] | undefined => {
-    return _fetchUsers
-  }
-
   return {
-    _isUserLoading,
-    fetchUserData,
-    fetchUsersData
+    fetchUserData
   }
 }

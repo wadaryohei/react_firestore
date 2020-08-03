@@ -1,30 +1,30 @@
 import firebase from '../model/_shared/firebase'
-import { UserData } from '../model/Datas/User/types'
+import { UserType } from '../model/User/types'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useFollowProps {
+export interface useFollowType {
   follow: (
     followerId: string | undefined,
-    otherUser: UserData | undefined
+    otherUser: UserType | undefined
   ) => void
   unFollow: (
     followerId: string | undefined,
-    profle: UserData | undefined
+    profle: UserType | undefined
   ) => void
 }
 
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFollow = (): useFollowProps => {
+export const useFollow = (): useFollowType => {
   /**
    * フォローをするときの処理
    */
   const follow = (
     followerId: string | undefined,
-    userId: UserData | undefined
+    userId: UserType | undefined
   ): void => {
     console.log(`Follow ${userId?.id}`)
 
@@ -72,7 +72,7 @@ export const useFollow = (): useFollowProps => {
    */
   const unFollow = (
     followerId: string | undefined,
-    user: UserData | undefined
+    user: UserType | undefined
   ): void => {
     console.log(`unFollow ${user?.id}`)
 

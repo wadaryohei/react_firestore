@@ -1,1 +1,1 @@
-export { Users } from './styles'
+export { UsersStyle as Users } from './styles'

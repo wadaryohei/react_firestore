@@ -1,20 +1,12 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
-import { CardMedia } from '../CardMedia/index'
 import { Typography } from '../Typography/index'
-import { UserData } from '../../../model/Datas/User/types'
+import { UserType } from '../../../model/User/types'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface UserProps {
-  user: UserData | undefined
+  user: UserType | undefined
   firebaseUser: firebase.User | null
   className?: string
   children?: React.ReactNode
@@ -24,11 +16,8 @@ export interface UserProps {
 // component
 //----------------------------------
 export const User = (props: UserProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
   <>
-    <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
+    <img src={props.user?.photoURL} alt={props.user?.photoURL} />
     <Typography component={'p'}>{props.user?.name}</Typography>
 
     <div>

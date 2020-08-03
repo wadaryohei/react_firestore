@@ -1,16 +1,10 @@
-/**
- * Style層
- * - CSSを記述する
- * - styledの引数でコンポーネントを受け取る
- * - CSSのネストが深くなったらコンポーネント分割を検討する
- */
 import styled from 'styled-components'
-import { ButtonDoms } from './doms'
+import { ButtonComponent } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Padding } from '../../../const/Padding'
 import { FontSize } from '../../../const/FontSize'
 
-export const Button = styled(ButtonDoms)`
+export const ButtonStyle = styled(ButtonComponent)`
   border: none;
   outline: none;
   font-weight: bold;

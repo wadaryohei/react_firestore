@@ -1,29 +1,19 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
 import { Typography } from '../Typography/index'
-import { useFormProps } from '../../../hooks/useForm'
+import { useFormType } from '../../../hooks/useForm'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface PostsFormProps {
-  form: useFormProps
+  form: useFormType
   className?: string
 }
 
 //----------------------------------
 // component
 //----------------------------------
-export const PostsFormDoms = (props: PostsFormProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
+export const PostsFormComponent = (props: PostsFormProps) => (
   <form className={props.className} onSubmit={e => props.form.onSubmit(e)}>
     <div className={'formInner'}>
       <input

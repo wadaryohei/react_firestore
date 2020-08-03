@@ -1,17 +1,12 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
-import { useAuth } from '../../hooks/useAuth'
-import { useHistory } from 'react-router-dom'
 import { Box } from '@material-ui/core'
-import { Margin } from '../../const/Margin'
+import { useHistory } from 'react-router-dom'
 import { Card } from '../../components/_shared/Card'
 import { Typography } from '../../components/_shared/Typography'
 import { Button } from '../../components/_shared/Button'
 import { AuthLayout } from '../../components/_shared/AuthLayout'
+import { Margin } from '../../const/Margin'
+import { useAuth } from '../../hooks/useAuth'
 
 //----------------------------------
 // component
@@ -22,9 +17,7 @@ export const SignOutContainer = () => {
   //----------------------------------
   const auth = useAuth()
   const history = useHistory()
-  //----------------------------------
-  // render
-  //----------------------------------
+
   return (
     <AuthLayout className={'signOut'}>
       <Card>

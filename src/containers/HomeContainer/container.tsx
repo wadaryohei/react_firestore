@@ -33,7 +33,6 @@ export const HomeContainer = (props: HomeProps) => {
   const fetchPosts = useFetchPosts('posts', props.firebaseUser)
   const presenter = useHomePresenter(
     fetchUsers.fetchUserData(),
-    fetchUsers.fetchUsersData(),
     fetchPosts.fetchPostDatas()
   )
 
@@ -43,29 +42,27 @@ export const HomeContainer = (props: HomeProps) => {
       firebaseUser={props.firebaseUser}
       user={presenter.viewDatas().user}
     >
-      {!fetchUsers._isUserLoading && (
-        <Box className={'l-wrapper'}>
-          <SideBar className={'l-user'}>
-            <User
-              user={presenter.viewDatas().user}
-              firebaseUser={props.firebaseUser}
-            />
-          </SideBar>
+      <Box className={'l-wrapper'}>
+        <SideBar className={'l-user'}>
+          <User
+            user={presenter.viewDatas().user}
+            firebaseUser={props.firebaseUser}
+          />
+        </SideBar>
 
-          <Main className={'l-timeline'}>
-            <Box className={'l-timeline-inner'}>
-              {presenter.viewDatas().posts?.map((post, index) => (
-                <Box key={index} mb={Margin.m32}>
-                  <Posts post={post} form={form} user={props.firebaseUser} className={'l-timeline-post'} />
-                </Box>
-              ))}
-              <Box py={Padding.p16}>
-                <PostsForm form={form} />
+        <Main className={'l-timeline'}>
+          <Box className={'l-timeline-inner'}>
+            {presenter.viewDatas().posts?.map((post, index) => (
+              <Box key={index} mb={Margin.m32}>
+                <Posts post={post} form={form} user={props.firebaseUser} className={'l-timeline-post'} />
               </Box>
+            ))}
+            <Box py={Padding.p16}>
+              <PostsForm form={form} />
             </Box>
-          </Main>
-        </Box>
-      )}
+          </Box>
+        </Main>
+      </Box>
     </BaseLayout>
   )
 }

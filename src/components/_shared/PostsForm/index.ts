@@ -1,1 +1,1 @@
-export { PostsForm } from './styles'
+export { PostsFormStyle as PostsForm } from './styles'
