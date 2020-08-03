@@ -29,5 +29,4 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
       }
     }
   }
-  console.log(location)
 }

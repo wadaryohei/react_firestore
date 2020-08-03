@@ -19,8 +19,6 @@ export const useAuthenticate = (): useAuthenticateProps => {
   const mounted = useRef(true)
   const history = useHistory()
 
-  console.log('App')
-
   /**
    * ユーザーのドキュメントが存在するか確認する
    */
