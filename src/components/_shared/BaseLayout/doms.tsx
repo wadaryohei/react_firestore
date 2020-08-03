@@ -26,8 +26,8 @@ export const BaseLayoutDoms = (props: BaseLayoutProps) => (
   //----------------------------------
   // render
   //----------------------------------
-  <div className={props.className}>
+  <section className={props.className}>
     <Header user={props.user} />
     {props.children}
-  </div>
+  </section>
 )

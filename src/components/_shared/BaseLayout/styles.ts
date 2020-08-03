@@ -6,8 +6,9 @@
  */
 import styled from 'styled-components'
 import { BaseLayoutDoms } from './doms'
-import { Padding } from '../../../const/Padding'
 
 export const BaseLayout = styled(BaseLayoutDoms)`
-  padding: ${Padding.p72} 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
 `
