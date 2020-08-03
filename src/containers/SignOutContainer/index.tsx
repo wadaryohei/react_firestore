@@ -28,15 +28,15 @@ export const SignOutContainer = () => {
   return (
     <AuthLayout className={'signOut'}>
       <Card>
-        <Typography variant={'h1'}>React × Firebase</Typography>
+        <Typography component={'h1'}>React × Firebase</Typography>
         <Box my={Margin.m16}>
-          <Typography variant={'h3'}>
+          <Typography component={'h3'}>
             React × Firebaseからログアウトしますか？
           </Typography>
         </Box>
 
         <Box my={Margin.m16}>
-          <Typography variant={'p'}>
+          <Typography component={'p'}>
             いつでもログインし直すことができます。
             別アカウントでログインする場合はログイン画面で別アカウントの情報を入力してログインしてください。
           </Typography>

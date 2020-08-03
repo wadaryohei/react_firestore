@@ -22,7 +22,7 @@ export const SignInContainer = () => {
   //----------------------------------
   return (
     <AuthLayout className={'signIn'}>
-      <Typography variant={'h1'}>Firebase × React</Typography>
+      <Typography component={'h1'}>Firebase × React</Typography>
       <Button size={'sm'} color={'primary'} onClick={() => signIn()}>
         ログインする
       </Button>
