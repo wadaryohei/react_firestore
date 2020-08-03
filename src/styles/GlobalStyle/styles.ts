@@ -5,7 +5,7 @@
  * - CSSのネストが深くなったらコンポーネント分割を検討する
  */
 import { createGlobalStyle } from 'styled-components'
-import { Colors } from '../../../const/Colors'
+import { Colors } from '../../const/Colors'
 
 export const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
