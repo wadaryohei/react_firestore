@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useLocation } from 'react-router-dom'
 import { HomeContainer } from '../../containers/HomeContainer'
 import { UserContainer } from '../../containers/UserContainer'
 import { SignOutContainer } from '../../containers/SignOutContainer'
@@ -23,6 +23,7 @@ export const Routes = (props: RoutesProps) => {
   //----------------------------------
   // ルーティングに関するロジックをCustom Hooksに集約
   useRoute(props.firebaseUser)
+  const location = useLocation()
 
   return (
     <>
@@ -41,6 +42,7 @@ export const Routes = (props: RoutesProps) => {
 
       {/** @Route User */}
       <Route
+        key={location.pathname}
         path={Routing.userId}
         render={() => <UserContainer firebaseUser={props.firebaseUser} />}
       />
