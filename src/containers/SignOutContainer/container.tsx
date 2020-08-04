@@ -9,9 +9,16 @@ import { Margin } from '../../const/Margin'
 import { useAuth } from '../../hooks/useAuth'
 
 //----------------------------------
+// props
+//----------------------------------
+export interface SignOutProps {
+  className?: string
+}
+
+//----------------------------------
 // component
 //----------------------------------
-export const SignOutContainer = () => {
+export const SignOutContainer = (props: SignOutProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
@@ -19,17 +26,19 @@ export const SignOutContainer = () => {
   const history = useHistory()
 
   return (
-    <AuthLayout className={'signOut'}>
+    <AuthLayout className={`${props.className} signOut`}>
       <Card>
-        <Typography component={'h1'}>React × Firebase</Typography>
+        <Typography component={'h1'} className={'signOutHeader'}>
+          React × Firebase
+        </Typography>
         <Box my={Margin.m16}>
-          <Typography component={'h3'}>
+          <Typography component={'h3'} className={'signOutSubHeader'}>
             React × Firebaseからログアウトしますか？
           </Typography>
         </Box>
 
         <Box my={Margin.m16}>
-          <Typography component={'p'}>
+          <Typography component={'p'} className={'signOutLead'}>
             いつでもログインし直すことができます。
             別アカウントでログインする場合はログイン画面で別アカウントの情報を入力してログインしてください。
           </Typography>
