@@ -1,14 +1,20 @@
-export enum Padding {
-  p4 = '4px',
-  p6 = '6px',
-  p8 = '8px',
-  p12 = '12px',
-  p16 = '16px',
-  p24 = '24px',
-  p32 = '32px',
-  p40 = '40px',
-  p56 = '56px',
-  p72 = '72px',
-  p112 = '112px',
-  p160 = '160px'
-}
+export const Padding = {
+  p4: '4px',
+  p8: '8px',
+  p16: '16px',
+  p24: '24px',
+  p32: '32px',
+  p40: '40px',
+  p48: '48px',
+  p56: '56px',
+  p64: '64px',
+  p72: '72px',
+  p80: '80px',
+  p88: '88px',
+  p96: '96px',
+  p104: '104px',
+  p112: '112px',
+  p120: '120px',
+  p128: '128px',
+  p160: '160px'
+} as const

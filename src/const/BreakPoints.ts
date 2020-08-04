@@ -1,7 +1,21 @@
-export enum BreakPoints {
-  xs = '0px',
-  sm = '576px',
-  md = '768px',
-  lg = '992px',
-  xl = '1200px'
+export const BreakPoints = {
+  xs: 0,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200
+} as const
+
+/**
+ * maxWidthメディアクエリー
+ */
+export const max = (maxWidth: number): string => {
+  return `(max-width: ${maxWidth}px)`
+}
+
+/**
+ * minWidthメディアクエリー
+ */
+export const min = (minWidth: number): string => {
+  return `(min-width: ${minWidth}px)`
 }

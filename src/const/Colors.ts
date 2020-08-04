@@ -1,9 +1,9 @@
-export enum Colors {
-  white = '#ffffff',
-  black = '#272727',
-  primary = '#0a7bff',
-  secondary = '#6c757d',
-  gray = '#39424c',
-  cancel = '#dc3545',
-  default = '#e6e6e6'
-}
+export const Colors = {
+  white: '#FFFFFF',
+  black: '#272727',
+  gray: '#292C34',
+  darkGray: '#363A41',
+  border: '#363A41',
+  primary: '#0a7bff',
+  cancel: '#dc3545'
+} as const
