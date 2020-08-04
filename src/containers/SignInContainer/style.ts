@@ -9,6 +9,10 @@ export const SignInContainerStyle = styled(SignInContainer)`
     color: ${Colors.black};
   }
 
+  .signInGitIcon {
+    color: ${Colors.black};
+  }
+
   .signInLead {
     color: ${Colors.black};
     font-weight: ${FontWeight.bold};

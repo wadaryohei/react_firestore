@@ -1,8 +1,10 @@
 import React from 'react'
-import { useAuth } from '../../hooks/useAuth'
+import { Box } from '@material-ui/core'
+import GitHubIcon from '@material-ui/icons/GitHub'
 import { Typography } from '../../components/_shared/Typography'
 import { Button } from '../../components/_shared/Button'
 import { AuthLayout } from '../../components/_shared/AuthLayout'
+import { useAuth } from '../../hooks/useAuth'
 
 //----------------------------------
 // props
@@ -22,6 +24,11 @@ export const SignInContainer = (props: SignInProps) => {
 
   return (
     <AuthLayout className={`${props.className} signIn`}>
+      <Box>
+        <a className={'signInGitIcon'} rel='noopener noreferrer' href='https://github.com/wadaryohei' target='_blank'>
+          <GitHubIcon />
+        </a>
+      </Box>
       <Typography component={'h1'} className={'signInHeader'}>
         React × FireBase
       </Typography>
