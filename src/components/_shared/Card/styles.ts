@@ -6,7 +6,7 @@ import { Colors } from '../../../const/Colors'
 export const CardStyle = styled('div')`
   margin: ${Margin.m24} 0;
   padding: ${Padding.p72} ${Padding.p24};
-  color: #ffffff;
+  color: ${Colors.gray};
   background-color: ${Colors.white};
   box-shadow: 0px 3px 33px -6px rgba(0, 0, 0, 0.15);
   border-radius: 6px;

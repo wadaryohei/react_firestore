@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { PostFormComponent } from './doms'
 import { Colors } from '../../../const/Colors'
+import { BreakPoints, max } from '../../../const/BreakPoints'
 
 export const PostFormStyle = styled(PostFormComponent)`
   width: 100%;
@@ -15,7 +16,10 @@ export const PostFormStyle = styled(PostFormComponent)`
     border-radius: 4px 0 0 4px;
     border: none;
     width: 90%;
-    background-color: ${Colors.default};
+
+    @media ${max(BreakPoints.md)} {
+      width: 80%;
+    }
 
     &:focus {
       outline: none;
@@ -29,8 +33,12 @@ export const PostFormStyle = styled(PostFormComponent)`
     outline: none;
     width: 10%;
     color: ${Colors.white};
-    background-color: ${Colors.primary};
+    background-color: ${Colors.darkGray};
     cursor: pointer;
+
+    @media ${max(BreakPoints.md)} {
+      width: 20%;
+    }
 
     &:disabled {
       opacity: 0.2;

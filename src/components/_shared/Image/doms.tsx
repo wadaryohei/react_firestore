@@ -15,5 +15,11 @@ export interface ImageProps {
 // component
 //----------------------------------
 export const ImageComponent = (props: ImageProps) => (
-  <img className={props.className} src={props.src} alt={props.alt} width={props.width} height={props.height} />
+  <img
+    className={props.className}
+    src={props.src}
+    alt={props.alt}
+    width={props.width}
+    height={props.height}
+  />
 )

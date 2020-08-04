@@ -5,7 +5,7 @@ import React from 'react'
 //----------------------------------
 export interface ButtonProps {
   children: React.ReactNode
-  color: 'primary' | 'secondary' | 'cancel' | 'default' | 'border'
+  color: 'primary' | 'cancel' | 'default' | 'border'
   size: 'lg' | 'md' | 'sm'
   className?: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -26,10 +26,10 @@ export const ButtonComponent = (props: ButtonProps) => {
         </button>
       )
 
-    case 'secondary':
+    case 'default':
       return (
         <button
-          className={`${props.className} ${props.size} secondary`}
+          className={`${props.className} ${props.size} default`}
           onClick={e => props.onClick(e)}
         >
           {props.children}
@@ -50,16 +50,6 @@ export const ButtonComponent = (props: ButtonProps) => {
       return (
         <button
           className={`${props.className} ${props.size} border`}
-          onClick={e => props.onClick(e)}
-        >
-          {props.children}
-        </button>
-      )
-
-    case 'default':
-      return (
-        <button
-          className={`${props.className} ${props.size} default`}
           onClick={e => props.onClick(e)}
         >
           {props.children}

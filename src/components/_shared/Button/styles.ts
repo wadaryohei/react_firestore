@@ -3,29 +3,30 @@ import { ButtonComponent } from './doms'
 import { Colors } from '../../../const/Colors'
 import { Padding } from '../../../const/Padding'
 import { FontSize } from '../../../const/FontSize'
+import { FontWeight } from '../../../const/FontWeight'
 
 export const ButtonStyle = styled(ButtonComponent)`
   border: none;
   outline: none;
-  font-weight: bold;
+  font-weight: ${FontWeight.bold};
   border-radius: 4px;
   color: ${Colors.white};
   cursor: pointer;
   transition: 0.4s ease;
 
   &.lg {
-    padding: ${Padding.p12} ${Padding.p24};
-    font-size: ${FontSize.lg};
+    padding: ${Padding.p16} ${Padding.p24};
+    font-size: ${FontSize.xs};
   }
 
   &.md {
     padding: ${Padding.p8} ${Padding.p24};
-    font-size: ${FontSize.md};
+    font-size: ${FontSize.xs};
   }
 
   &.sm {
-    padding: ${Padding.p6} ${Padding.p24};
-    font-size: ${FontSize.sm};
+    padding: ${Padding.p8} ${Padding.p24};
+    font-size: ${FontSize.xs};
   }
 
   &.primary {
@@ -38,10 +39,8 @@ export const ButtonStyle = styled(ButtonComponent)`
     }
   }
 
-  &.secondary {
-    border: solid 1px ${Colors.secondary};
-    background-color: ${Colors.secondary};
-
+  &.default {
+    color: ${Colors.black};
     &:hover {
       transition: 0.2s ease;
       filter: brightness(70%);
@@ -62,15 +61,5 @@ export const ButtonStyle = styled(ButtonComponent)`
     color: ${Colors.primary};
     border: solid 1px ${Colors.primary};
     background-color: ${Colors.white};
-  }
-
-  &.default {
-    border: solid 1px ${Colors.default};
-    background-color: ${Colors.default};
-
-    &:hover {
-      transition: 0.2s ease;
-      filter: brightness(70%);
-    }
   }
 `

@@ -8,15 +8,18 @@ export interface TypographyProps {
   className?: string
   children: React.ReactNode
   component: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span'
-  color?: string
+  color?: 'white' | 'black'
   weight?: 'light' | 'normal' | 'bold'
 }
 
 //----------------------------------
 // component
 //----------------------------------
-export const TypographyDoms = (props: TypographyProps) => (
-  <Typography component={props.component} className={`${props.component} ${props.className} ${props.color}`}>
+export const TypographyComponent = (props: TypographyProps) => (
+  <Typography
+    component={props.component}
+    className={`${props.component} ${props.className} ${props.color}`}
+  >
     {props.children}
   </Typography>
 )
@@ -24,6 +27,6 @@ export const TypographyDoms = (props: TypographyProps) => (
 //----------------------------------
 // defaultProps
 //----------------------------------
-TypographyDoms.defaultProps = {
-  color: 'black',
+TypographyComponent.defaultProps = {
+  color: 'black'
 }

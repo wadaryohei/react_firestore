@@ -6,7 +6,6 @@ import { UserType } from '../../../model/User/types'
 // props
 //----------------------------------
 export interface BaseLayoutProps {
-  firebaseUser: firebase.User | null
   user: UserType | undefined
   children: React.ReactNode
   className?: string

@@ -9,6 +9,7 @@ import { UserType } from '../../../model/User/types'
 export interface UserProps {
   user: UserType | undefined
   firebaseUser: firebase.User | null
+  ptahClassName?: string
   className?: string
   children?: React.ReactNode
 }
@@ -16,23 +17,39 @@ export interface UserProps {
 //----------------------------------
 // component
 //----------------------------------
-export const User = (props: UserProps) => (
-  <>
-    <Image src={props.user?.photoURL} alt={props.user?.photoURL} width={120} height={120} />
-    <Typography component={'p'}>{props.user?.name}</Typography>
+export const UserComponent = (props: UserProps) => (
+  <div className={props.className}>
+    <Image
+      src={props.user?.photoURL}
+      alt={props.user?.photoURL}
+      width={120}
+      height={120}
+    />
+    <Typography
+      component={'p'}
+      className={`userTypography name ${props.ptahClassName}`}
+    >
+      {props.user?.name}
+    </Typography>
 
     <div>
       {props.user?.followingCount !== undefined && (
-        <Typography component={'p'}>
+        <Typography
+          component={'p'}
+          className={`userTypography ${props.ptahClassName}`}
+        >
           フォロー / {props.user?.followingCount}
         </Typography>
       )}
       {props.user?.followerCount !== undefined && (
-        <Typography component={'p'}>
+        <Typography
+          component={'p'}
+          className={`userTypography ${props.ptahClassName}`}
+        >
           フォロワー / {props.user?.followerCount}
         </Typography>
       )}
     </div>
     {props.children}
-  </>
+  </div>
 )

@@ -1,1 +1,1 @@
-export { Typography } from './styles'
+export { TypographyStyle as Typography } from './styles'

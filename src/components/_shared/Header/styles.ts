@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import { HeaderComponent } from './doms'
 import { Colors } from '../../../const/Colors'
-import { Padding } from '../../../const/Padding'
-import { BreakPoints } from '../../../const/BreakPoints'
 
 export const HeaderStyle = styled(HeaderComponent)`
   position: fixed;
@@ -12,25 +10,20 @@ export const HeaderStyle = styled(HeaderComponent)`
   width: 100%;
   height: 72px;
   line-height: 72px;
-  background-color: ${Colors.primary};
+  background-color: ${Colors.darkGray};
   color: ${Colors.white};
 
-  > div {
+  .headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 960px;
     margin: 0 auto;
     height: 72px;
 
-    @media (max-width: ${BreakPoints.md}) {
-      padding: 0 ${Padding.p24};
-    }
-
     > a {
       display: flex;
-      img {
-        border: solid 2px ${Colors.white};
+      .headerImage {
+        border: solid 2px ${Colors.primary};
         width: 45px;
         height: 45px;
       }

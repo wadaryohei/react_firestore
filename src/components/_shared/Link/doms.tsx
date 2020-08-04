@@ -4,7 +4,7 @@ import { Link, LinkProps as RouterProps } from 'react-router-dom'
 //----------------------------------
 // props
 //----------------------------------
-export interface LinkProps extends RouterProps{
+export interface LinkProps extends RouterProps {
   className?: string
 }
 
@@ -12,5 +12,7 @@ export interface LinkProps extends RouterProps{
 // component
 //----------------------------------
 export const LinkComponent = (props: LinkProps) => (
-  <Link className={props.className} {...props}>{props.children}</Link>
+  <Link className={props.className} {...props}>
+    {props.children}
+  </Link>
 )
