@@ -1,6 +1,6 @@
 import firebase from '../model/_shared/firebase'
 import { UserType } from '../model/User/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 //----------------------------------
 // type
@@ -25,22 +25,38 @@ export const useFollow = (
   otherUserId: string | undefined
 ): useFollowType => {
   const [_isFollowing, setFollowing] = useState<boolean>(false)
+  const mounted = useRef(true)
 
+  //----------------------------------
+  // useEffect
+  //----------------------------------
   useEffect(() => {
-    firebase
-      .firestore()
-      .doc(`social/${uid}`)
-      .collection('following')
-      .doc(uid)
-      .onSnapshot(snap => {
-        if (snap.exists) {
-          if (otherUserId !== undefined) {
-            setFollowing(snap.data()?.[otherUserId])
-            return snap.data()?.[otherUserId]
-          }
-        }
-      })
+    const unsubscribe = isFollowingSnapShot()
+
+    return () => {
+      unsubscribe()
+      // mounted.current = false
+    }
   })
+
+  /**
+   * ログイン中のユーザーが他ユーザーをフォローしているかどうか
+   */
+  const isFollowingSnapShot = (): () => void => {
+    return firebase
+    .firestore()
+    .doc(`social/${uid}`)
+    .collection('following')
+    .doc(uid)
+    .onSnapshot(snap => {
+      if (snap.exists) {
+        if (otherUserId !== undefined) {
+          setFollowing(snap.data()?.[otherUserId])
+          return snap.data()?.[otherUserId]
+        }
+      }
+    })
+  }
 
   /**
    * ログイン中のユーザーが他人のユーザーをフォローしているか
@@ -141,11 +157,8 @@ export const useFollow = (
     // cloud functionsのfunctionをアプリ側からcall
     const userFollowCountFunc = firebase
       .functions()
-      .httpsCallable('userFollowCount')
-    await userFollowCountFunc({
-      followeredId: followeredId,
-      followingId: followingId
-    }).catch(e => {
+      .httpsCallable('followCount')
+    await userFollowCountFunc({followeredId: followeredId, followingId: followingId }).catch(e => {
       console.log(e)
     })
   }
@@ -159,13 +172,8 @@ export const useFollow = (
     followingId: string | undefined
   ): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const userUnFollowCountFunc = firebase
-      .functions()
-      .httpsCallable('userUnFollowCount')
-    await userUnFollowCountFunc({
-      followeredId: followeredId,
-      followingId: followingId
-    }).catch(e => {
+    const userUnFollowCountFunc = firebase.functions().httpsCallable('unFollowCount')
+    await userUnFollowCountFunc({followeredId: followeredId, followingId: followingId}).catch(e => {
       console.log(e)
     })
   }
