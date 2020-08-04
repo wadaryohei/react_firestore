@@ -28,11 +28,14 @@ export const useFetchPosts = (
       .firestore()
       .collection(collection)
       .orderBy('createdAt', 'desc')
-      .onSnapshot(async (snap) => {
-        const docs = snap.docs.map(async (doc) => {
-
+      .onSnapshot(async snap => {
+        const docs = snap.docs.map(async doc => {
           // PostsデータのauthorIdを元にUsersデータを取ってくる
-          const _usersdoc = (await firebase.firestore().collection('users').doc(doc.data().authorId).get())
+          const _usersdoc = await firebase
+            .firestore()
+            .collection('users')
+            .doc(doc.data().authorId)
+            .get()
 
           return {
             docId: doc.id,
@@ -40,7 +43,9 @@ export const useFetchPosts = (
             userName: _usersdoc.data()?.name as string,
             userImages: _usersdoc.data()?.photoURL as string,
             postBody: doc.data().postBody as string,
-            createdAt: dayjs(doc.data().createdAt.toDate()).format('YYYY/MM/DD hh:mm:ss'),
+            createdAt: dayjs(doc.data().createdAt.toDate()).format(
+              'YYYY/MM/DD hh:mm:ss'
+            )
           }
         })
         const _datas = await Promise.all(docs)

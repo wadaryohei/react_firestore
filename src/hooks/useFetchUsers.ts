@@ -2,7 +2,6 @@ import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef } from 'react'
 import { UserType } from '../model/User/types'
 
-
 //----------------------------------
 // type
 //----------------------------------
@@ -15,18 +14,17 @@ export interface userFetchUsersType {
 //----------------------------------
 export const useFetchUsers = (
   collection: string,
-  user: firebase.User | null
+  uid: string | undefined
 ): userFetchUsersType => {
   const [_fetchUser, _setFetchUser] = useState<UserType>()
   const mounted = useRef(true)
-
   //----------------------------------
   // lifeCycle
   //----------------------------------
   useEffect(() => {
     const init = async () => {
-      // 自分のユーザー情報をonSnapShotでリアルタイム取得
-      const userUnsubscribe = await userSnapShot(collection, user)
+      // ユーザー情報をonSnapShotでリアルタイム取得
+      const userUnsubscribe = await userSnapShot(collection, uid)
 
       // コンポーネントのアンマウント時にはonSnapShotをUnsubscribeする
       return () => {
@@ -38,20 +36,19 @@ export const useFetchUsers = (
     return () => {
       mounted.current = false
     }
-    // eslint-disable-next-line
-  }, [collection, user])
+  }, [collection, uid])
 
   /**
    * fireStoreからユーザーを取得する
    */
   const userSnapShot = async (
     collection: string,
-    user: firebase.User | null
+    uid: string | undefined
   ): Promise<() => void> => {
     return firebase
       .firestore()
       .collection(collection)
-      .doc(user?.uid)
+      .doc(uid)
       .onSnapshot(snap => {
         const _datas = {
           id: snap.id,
