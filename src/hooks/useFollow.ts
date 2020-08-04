@@ -1,5 +1,6 @@
 import firebase from '../model/_shared/firebase'
 import { UserType } from '../model/User/types'
+import { useEffect, useState } from 'react'
 
 //----------------------------------
 // type
@@ -13,12 +14,41 @@ export interface useFollowType {
     followerId: string | undefined,
     profle: UserType | undefined
   ) => void
+  isFollowing: () => boolean
 }
 
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFollow = (): useFollowType => {
+export const useFollow = (
+  uid: string | undefined,
+  otherUserId: string | undefined
+): useFollowType => {
+  const [_isFollowing, setFollowing] = useState<boolean>(false)
+
+  useEffect(() => {
+    firebase
+      .firestore()
+      .doc(`social/${uid}`)
+      .collection('following')
+      .doc(uid)
+      .onSnapshot(snap => {
+        if (snap.exists) {
+          if (otherUserId !== undefined) {
+            setFollowing(snap.data()?.[otherUserId])
+            return snap.data()?.[otherUserId]
+          }
+        }
+      })
+  })
+
+  /**
+   * ログイン中のユーザーが他人のユーザーをフォローしているか
+   */
+  const isFollowing = (): boolean => {
+    return _isFollowing
+  }
+
   /**
    * フォローをするときの処理
    */
@@ -140,5 +170,5 @@ export const useFollow = (): useFollowType => {
     })
   }
 
-  return { follow, unFollow }
+  return { follow, unFollow, isFollowing }
 }
