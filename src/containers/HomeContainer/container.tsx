@@ -45,7 +45,7 @@ export const HomeContainer = (props: HomeProps) => {
       <Box className={'l-wrapper'}>
         <SideBar className={'l-user'}>
           <User
-            ptahClassName={location.pathname}
+            pathClassName={location.pathname}
             user={presenter.viewDatas().user}
             firebaseUser={props.firebaseUser}
           />

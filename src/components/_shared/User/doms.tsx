@@ -9,7 +9,7 @@ import { UserType } from '../../../model/User/types'
 export interface UserProps {
   user: UserType | undefined
   firebaseUser: firebase.User | null
-  ptahClassName?: string
+  pathClassName?: string
   className?: string
   children?: React.ReactNode
 }
@@ -27,7 +27,7 @@ export const UserComponent = (props: UserProps) => (
     />
     <Typography
       component={'p'}
-      className={`userTypography name ${props.ptahClassName}`}
+      className={`userTypography name ${props.pathClassName}`}
     >
       {props.user?.name}
     </Typography>
@@ -36,7 +36,7 @@ export const UserComponent = (props: UserProps) => (
       {props.user?.followingCount !== undefined && (
         <Typography
           component={'p'}
-          className={`userTypography ${props.ptahClassName}`}
+          className={`userTypography ${props.pathClassName}`}
         >
           フォロー / {props.user?.followingCount}
         </Typography>
@@ -44,7 +44,7 @@ export const UserComponent = (props: UserProps) => (
       {props.user?.followerCount !== undefined && (
         <Typography
           component={'p'}
-          className={`userTypography ${props.ptahClassName}`}
+          className={`userTypography ${props.pathClassName}`}
         >
           フォロワー / {props.user?.followerCount}
         </Typography>

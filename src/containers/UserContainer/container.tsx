@@ -83,7 +83,7 @@ export const UserContainer = (props: UserProps) => {
             <Grid item xs={12} md={8}>
               <Card className={'l-user'}>
                 <User
-                  ptahClassName={location.pathname}
+                  pathClassName={location.pathname}
                   user={presenter.viewDatas().user}
                   firebaseUser={props.firebaseUser}
                 >
