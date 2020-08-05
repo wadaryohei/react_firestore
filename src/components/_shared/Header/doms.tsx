@@ -20,7 +20,7 @@ export const HeaderComponent = (props: HeaderProps) => {
   return (
     <header className={props.className}>
       <Container className={'headerContainer'} maxWidth={'md'}>
-        <Link to={'/home'}>
+        <Link to={'/'}>
           <Typography component={'h1'} color={'white'}>
             React × Firebase
           </Typography>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import firebase from '../model/_shared/firebase'
+import { functions } from '../model/_shared/functions'
 import { fromUserType, toUserType } from '../model/User/types'
 
 //----------------------------------
@@ -67,7 +68,6 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-    console.log(`Follow ${otherUserId}`)
 
     // フォローする側とフォローされる側のusersドキュメントを取得
     const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
@@ -101,7 +101,6 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-    console.log(`unFollow ${otherUserId}`)
 
     // フォローする側とフォローされる側のusersドキュメントを取得
     const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
@@ -119,9 +118,10 @@ export const useFollow = (
    */
   const callFollow = async (fromUser: fromUserType, toUser: toUserType): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const callFollowFunc = firebase.functions().httpsCallable('follow')
-    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch(e => {
+    const callFollowFunc = functions.httpsCallable('follow')
+    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch((e: any) => {
       console.log(e)
+      alert('フォローに失敗しました')
     })
   }
 
@@ -131,9 +131,10 @@ export const useFollow = (
    */
   const callUnFollow = async (fromUserId: string | undefined, toUserId: string | undefined): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const callUnFollowFunc = firebase.functions().httpsCallable('unFollow')
-    await callUnFollowFunc({ fromUserId: fromUserId, toUserId: toUserId }).catch(e => {
+    const callUnFollowFunc = functions.httpsCallable('unFollow')
+    await callUnFollowFunc({ fromUserId: fromUserId, toUserId: toUserId }).catch((e: any) => {
       console.log(e)
+      alert('フォロー解除に失敗しました')
     })
   }
 

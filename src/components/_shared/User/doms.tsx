@@ -38,7 +38,7 @@ export const UserComponent = (props: UserProps) => (
           component={'p'}
           className={`userTypography ${props.pathClassName}`}
         >
-          フォロー / {props.user?.followingCount}
+          フォロー / <Typography component={'span'}>{props.user?.followingCount}</Typography>
         </Typography>
       )}
       {props.user?.followerCount !== undefined && (
@@ -46,7 +46,7 @@ export const UserComponent = (props: UserProps) => (
           component={'p'}
           className={`userTypography ${props.pathClassName}`}
         >
-          フォロワー / {props.user?.followerCount}
+          フォロワー / <Typography component={'span'}>{props.user?.followerCount}</Typography>
         </Typography>
       )}
     </div>

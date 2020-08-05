@@ -14,7 +14,7 @@ export const LoadingStyle = styled(LoadingComponent)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${Colors.white};
+  color: ${Colors.white};
 
   > div {
     margin-top: ${Margin.m8};

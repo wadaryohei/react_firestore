@@ -67,7 +67,9 @@ export const useForm = (
    * クリックボタンを押したときフィールドのテキストを保存する
    */
   const onClick = (text: string): void => {
-    setTextData(text)
+    setTextData(text).catch((e) => {
+      alert('投稿に失敗しました。')
+    })
   }
 
   /**
@@ -100,7 +102,6 @@ export const useForm = (
           },
           { merge: true }
         )
-      console.log('保存されました')
     }
     _setText('')
     _setDisabled(false)
