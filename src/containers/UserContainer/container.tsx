@@ -4,7 +4,6 @@ import { useParams, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Loading } from '../../components/_shared/Loading'
 import { DeleteModal } from '../../components/_shared/DeleteModal'
-import { SideBar } from '../../components/_shared/SideBar'
 import { Card } from '../../components/_shared/Card'
 import { Link } from '../../components/_shared/Link'
 import { Button } from '../../components/_shared/Button'
@@ -59,34 +58,30 @@ export const UserContainer = (props: UserProps) => {
           <DeleteModal modal={modal} onDeleteUser={deleted.onDeleteUser} />
         )}
 
-        <Container maxWidth={'md'}>
+        <Container maxWidth={'sm'}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
-              <SideBar>
-                <Card className={'l-user-action'}>
-                  <Box mb={Margin.m16}>
-                    <Link to={'/signout'}>
-                      {presenter.viewDatas().user?.name}からログアウト
-                    </Link>
-                  </Box>
-                  <Button
-                    size={'sm'}
-                    color={'cancel'}
-                    onClick={() => modal.onOpenModal()}
-                  >
-                    アカウントを削除する
-                  </Button>
-                </Card>
-              </SideBar>
-            </Grid>
-
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={12}>
               <Card className={'l-user'}>
                 <User
                   pathClassName={location.pathname}
                   user={presenter.viewDatas().user}
                   firebaseUser={props.firebaseUser}
                 >
+                  {id === props.firebaseUser?.uid && (
+                  <Box mb={Margin.m16} className={'l-user-info'}>
+                    <Button
+                      size={'sm'}
+                      color={'cancel'}
+                      onClick={() => modal.onOpenModal()}
+                    >
+                    アカウントを削除する
+                  </Button>
+                  <Link to={'/signout'}>
+                      {presenter.viewDatas().currentUser?.name}からログアウトする
+                    </Link>
+                  </Box>
+                  )}
+
                   {id !== props.firebaseUser?.uid && (
                     <Box my={Margin.m8}>
                       {follow.isFollowing() && (
