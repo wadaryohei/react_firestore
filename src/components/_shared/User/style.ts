@@ -9,13 +9,27 @@ export const UserStyle = styled(UserComponent)`
   .userTypography {
     color: ${Colors.black};
 
-    &[class*='/home'] {
+    &[class*='/'] {
       color: ${Colors.white};
 
       @media ${max(BreakPoints.md)} {
         font-size: ${FontSize.xs};
       }
     }
+
+    &[class*='/user'] {
+      color: ${Colors.black};
+
+      @media ${max(BreakPoints.md)} {
+        font-size: ${FontSize.xs};
+      }
+
+      span {
+        color: ${Colors.black};
+        font-weight: ${FontWeight.bold};
+      }
+    }
+
 
     &.name {
       font-weight: ${FontWeight.bold};
