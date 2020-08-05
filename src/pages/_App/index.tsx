@@ -7,6 +7,7 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { Routes } from '../../components/Routes'
 import { Loading } from '../../components/_shared/Loading'
+import { Head } from '../../components/_shared/Head'
 import { useAuthenticate } from '../../hooks/useAuthenticate'
 import { useAppPresenter } from './Presenter/UseAppPresenter'
 
@@ -22,6 +23,7 @@ export const App = () => {
 
   return (
     <>
+      <Head />
       {authenticate.loading && <Loading text={'Loading...'} />}
       {!authenticate.loading && (
         <Route
