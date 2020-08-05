@@ -70,12 +70,14 @@ export const useAuthenticate = (): useAuthenticateType => {
         if (!theUser) {
           await writeUser(result.user)
         }
-        history.replace('/home')
+        history.replace('/')
       }
 
-      setLocation(user ? user : null)
-      setUser(user ? user : null)
-      setLoader(false)
+      if (mounted.current) {
+        setLocation(user ? user : null)
+        setUser(user ? user : null)
+        setLoader(false)
+      }
     })
 
     return () => {
@@ -89,14 +91,14 @@ export const useAuthenticate = (): useAuthenticateType => {
    * ユーザーをセットする関数
    */
   const setUser = useCallback((user: firebase.User | null): void => {
-    if (mounted.current) setFirebaseUser(user ? user : null)
+    setFirebaseUser(user ? user : null)
   }, [])
 
   /**
    * ローディング状態をセットする関数
    */
   const setLoader = useCallback((loading: boolean): void => {
-    if (mounted.current) setLoading(loading)
+    setLoading(loading)
   }, [])
 
   /**

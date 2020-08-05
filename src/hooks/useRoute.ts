@@ -23,7 +23,7 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
   const privateRoute = () => {
     if (firebaseUser) {
       history.push(location.pathname)
-      // ログインしている状態でSignInページに遷移した場合'/home'にリダイレクトする
+      // ログインしている状態でSignInページに遷移した場合'/'にリダイレクトする
       if (location.pathname === Routing.signIn) {
         history.push(Routing.home)
       }
