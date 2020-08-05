@@ -1,6 +1,6 @@
-import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef } from 'react'
 import { UserType } from '../model/User/types'
+import firebase from '../model/_shared/firebase'
 
 //----------------------------------
 // type

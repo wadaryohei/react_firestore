@@ -18,3 +18,10 @@ export const LoadingComponent = (props: LoadingProps) => (
     <div>{props.text}</div>
   </div>
 )
+
+export const ContentLoadingComponent = (props: LoadingProps) => (
+  <div className={props.className}>
+    <CircularProgress />
+    <div>{props.text}</div>
+  </div>
+)

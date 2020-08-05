@@ -9,7 +9,7 @@ import { Routes } from '../../components/Routes'
 import { Loading } from '../../components/_shared/Loading'
 import { Head } from '../../components/_shared/Head'
 import { useAuthenticate } from '../../hooks/useAuthenticate'
-import { useAppPresenter } from './Presenter/UseAppPresenter'
+import { FirebaseAuthContext } from '../../context/authContext'
 
 //----------------------------------
 // component
@@ -19,18 +19,17 @@ export const App = () => {
   // hooks
   //----------------------------------
   const authenticate = useAuthenticate()
-  const presenter = useAppPresenter(authenticate.firebaseUser)
 
   return (
-    <>
+    <FirebaseAuthContext.Provider value={authenticate.firebaseUser}>
       <Head />
       {authenticate.loading && <Loading text={'Loading...'} />}
       {!authenticate.loading && (
         <Route
           path="/"
-          render={() => <Routes firebaseUser={presenter.firebaseUser()} />}
+          render={() => <Routes />}
         />
       )}
-    </>
+    </FirebaseAuthContext.Provider>
   )
 }

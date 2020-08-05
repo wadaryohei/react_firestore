@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box } from '@material-ui/core'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Post } from '../../components/_shared/Post'
@@ -15,12 +15,12 @@ import { useFetchPosts } from '../../hooks/useFetchPosts'
 import { useHomePresenter } from './HomePresenter/UseHomePresenter'
 import { PostType } from '../../model/Post/type'
 import { useLocation } from 'react-router-dom'
+import { FirebaseAuthContext } from '../../context/authContext'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface HomeProps {
-  firebaseUser: firebase.User | null
   className?: string
 }
 
@@ -31,10 +31,11 @@ export const HomeContainer = (props: HomeProps) => {
   //----------------------------------
   // hooks
   //----------------------------------
+  const auth = useContext(FirebaseAuthContext)
   const location = useLocation()
-  const form = useForm(props.firebaseUser, 'posts')
-  const fetchUsers = useFetchUsers('users', props.firebaseUser?.uid)
-  const fetchPosts = useFetchPosts('posts', props.firebaseUser)
+  const form = useForm(auth, 'posts')
+  const fetchUsers = useFetchUsers('users', auth?.uid)
+  const fetchPosts = useFetchPosts('posts', auth)
   const presenter = useHomePresenter(
     fetchUsers.fetchUserData(),
     fetchPosts.fetchPostDatas()
@@ -43,13 +44,13 @@ export const HomeContainer = (props: HomeProps) => {
   return (
     <BaseLayout className={props.className} user={presenter.viewDatas().user}>
       <Box className={'l-wrapper'}>
-        <SideBar className={'l-user'}>
-          <User
-            pathClassName={location.pathname}
-            user={presenter.viewDatas().user}
-            firebaseUser={props.firebaseUser}
-          />
-        </SideBar>
+          <SideBar className={'l-user'}>
+            <User
+              pathClassName={location.pathname}
+              user={presenter.viewDatas().user}
+              firebaseUser={auth}
+            />
+          </SideBar>
 
         <Main className={'l-timeline'}>
           <Box className={'l-timeline-inner'}>
@@ -64,7 +65,7 @@ export const HomeContainer = (props: HomeProps) => {
                     <Post
                       post={post}
                       form={form}
-                      user={props.firebaseUser}
+                      user={auth}
                       className={'l-timeline-post'}
                     />
                   </Box>
