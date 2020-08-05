@@ -68,7 +68,6 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-    console.log(`Follow ${otherUserId}`)
 
     // フォローする側とフォローされる側のusersドキュメントを取得
     const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
@@ -102,7 +101,6 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-    console.log(`unFollow ${otherUserId}`)
 
     // フォローする側とフォローされる側のusersドキュメントを取得
     const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
@@ -123,6 +121,7 @@ export const useFollow = (
     const callFollowFunc = functions.httpsCallable('follow')
     await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch((e: any) => {
       console.log(e)
+      alert('フォローに失敗しました')
     })
   }
 
@@ -135,6 +134,7 @@ export const useFollow = (
     const callUnFollowFunc = functions.httpsCallable('unFollow')
     await callUnFollowFunc({ fromUserId: fromUserId, toUserId: toUserId }).catch((e: any) => {
       console.log(e)
+      alert('フォロー解除に失敗しました')
     })
   }
 

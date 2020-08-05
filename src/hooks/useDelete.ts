@@ -58,7 +58,7 @@ export const useDelete = (): useDeleteType => {
     // cloud functionsのfunctionをアプリ側からcall
     const userDeleteFunc = firebase.functions().httpsCallable('userDelete')
     await userDeleteFunc().catch(e => {
-      console.log(e)
+      console.log(`${e}: ユーザーの削除に失敗しました。再度削除してください。`)
     })
   }
 

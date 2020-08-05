@@ -65,18 +65,23 @@ export const useAuthenticate = (): useAuthenticateType => {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
       const result = await firebase.auth().getRedirectResult()
-      if (result.credential) {
-        const theUser = await findUser(result.user?.uid)
-        if (!theUser) {
-          await writeUser(result.user)
+
+      try {
+        if (result.credential) {
+          const theUser = await findUser(result.user?.uid)
+          if (!theUser) {
+            await writeUser(result.user)
+          }
+          history.replace('/')
         }
-        history.replace('/')
+      } catch (e) {
+        alert('ユーザ認証でエラーが発生しました。')
       }
 
       if (mounted.current) {
-        setLocation(user ? user : null)
-        setUser(user ? user : null)
-        setLoader(false)
+        if (!user) history.replace('/signin')
+        setFirebaseUser(user ? user : null)
+        setLoading(false)
       }
     })
 
@@ -86,34 +91,6 @@ export const useAuthenticate = (): useAuthenticateType => {
     }
     // eslint-disable-next-line
   }, [])
-
-  /**
-   * ユーザーをセットする関数
-   */
-  const setUser = useCallback((user: firebase.User | null): void => {
-    setFirebaseUser(user ? user : null)
-  }, [])
-
-  /**
-   * ローディング状態をセットする関数
-   */
-  const setLoader = useCallback((loading: boolean): void => {
-    setLoading(loading)
-  }, [])
-
-  /**
-   * ユーザーが存在するかしないかを判定してリダイレクトする関数
-   */
-  const setLocation = useCallback(
-    (user: firebase.User | null): void => {
-      if (mounted.current) {
-        if (!user) {
-          history.replace('/signin')
-        }
-      }
-    },
-    [history]
-  )
 
   return { firebaseUser, loading }
 }
