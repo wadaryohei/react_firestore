@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import dayjs from 'dayjs'
 import { PostType } from '../model/Post/type'
 
@@ -18,7 +18,7 @@ export const useFetchPosts = (
   user: firebase.User | null
 ): useFetchPostsType => {
   const [_fetchPostDatas, _setFetchPostDatas] = useState<PostType[]>([])
-  const mounted = useRef(true)
+  const mount = useRef<boolean>(true)
 
   /**
    * 全ユーザーのPostsを取得する
@@ -30,6 +30,7 @@ export const useFetchPosts = (
       .orderBy('createdAt', 'desc')
       .onSnapshot(async snap => {
         const docs = snap.docs.map(async doc => {
+
           // PostsデータのauthorIdを元にUsersデータを取ってくる
           const _usersdoc = await firebase
             .firestore()
@@ -49,7 +50,9 @@ export const useFetchPosts = (
           }
         })
         const _datas = await Promise.all(docs)
-        _setFetchPostDatas(_datas)
+        if(mount.current) {
+          _setFetchPostDatas(_datas)
+        }
         return _datas
       })
   }, [collection])
@@ -68,7 +71,7 @@ export const useFetchPosts = (
     const unsubscribe = fetchPostsOnSnapShot()
 
     return () => {
-      mounted.current = false
+      mount.current = false
       unsubscribe()
     }
   }, [collection, user, fetchPostsOnSnapShot])

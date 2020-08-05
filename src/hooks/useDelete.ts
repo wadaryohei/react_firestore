@@ -1,5 +1,5 @@
 import firebase from '../model/_shared/firebase'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 //----------------------------------
 // type
@@ -14,6 +14,13 @@ export interface useDeleteType {
 //----------------------------------
 export const useDelete = (): useDeleteType => {
   const [_deleteLoading, _setDeleteLoading] = useState<boolean>(false)
+  const mount = useRef<boolean>(true)
+
+  useEffect(() => {
+    return () => {
+      mount.current = false
+    }
+  })
 
   /**
    * ユーザーを削除を実行するハンドラー
@@ -29,7 +36,10 @@ export const useDelete = (): useDeleteType => {
     _setDeleteLoading(true)
     await callUserDelete()
     await firebase.auth().signOut()
-    _setDeleteLoading(false)
+
+    if(mount.current) {
+      _setDeleteLoading(false)
+    }
   }
 
   /**

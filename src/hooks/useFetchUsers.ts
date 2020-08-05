@@ -17,34 +17,28 @@ export const useFetchUsers = (
   uid: string | undefined
 ): userFetchUsersType => {
   const [_fetchUser, _setFetchUser] = useState<UserType>()
-  const mounted = useRef(true)
+  const mount = useRef<boolean>(true)
+
   //----------------------------------
   // lifeCycle
   //----------------------------------
   useEffect(() => {
-    const init = async () => {
-      // ユーザー情報をonSnapShotでリアルタイム取得
-      const userUnsubscribe = await userSnapShot(collection, uid)
 
-      // コンポーネントのアンマウント時にはonSnapShotをUnsubscribeする
-      return () => {
-        userUnsubscribe()
-      }
-    }
-    init()
+    const userUnsubscribe = userSnapShot(collection, uid)
 
     return () => {
-      mounted.current = false
+      mount.current = false
+      userUnsubscribe()
     }
   }, [collection, uid])
 
   /**
    * fireStoreからユーザーを取得する
    */
-  const userSnapShot = async (
+  const userSnapShot = (
     collection: string,
     uid: string | undefined
-  ): Promise<() => void> => {
+  ): () => void => {
 
     // onSnapShotで取得したいcollection先
     const collectionRef = firebase.firestore().collection(collection).doc(uid)
@@ -63,7 +57,7 @@ export const useFetchUsers = (
               photoURL: snap.data()?.photoURL as string
             }
 
-            if (mounted.current) {
+            if(mount.current) {
               _setFetchUser(_datas)
             }
           })

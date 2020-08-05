@@ -35,7 +35,8 @@ export const useFollow = (
     return () => {
       unsubscribe()
     }
-  })
+    // eslint-disable-next-line
+  },[])
 
   /**
    * ログイン中のユーザーが他ユーザーをフォローしているかどうか
@@ -48,7 +49,7 @@ export const useFollow = (
       .collection('followers')
       .doc(userId)
       .onSnapshot((snap) => {
-        snap.exists ? setFollowing(true) : setFollowing(false)
+        snap.exists? setFollowing(true) : setFollowing(false)
       })
   }
 
