@@ -5,56 +5,54 @@ const admin = require('firebase-admin')
  * ユーザーが削除されたとき関連データを全削除する
  */
 module.exports = functions.auth.user().onDelete(async user => {
-  // バッチ処理を準備
+
   const batch = admin.firestore().batch()
 
+  //----------------------------------
+  // 削除したいRefPathを取得
+  //----------------------------------
   // UserRef
   const usersRef = admin.firestore().doc(`users/${user.uid}`)
 
   // SocialRef
   const socialRef = admin.firestore().doc(`social/${user.uid}`)
 
-  // FollowingRef
-  const followingRef = admin
-    .firestore()
-    .doc(`social/${user.uid}`)
-    .collection('following')
-    .doc(`${user.uid}`)
+  //----------------------------------
+  // Doc毎に削除が必要なものを取得する
+  //----------------------------------
+  // followersDocs
+  const followersDocs = await admin.firestore().collectionGroup('followers').where('uid', '==', user.uid).get()
 
-  // Postsドキュメント
-  const postsDocs = await admin
-    .firestore()
-    .collection('posts')
-    .where('authorId', '==', user.uid)
-    .get()
+  // followingsDocs
+  const followingsDocs = await admin.firestore().collectionGroup('followings').where('deleteId', '==', user.uid).get()
 
-  // Followersドキュメント
-  const followersDocs = await admin
-    .firestore()
-    .doc(`social/${user.uid}`)
-    .collection('followers')
-    .where(`${user.uid}`, '==', true)
-    .get()
+  // otherFollowingsDocs
+  const otherFollowingsDocs = await admin.firestore().collectionGroup('followings').where('uid', '==', user.uid).get()
 
-  // Followingドキュメント
-  const followingDoc = await admin
-    .firestore()
-    .doc(`social/${user.uid}`)
-    .collection('following')
-    .doc(`${user.uid}`)
-    .get()
+  // PostsDocs
+  const postsDocs = await admin.firestore().collection('posts').where('authorId', '==', user.uid).get()
 
+  //----------------------------------
   // バッチ処理で一括削除する
-  batch.delete(usersRef)
-  batch.delete(socialRef)
-  batch.delete(followingRef)
-  followersDocs.docs.forEach(doc => {
-    batch.delete(doc.ref)
-  })
+  //----------------------------------
   postsDocs.docs.forEach(doc => {
     batch.delete(doc.ref)
   })
 
-  // バッチ処理をコミット
+  followersDocs.docs.forEach((doc) => {
+    batch.delete(doc.ref)
+  })
+
+  followingsDocs.docs.forEach(doc => {
+    batch.delete(doc.ref)
+  })
+
+  otherFollowingsDocs.docs.forEach(doc => {
+    batch.delete(doc.ref)
+  })
+
+  batch.delete(usersRef)
+  batch.delete(socialRef)
+
   await batch.commit()
 })

@@ -45,21 +45,29 @@ export const useFetchUsers = (
     collection: string,
     uid: string | undefined
   ): Promise<() => void> => {
-    return firebase
-      .firestore()
-      .collection(collection)
-      .doc(uid)
-      .onSnapshot(snap => {
-        const _datas = {
-          id: snap.id,
-          name: snap.data()?.name as string,
-          followerCount: snap.data()?.followerCount as number,
-          followingCount: snap.data()?.followingCount as number,
-          photoURL: snap.data()?.photoURL as string
-        }
-        if (mounted.current) {
-          _setFetchUser(_datas)
-        }
+
+    // onSnapShotで取得したいcollection先
+    const collectionRef = firebase.firestore().collection(collection).doc(uid)
+    const followersRef = firebase.firestore().collection('social').doc(uid).collection('followers')
+    const followingsRef = firebase.firestore().collection('social').doc(uid).collection('followings')
+
+    // コレクションをonSnapShotで監視してusersデータにする
+    return collectionRef.onSnapshot((snap) => {
+        followersRef.onSnapshot((followersSnap) => {
+          followingsRef.onSnapshot((followingsSnap) => {
+            const _datas = {
+              id: snap.id,
+              name: snap.data()?.name as string,
+              followerCount: followersSnap.size as number,
+              followingCount: followingsSnap.size as number,
+              photoURL: snap.data()?.photoURL as string
+            }
+
+            if (mounted.current) {
+              _setFetchUser(_datas)
+            }
+          })
+        })
       })
   }
 

@@ -96,7 +96,7 @@ export const UserContainer = (props: UserProps) => {
                           onClick={() =>
                             follow.unFollow(
                               props.firebaseUser?.uid,
-                              otherUser.fetchUserData()
+                              id
                             )
                           }
                         >
@@ -110,7 +110,7 @@ export const UserContainer = (props: UserProps) => {
                           onClick={() =>
                             follow.follow(
                               props.firebaseUser?.uid,
-                              otherUser.fetchUserData()
+                              id
                             )
                           }
                         >

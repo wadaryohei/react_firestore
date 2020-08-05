@@ -10,7 +10,6 @@ service cloud.firestore {
     // writeは原則使用禁止 cerate / update / deleteを書き分ける
     //========================================================
 		match /databases/{database}/documents {
-
     //======================================
     // function
     //======================================
@@ -51,20 +50,17 @@ service cloud.firestore {
 
     // @path social - social
     match /social/{userId} {
-    	allow read;
-      allow create, update, delete: if isAuth() && authUid() == userId;
+    	allow read: if isAuth();  // create, update, delete to cloud functions
+    }
 
-    	// @path social - followers
-      match /followers/{followersId} {
-        allow read;
-        allow create, update, delete: if isAuth() && authUid() == userId;
-      }
+    // @path social - followers
+    match /{path=**}/followers/{followersId} {
+      allow read; // create, update, delete to cloud functions
+    }
 
-      // @path social - following
-      match /following/{followingId} {
-    		allow read;
-      	allow create, update, delete: if isAuth() && authUid() == followingId;
-      }
+    // @path social - following
+    match /{path=**}/followings/{followingsId} {
+      allow read; // create, update, delete to cloud functions
     }
 
     // @path posts
