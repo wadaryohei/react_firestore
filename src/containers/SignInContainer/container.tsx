@@ -25,7 +25,7 @@ export const SignInContainer = (props: SignInProps) => {
   return (
     <AuthLayout className={`${props.className} signIn`}>
       <Box>
-        <a className={'signInGitIcon'} rel='noopener noreferrer' href='https://github.com/wadaryohei' target='_blank'>
+        <a className={'signInGitIcon'} rel='noopener noreferrer' href='https://github.com/wadaryohei/react_firestore' target='_blank'>
           <GitHubIcon />
         </a>
       </Box>
