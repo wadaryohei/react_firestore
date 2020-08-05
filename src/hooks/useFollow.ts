@@ -1,144 +1,141 @@
+import { useEffect, useState } from 'react'
 import firebase from '../model/_shared/firebase'
-import { UserData } from '../model/Datas/User/types'
+import { fromUserType, toUserType } from '../model/User/types'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useFollowProps {
+export interface useFollowType {
   follow: (
-    followerId: string | undefined,
-    otherUser: UserData | undefined
+    userId: string | undefined,
+    otherUser: string | undefined
   ) => void
   unFollow: (
-    followerId: string | undefined,
-    profle: UserData | undefined
+    userId: string | undefined,
+    otherUser: string | undefined
   ) => void
+  isFollowing: () => boolean
 }
 
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFollow = (): useFollowProps => {
+export const useFollow = (
+  userId: string | undefined,
+  otherUserId: string | undefined
+): useFollowType => {
+  const [_isFollowing, setFollowing] = useState<boolean>(false)
+
+  //----------------------------------
+  // useEffect
+  //----------------------------------
+  useEffect(() => {
+    const unsubscribe = isFollowingSnapShot()
+
+    return () => {
+      unsubscribe()
+    }
+    // eslint-disable-next-line
+  },[])
+
+  /**
+   * ログイン中のユーザーが他ユーザーをフォローしているかどうか
+   */
+  const isFollowingSnapShot = (): () => void => {
+    return firebase
+      .firestore()
+      .collection('social')
+      .doc(otherUserId)
+      .collection('followers')
+      .doc(userId)
+      .onSnapshot((snap) => {
+        snap.exists? setFollowing(true) : setFollowing(false)
+      })
+  }
+
+  /**
+   * ログイン中のユーザーが他人のユーザーをフォローしているか
+   */
+  const isFollowing = (): boolean => {
+    return _isFollowing
+  }
+
   /**
    * フォローをするときの処理
    */
-  const follow = (
-    followerId: string | undefined,
-    userId: UserData | undefined
-  ): void => {
-    console.log(`Follow ${userId?.id}`)
-
-    const batch = firebase.firestore().batch()
-
-    callFollowCount(userId?.id, followerId)
-
-    const followersRef = firebase
-      .firestore()
-      .doc(`social/${followerId}`)
-      .collection('followers')
-      .doc(userId?.id)
-
-    const followingRef = firebase
-      .firestore()
-      .doc(`social/${followerId}`)
-      .collection('following')
-      .doc(followerId)
-
-    batch.set(
-      followersRef,
-      {
-        [followerId as string]: true,
-        name: userId?.name,
-        photoURL: userId?.photoURL,
-        createdAt: firebase.firestore.Timestamp.now(),
-        updatedAt: firebase.firestore.Timestamp.now()
-      },
-      { merge: true }
-    )
-
-    batch.set(
-      followingRef,
-      {
-        [userId?.id as string]: true
-      },
-      { merge: true }
-    )
-
-    batch.commit()
-  }
-
-  /**
-   * フォローを外すときの処理
-   */
-  const unFollow = (
-    followerId: string | undefined,
-    user: UserData | undefined
-  ): void => {
-    console.log(`unFollow ${user?.id}`)
-
-    const batch = firebase.firestore().batch()
-
-    callUnFollowCount(user?.id, followerId)
-
-    const followersRef = firebase
-      .firestore()
-      .doc(`social/${followerId}`)
-      .collection('followers')
-      .doc(user?.id)
-
-    const followingRef = firebase
-      .firestore()
-      .doc(`social/${followerId}`)
-      .collection('following')
-      .doc(followerId)
-
-    batch.delete(followersRef)
-    batch.update(followingRef, {
-      [user?.id as string]: firebase.firestore.FieldValue.delete()
-    })
-
-    batch.commit()
-  }
-
-  /**
-   * ユーザーのフォロー時のフォロー・フォロワー数をカウント
-   * @function userFollowCount functionsからフォロー・フォロワー数をカウントする
-   */
-  const callFollowCount = async (
-    followeredId: string | undefined,
-    followingId: string | undefined
+  const follow = async (
+    userId: string | undefined,
+    otherUserId: string | undefined
   ): Promise<void> => {
+    console.log(`Follow ${otherUserId}`)
+
+    // フォローする側とフォローされる側のusersドキュメントを取得
+    const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
+    const toUserDoc = await firebase.firestore().collection('users').doc(otherUserId).get() // 自分以外
+
+    // フォローする側のデータ
+    const fromUser: fromUserType = {
+      userId: fromUserDoc.id,
+      userDoc: {
+        name: fromUserDoc.data()?.name,
+        photoURL: fromUserDoc.data()?.photoURL
+      }
+    }
+
+    // フォローされる側のデータ
+    const toUser: toUserType = {
+      userId: toUserDoc.id,
+      userDoc: {
+        name: toUserDoc.data()?.name,
+        photoURL: toUserDoc.data()?.photoURL
+      }
+    }
+
+    await callFollow(fromUser, toUser)
+  }
+
+  /**
+   * アンフォローをするときの処理
+   */
+  const unFollow = async (
+    userId: string | undefined,
+    otherUserId: string | undefined
+  ): Promise<void> => {
+    console.log(`unFollow ${otherUserId}`)
+
+    // フォローする側とフォローされる側のusersドキュメントを取得
+    const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
+    const toUserDoc = await firebase.firestore().collection('users').doc(otherUserId).get() // 自分以外
+
+    // フォローされる側とフォローする側のデータ
+    const fromUserId: string | undefined = fromUserDoc.id
+    const toUserId: string | undefined = toUserDoc.id
+
+    await callUnFollow(fromUserId, toUserId)
+  }
+
+  /**
+   * ユーザーのフォロー・フォロワー処理
+   */
+  const callFollow = async (fromUser: fromUserType, toUser: toUserType): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const userFollowCountFunc = firebase
-      .functions()
-      .httpsCallable('userFollowCount')
-    await userFollowCountFunc({
-      followeredId: followeredId,
-      followingId: followingId
-    }).catch(e => {
+    const callFollowFunc = firebase.functions().httpsCallable('follow')
+    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch(e => {
       console.log(e)
     })
   }
 
+
   /**
-   * ユーザーのアンフォロー時のフォロー・フォロワー数をカウント
-   * @function userUnFollowCount functionsからフォロー・フォロワー数をカウントする
+   * ユーザーのアンフォロー・アンフォロワー処理
    */
-  const callUnFollowCount = async (
-    followeredId: string | undefined,
-    followingId: string | undefined
-  ): Promise<void> => {
+  const callUnFollow = async (fromUserId: string | undefined, toUserId: string | undefined): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const userUnFollowCountFunc = firebase
-      .functions()
-      .httpsCallable('userUnFollowCount')
-    await userUnFollowCountFunc({
-      followeredId: followeredId,
-      followingId: followingId
-    }).catch(e => {
+    const callUnFollowFunc = firebase.functions().httpsCallable('unFollow')
+    await callUnFollowFunc({ fromUserId: fromUserId, toUserId: toUserId }).catch(e => {
       console.log(e)
     })
   }
 
-  return { follow, unFollow }
+  return { follow, unFollow, isFollowing }
 }

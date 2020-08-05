@@ -1,35 +1,25 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
 import { Modal } from '../Modal/index'
-import { ModalHeader } from '../Modal/ModalHeader/doms'
-import { ModalContent } from '../Modal/ModalContent/doms'
-import { ModalContentText } from '../Modal/ModalContentText/doms'
-import { ModalActions } from '../Modal/ModalActions/doms'
+import { ModalHeader } from '../Modal/ModalHeader'
+import { ModalContent } from '../Modal/ModalContent'
+import { ModalContentText } from '../Modal/ModalContentText'
+import { ModalActions } from '../Modal/ModalActions'
 import { ButtonList } from '../ButtonList'
 import { Button } from '../Button'
-import { useModalProps } from '../../../hooks/useModal'
+import { useModalType } from '../../../hooks/useModal'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface DeleteModalProps {
-  modal: useModalProps
+  modal: useModalType
   onDeleteUser: () => void
 }
 
 //----------------------------------
 // component
 //----------------------------------
-export const DeleteModal = (props: DeleteModalProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
+export const DeleteModalComponent = (props: DeleteModalProps) => (
   <Modal open={props.modal.showModal()} onClose={props.modal.onCloseModal}>
     <ModalContent>
       <ModalHeader title={'アカウントを削除しますか？'} />

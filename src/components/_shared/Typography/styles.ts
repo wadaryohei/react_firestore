@@ -1,42 +1,38 @@
-/**
- * Style層
- * - CSSを記述する
- * - styledの引数でコンポーネントを受け取る
- * - CSSのネストが深くなったらコンポーネント分割を検討する
- */
 import styled from 'styled-components'
-import { TypographyDoms } from './doms'
-import { FontSize } from '../../../const/FontSize'
+import { TypographyComponent } from './doms'
 import { Margin } from '../../../const/Margin'
 import { Colors } from '../../../const/Colors'
+import { FontSize } from '../../../const/FontSize'
+import { FontWeight } from '../../../const/FontWeight'
 
-export const Typography = styled(TypographyDoms)`
-  color: ${Colors.black};
+export const TypographyStyle = styled(TypographyComponent)`
+  color: ${Colors.white};
   margin: ${Margin.m0};
 
   &.h1 {
-    font-size: ${FontSize.h1};
+    font-size: ${FontSize.lg};
+    font-weight: ${FontWeight.bold};
   }
 
   &.h2 {
-    font-size: ${FontSize.h2};
+    font-size: ${FontSize.md};
   }
 
   &.h3 {
-    font-size: ${FontSize.h3};
+    font-size: ${FontSize.md};
   }
 
   &.h4 {
-    font-size: ${FontSize.h4};
+    font-size: ${FontSize.sm};
   }
 
   &.p {
-    font-size: ${FontSize.p};
+    font-size: ${FontSize.sm};
     line-height: 2;
   }
 
   &.span {
-    font-size: ${FontSize.span};
+    font-size: ${FontSize.xs};
   }
 
   &.white {

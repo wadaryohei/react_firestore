@@ -1,19 +1,18 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
-import { Link, LinkProps } from 'react-router-dom'
+import { Link, LinkProps as RouterProps } from 'react-router-dom'
+
+//----------------------------------
+// props
+//----------------------------------
+export interface LinkProps extends RouterProps {
+  className?: string
+}
 
 //----------------------------------
 // component
 //----------------------------------
-export const LinkDoms = (props: LinkProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
-  <Link {...props}>{props.children}</Link>
+export const LinkComponent = (props: LinkProps) => (
+  <Link className={props.className} {...props}>
+    {props.children}
+  </Link>
 )

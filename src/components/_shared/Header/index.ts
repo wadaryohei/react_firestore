@@ -1,1 +1,1 @@
-export { Header } from './styles'
+export { HeaderStyle as Header } from './styles'

@@ -1,1 +1,1 @@
-export { User } from './doms'
+export { UserStyle as User } from './style'

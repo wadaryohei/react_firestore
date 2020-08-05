@@ -1,4 +1,5 @@
-import { UserData, UserPostsData } from '../../../model/Datas/User/types'
+import { UserType } from '../../../model/User/types'
+import { PostType } from '../../../model/Post/type'
 import { HomePresenterViewData } from './HomePresenterViewData'
 
 //----------------------------------
@@ -6,19 +7,15 @@ import { HomePresenterViewData } from './HomePresenterViewData'
 //----------------------------------
 export interface HomePresenter {
   viewDatas: () => HomePresenterViewData
-  isPostsDividerShow: () => boolean | undefined
-  isUsersDividerShow: (index: number) => boolean | undefined
-  isEmptyUsers: () => boolean
-  emptyUsersMessage: () => string | undefined
+  isExsistsPosts: () => boolean
 }
 
 //----------------------------------
 // presenter
 //----------------------------------
 export const useHomePresenter = (
-  _user: UserData | undefined,
-  _users: UserData[] | undefined,
-  _posts: UserPostsData[] | undefined
+  _user: UserType | undefined,
+  _posts: PostType[] | undefined
 ): HomePresenter => {
   /**
    * viewData
@@ -26,20 +23,22 @@ export const useHomePresenter = (
   const viewDatas = (): HomePresenterViewData => {
     return {
       posts: posts(),
-      user: user(),
-      users: users()
+      user: user()
     }
   }
 
   /**
    * ポストデータを返す
    */
-  const posts = (): UserPostsData[] | undefined => {
-    return _posts?.map((post: UserPostsData) => {
+  const posts = (): PostType[] | undefined => {
+    return _posts?.map((post: PostType) => {
       return {
         docId: post?.docId,
         authorId: post?.authorId,
-        postBody: post?.postBody
+        userName: post?.userName,
+        userImages: post?.userImages,
+        postBody: post?.postBody,
+        createdAt: post?.createdAt
       }
     })
   }
@@ -47,85 +46,25 @@ export const useHomePresenter = (
   /**
    * ユーザーデータを返す
    */
-  const user = (): UserData => {
+  const user = (): UserType => {
     return {
       id: _user?.id as string,
-      followerCount: followerCount(_user) as number,
-      followingCount: followingCount(_user) as number,
       name: _user?.name as string,
+      followerCount: _user?.followerCount as number,
+      followingCount: _user?.followingCount as number,
       photoURL: _user?.photoURL as string | undefined
     }
   }
 
   /**
-   * ログイン中のユーザーデータ以外を返す
+   * 取得したポストデータが存在するかどうか
    */
-  const users = (): UserData[] | undefined => {
-    return _users?.map(
-      (_user): UserData => {
-        return {
-          id: _user?.id,
-          isFollow: _user?.isFollow as boolean,
-          name: _user?.name,
-          photoURL: _user?.photoURL
-        }
-      }
-    )
-  }
-
-  /**
-   * フォローが何人いるかどうか
-   */
-  const followingCount = (users: UserData | undefined) => {
-    return users?.followingCount === 0 ? 0 : users?.followingCount
-  }
-
-  /**
-   * フォロワーが何人いるかどうか
-   */
-  const followerCount = (users: UserData | undefined) => {
-    return users?.followerCount === 0 ? 0 : users?.followerCount
-  }
-
-  /**
-   * postsが1件でも存在すればDividerを表示させる
-   */
-  const isPostsDividerShow = (): boolean | undefined => {
-    return _posts?.length ? true : false
-  }
-
-  /**
-   * 最後のUsers情報にはDividerを表示しない
-   */
-  const isUsersDividerShow = (index: number): boolean | undefined => {
-    if (_users !== undefined) {
-      return _users.length - 1 !== index
-    }
-  }
-
-  /**
-   * ユーザーが誰もいないかどうかを判定
-   */
-  const isEmptyUsers = (): boolean => {
-    return _users === undefined || _users?.length === 0 ? true : false
-  }
-
-  /**
-   * ユーザーが存在しない場合に表示する文言
-   */
-  const emptyUsersMessage = (): string | undefined => {
-    if (_users === undefined || _users?.length === 0) {
-      return '他にユーザーが存在しません'
-    } else {
-      return
-    }
+  const isExsistsPosts = (): boolean => {
+    return _posts !== undefined && _posts.length !== 0 ? true : false
   }
 
   return {
     viewDatas,
-    isPostsDividerShow,
-    isUsersDividerShow,
-    isEmptyUsers,
-    emptyUsersMessage
+    isExsistsPosts
   }
 }

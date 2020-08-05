@@ -1,1 +1,1 @@
-export { Link } from './styles'
+export { LinkStyle as Link } from './styles'

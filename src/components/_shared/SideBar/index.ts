@@ -1,1 +1,1 @@
-export { SideBar } from './styles'
+export { SideBarStyle as SideBar } from './styles'

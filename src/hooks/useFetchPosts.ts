@@ -1,12 +1,13 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { UserPostsData } from '../model/Datas/User/types'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import dayjs from 'dayjs'
+import { PostType } from '../model/Post/type'
 
 //----------------------------------
-// interface
+// type
 //----------------------------------
-export interface useFetchPostsProps {
-  fetchUserPostData: () => UserPostsData[] | undefined
+export interface useFetchPostsType {
+  fetchPostDatas: () => PostType[] | undefined
 }
 
 //----------------------------------
@@ -15,56 +16,67 @@ export interface useFetchPostsProps {
 export const useFetchPosts = (
   collection: string,
   user: firebase.User | null
-): useFetchPostsProps => {
-  const [_fetchPostData, _setFetchPostData] = useState<UserPostsData[]>([])
-  const mounted = useRef(true)
+): useFetchPostsType => {
+  const [_fetchPostDatas, _setFetchPostDatas] = useState<PostType[]>([])
+  const mount = useRef<boolean>(true)
 
   /**
-   * fireStoreからユーザー情報をonSnapShotでリアルタイムに取得する
+   * 全ユーザーのPostsを取得する
    */
-  const fetchUserPostonSnapShot = useCallback((): (() => void) => {
-    // ログイン中のユーザー（自分自身の）ポスト情報をpostコレクションのauthorIdから抽出
+  const fetchPostsOnSnapShot = useCallback((): (() => void) => {
     return firebase
       .firestore()
       .collection(collection)
-      .where('authorId', '==', user?.uid)
       .orderBy('createdAt', 'desc')
-      .onSnapshot(snap => {
-        const snapDocs = snap.docs.map(doc => {
+      .onSnapshot(async snap => {
+        const docs = snap.docs.map(async doc => {
+
+          // PostsデータのauthorIdを元にUsersデータを取ってくる
+          const _usersdoc = await firebase
+            .firestore()
+            .collection('users')
+            .doc(doc.data().authorId)
+            .get()
+
           return {
             docId: doc.id,
-            authorId: doc.data().authorId as string,
-            postBody: doc.data().postBody as string
+            authorId: _usersdoc.id as string,
+            userName: _usersdoc.data()?.name as string,
+            userImages: _usersdoc.data()?.photoURL as string,
+            postBody: doc.data().postBody as string,
+            createdAt: dayjs(doc.data().createdAt.toDate()).format(
+              'YYYY/MM/DD hh:mm:ss'
+            )
           }
         })
-        if (mounted.current) {
-          _setFetchPostData(snapDocs)
+        const _datas = await Promise.all(docs)
+        if(mount.current) {
+          _setFetchPostDatas(_datas)
         }
+        return _datas
       })
-  }, [collection, user])
+  }, [collection])
+
   /**
-   * DBから取得したポストデータを返す
+   * DBから取得した全ユーザーのポストデータを返す
    */
-  const fetchUserPostData = (): UserPostsData[] | undefined => {
-    return _fetchPostData
+  const fetchPostDatas = (): PostType[] | undefined => {
+    return _fetchPostDatas
   }
 
   //----------------------------------
   // lifeCycle
   //----------------------------------
   useEffect(() => {
-    // ポスト情報をonSnapShot
-    const unsubscribe = fetchUserPostonSnapShot()
+    const unsubscribe = fetchPostsOnSnapShot()
 
     return () => {
-      mounted.current = false
-
-      // コンポーネントのアンマウント時にonSnapShotをUnsubscribe
+      mount.current = false
       unsubscribe()
     }
-  }, [collection, user, fetchUserPostonSnapShot])
+  }, [collection, user, fetchPostsOnSnapShot])
 
   return {
-    fetchUserPostData
+    fetchPostDatas
   }
 }

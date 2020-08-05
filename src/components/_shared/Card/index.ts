@@ -1,1 +1,1 @@
-export { Card } from './styles'
+export { CardStyle as Card } from './styles'

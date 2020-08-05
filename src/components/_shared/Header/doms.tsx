@@ -1,39 +1,40 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Container } from '@material-ui/core'
 import { Typography } from '../Typography'
-import { CardMedia } from '../CardMedia'
-import { UserData } from '../../../model/Datas/User/types'
+import { Link } from '../Link'
+import { Image } from '../Image'
+import { UserType } from '../../../model/User/types'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface HeaderProps {
-  user: UserData | undefined
+  user: UserType | undefined
   className?: string
 }
 
 //----------------------------------
 // component
 //----------------------------------
-export const HeaderDoms = (props: HeaderProps) => {
-  //----------------------------------
-  // render
-  //----------------------------------
+export const HeaderComponent = (props: HeaderProps) => {
   return (
     <header className={props.className}>
-      <div>
-        <Typography variant={'h1'} color={'white'}>
-          React × Firebase
-        </Typography>
-        <Link to={`/user/${props.user?.id}`}>
-          <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
+      <Container className={'headerContainer'} maxWidth={'md'}>
+        <Link to={'/home'}>
+          <Typography component={'h1'} color={'white'}>
+            React × Firebase
+          </Typography>
         </Link>
-      </div>
+        <Link to={`/user/${props.user?.id}`}>
+          <Image
+            className={'headerImage'}
+            src={props.user?.photoURL}
+            alt={props.user?.photoURL}
+            width={80}
+            height={80}
+          />
+        </Link>
+      </Container>
     </header>
   )
 }

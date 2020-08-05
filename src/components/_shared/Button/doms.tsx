@@ -1,10 +1,3 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
 
 //----------------------------------
@@ -12,7 +5,7 @@ import React from 'react'
 //----------------------------------
 export interface ButtonProps {
   children: React.ReactNode
-  color: 'primary' | 'secondary' | 'cancel' | 'default' | 'border'
+  color: 'primary' | 'cancel' | 'default' | 'border'
   size: 'lg' | 'md' | 'sm'
   className?: string
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
@@ -21,7 +14,7 @@ export interface ButtonProps {
 //----------------------------------
 // component
 //----------------------------------
-export const ButtonDoms = (props: ButtonProps) => {
+export const ButtonComponent = (props: ButtonProps) => {
   switch (props.color) {
     case 'primary':
       return (
@@ -33,10 +26,10 @@ export const ButtonDoms = (props: ButtonProps) => {
         </button>
       )
 
-    case 'secondary':
+    case 'default':
       return (
         <button
-          className={`${props.className} ${props.size} secondary`}
+          className={`${props.className} ${props.size} default`}
           onClick={e => props.onClick(e)}
         >
           {props.children}
@@ -57,16 +50,6 @@ export const ButtonDoms = (props: ButtonProps) => {
       return (
         <button
           className={`${props.className} ${props.size} border`}
-          onClick={e => props.onClick(e)}
-        >
-          {props.children}
-        </button>
-      )
-
-    case 'default':
-      return (
-        <button
-          className={`${props.className} ${props.size} default`}
           onClick={e => props.onClick(e)}
         >
           {props.children}

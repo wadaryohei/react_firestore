@@ -1,21 +1,15 @@
-/**
- * DOM層
- * - 宣言的UIを記述する
- * - データをPropsで受け取る
- * - 出し分け以外のロジックはContainer層で書く
- *   - props => ()とすることにより、余計なロジックが入らないようにする
- */
 import React from 'react'
-import { CardMedia } from '../CardMedia/index'
-import { Typography } from '../Typography/index'
-import { UserData } from '../../../model/Datas/User/types'
+import { Typography } from '../Typography'
+import { Image } from '../Image'
+import { UserType } from '../../../model/User/types'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface UserProps {
-  user: UserData | undefined
+  user: UserType | undefined
   firebaseUser: firebase.User | null
+  pathClassName?: string
   className?: string
   children?: React.ReactNode
 }
@@ -23,24 +17,39 @@ export interface UserProps {
 //----------------------------------
 // component
 //----------------------------------
-export const User = (props: UserProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
-  <>
-    <CardMedia imgSrc={props.user?.photoURL} alt={props.user?.photoURL} />
-    <Typography variant={'p'}>LoginName / {props.user?.name}</Typography>
-    <Typography variant={'p'}>UserId / {props.user?.id}</Typography>
-    {props.user?.followingCount !== undefined && (
-      <Typography variant={'p'}>
-        フォロー / {props.user?.followingCount}
-      </Typography>
-    )}
-    {props.user?.followerCount !== undefined && (
-      <Typography variant={'p'}>
-        フォロワー / {props.user?.followerCount}
-      </Typography>
-    )}
+export const UserComponent = (props: UserProps) => (
+  <div className={props.className}>
+    <Image
+      src={props.user?.photoURL}
+      alt={props.user?.photoURL}
+      width={120}
+      height={120}
+    />
+    <Typography
+      component={'p'}
+      className={`userTypography name ${props.pathClassName}`}
+    >
+      {props.user?.name}
+    </Typography>
+
+    <div>
+      {props.user?.followingCount !== undefined && (
+        <Typography
+          component={'p'}
+          className={`userTypography ${props.pathClassName}`}
+        >
+          フォロー / {props.user?.followingCount}
+        </Typography>
+      )}
+      {props.user?.followerCount !== undefined && (
+        <Typography
+          component={'p'}
+          className={`userTypography ${props.pathClassName}`}
+        >
+          フォロワー / {props.user?.followerCount}
+        </Typography>
+      )}
+    </div>
     {props.children}
-  </>
+  </div>
 )

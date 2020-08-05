@@ -1,8 +1,3 @@
-/**
- * Container層
- * - スタイルコンポーネントにデータを渡す
- * - ロジックが必要な場合は、ここに記述する
- */
 import React from 'react'
 
 //----------------------------------
@@ -16,9 +11,6 @@ export interface SideBarProps {
 //----------------------------------
 // component
 //----------------------------------
-export const SideBarDoms = (props: SideBarProps) => (
-  //----------------------------------
-  // render
-  //----------------------------------
+export const SideBarComponent = (props: SideBarProps) => (
   <div className={props.className}>{props.children}</div>
 )
