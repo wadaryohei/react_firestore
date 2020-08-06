@@ -22,10 +22,7 @@ ReactとFirebaseでこういう機能を実装したいけど取っ掛かりと�
 
 ## Functional
 
-![02](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_02.png "02")
-
-![03](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_03.png "03")
-
+![02](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_02.png "02") ![03](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_03.png "03")
 
 
 ### Firebase / FireStore / CloudFnction
