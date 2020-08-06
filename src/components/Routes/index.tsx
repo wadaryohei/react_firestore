@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, useLocation } from 'react-router-dom'
 import { HomeContainer } from '../../containers/HomeContainer'
 import { UserContainer } from '../../containers/UserContainer'
@@ -6,24 +6,19 @@ import { SignOutContainer } from '../../containers/SignOutContainer'
 import { SignInContainer } from '../../containers/SignInContainer'
 import { Routing } from '../../const/Routing'
 import { useRoute } from '../../hooks/useRoute'
-
-//----------------------------------
-// props
-//----------------------------------
-export interface RoutesProps {
-  firebaseUser: firebase.User | null
-}
+import { FirebaseAuthContext } from '../../context/authContext'
 
 //----------------------------------
 // component
 //----------------------------------
-export const Routes = (props: RoutesProps) => {
+export const Routes = () => {
   //----------------------------------
   // hooks
   //----------------------------------
-  // ルーティングに関するロジックをCustom Hooksに集約
-  useRoute(props.firebaseUser)
+  const auth = useContext(FirebaseAuthContext)
   const location = useLocation()
+  // ルーティングに関するロジックをCustom Hooksに集約
+  useRoute(auth)
 
   return (
     <>
@@ -34,18 +29,10 @@ export const Routes = (props: RoutesProps) => {
       <Route exact path={Routing.signOut} component={SignOutContainer} />
 
       {/** @Route Home */}
-      <Route
-        exact
-        path={Routing.home}
-        render={() => <HomeContainer firebaseUser={props.firebaseUser} />}
-      />
+      <Route exact path={Routing.home} render={() => <HomeContainer />} />
 
       {/** @Route User */}
-      <Route
-        key={location.pathname}
-        path={Routing.userId}
-        render={() => <UserContainer firebaseUser={props.firebaseUser} />}
-      />
+      <Route key={location.pathname} path={Routing.userId} render={() => <UserContainer />} />
     </>
   )
 }

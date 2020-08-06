@@ -9,6 +9,14 @@ export const SignInContainerStyle = styled(SignInContainer)`
     color: ${Colors.black};
   }
 
+  .signInServicesLogo {
+    display: flex;
+    margin-bottom: ${Margin.m40};
+    svg {
+      width: 120px;
+    }
+  }
+
   .signInGitIcon {
     color: ${Colors.black};
   }

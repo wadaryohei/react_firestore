@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CircularProgress, Grid, Container, Box } from '@material-ui/core'
 import { useParams, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
@@ -11,15 +11,15 @@ import { User } from '../../components/_shared/User'
 import { useFetchUsers } from '../../hooks/useFetchUsers'
 import { useDelete } from '../../hooks/useDelete'
 import { useModal } from '../../hooks/useModal'
+import { useFollow } from '../../hooks/useFollow'
 import { Margin } from '../../const/Margin'
 import { useUserPresenter } from './UserPresenter/UseUserPresenter'
-import { useFollow } from '../../hooks/useFollow'
+import { FirebaseAuthContext } from '../../context/authContext'
 
 //----------------------------------
 // props
 //----------------------------------
 export interface UserProps {
-  firebaseUser: firebase.User | null
   className?: string
 }
 
@@ -30,13 +30,14 @@ export const UserContainer = (props: UserProps) => {
   //----------------------------------
   //  hooks
   //----------------------------------
+  const auth = useContext(FirebaseAuthContext)
   const { id } = useParams()
   const location = useLocation()
   const modal = useModal()
-  const follow = useFollow(props.firebaseUser?.uid, id)
+  const follow = useFollow(auth?.uid, id)
   const deleted = useDelete()
   const otherUser = useFetchUsers('users', id)
-  const currentUser = useFetchUsers('users', props.firebaseUser?.uid)
+  const currentUser = useFetchUsers('users', auth?.uid)
   const presenter = useUserPresenter(
     otherUser.fetchUserData(),
     currentUser.fetchUserData()
@@ -65,9 +66,9 @@ export const UserContainer = (props: UserProps) => {
                 <User
                   pathClassName={location.pathname}
                   user={presenter.viewDatas().user}
-                  firebaseUser={props.firebaseUser}
+                  firebaseUser={auth}
                 >
-                  {id === props.firebaseUser?.uid && (
+                  {id === auth?.uid && (
                   <Box mb={Margin.m16} className={'l-user-info'}>
                     <Button
                       size={'sm'}
@@ -82,7 +83,7 @@ export const UserContainer = (props: UserProps) => {
                   </Box>
                   )}
 
-                  {id !== props.firebaseUser?.uid && (
+                  {id !== auth?.uid && (
                     <Box my={Margin.m8}>
                       {follow.isFollowing() && (
                         <Button
@@ -90,7 +91,7 @@ export const UserContainer = (props: UserProps) => {
                           color={'border'}
                           onClick={() =>
                             follow.unFollow(
-                              props.firebaseUser?.uid,
+                              auth?.uid,
                               id
                             )
                           }
@@ -104,7 +105,7 @@ export const UserContainer = (props: UserProps) => {
                           color={'primary'}
                           onClick={() =>
                             follow.follow(
-                              props.firebaseUser?.uid,
+                              auth?.uid,
                               id
                             )
                           }
