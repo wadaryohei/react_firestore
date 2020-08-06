@@ -16,9 +16,10 @@ export const PostFormStyle = styled(PostFormComponent)`
     border-radius: 4px 0 0 4px;
     border: none;
     width: 90%;
+    font-size: 16px;
 
     @media ${max(BreakPoints.md)} {
-      width: 80%;
+      width: 90%;
     }
 
     &:focus {
@@ -27,6 +28,9 @@ export const PostFormStyle = styled(PostFormComponent)`
   }
 
   input[type='submit'] {
+    -webkit-box-sizing: content-box;
+    -webkit-appearance: button;
+    appearance: button;
     padding: 14px;
     border: none;
     border-radius: 0 4px 4px 0;
@@ -37,7 +41,7 @@ export const PostFormStyle = styled(PostFormComponent)`
     cursor: pointer;
 
     @media ${max(BreakPoints.md)} {
-      width: 20%;
+      width: 10%;
     }
 
     &:disabled {
