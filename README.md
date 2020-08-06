@@ -2,8 +2,6 @@
 
 React ✕ FireBase(FireStore) [https://react-test-93253.firebaseapp.com/](https://react-test-93253.firebaseapp.com/)
 
-![01](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_01.png "01")
-
 ## About
 ReactとFirebase(FireStore)で作ったチャットツールです。
 ReactではTypescriptベースでのFunctionalComponentやHooksなどを使用したモダンなフロントエンドのコードで開発。
@@ -22,9 +20,6 @@ ReactとFirebaseでこういう機能を実装したいけど取っ掛かりと�
 
 ## Functional
 
-![02](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_02.png "02") ![03](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_03.png "03")
-
-
 ### Firebase / FireStore / CloudFnction
 * Google認証によるログイン/ログアウト機能
 * テキストメッセージの投稿と投稿の削除機能
@@ -38,5 +33,11 @@ ReactとFirebaseでこういう機能を実装したいけど取っ掛かりと�
 * 責務の分離を意識したレイヤー毎の設計
 * コンポーネント間の依存注入レイヤーを考慮したContainer / Presentational設計
 * StyledComponentによるJSベースのスタイル設計
+
+![01](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_01.png "01")
+
+![02](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_02.png "02")
+
+![03](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_03.png "03")
 
 ![04](https://github.com/wadaryohei/react_firestore/blob/images/react_firebase_04.png "04")
