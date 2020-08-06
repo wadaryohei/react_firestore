@@ -19,7 +19,7 @@ export const HomeContainerStyle = styled(HomeContainer)`
     text-align: center;
 
     @media ${max(BreakPoints.md)} {
-      padding: 0 ${Padding.p16};
+      display: none;
     }
   }
 
@@ -28,6 +28,12 @@ export const HomeContainerStyle = styled(HomeContainer)`
     margin-left: 24%;
     border-left: solid 1px ${Colors.border};
     overflow-y: scroll;
+
+    @media ${max(BreakPoints.md)} {
+      width: 100%;
+      margin-left: 0;
+      border-left: none;
+    }
 
     .l-timeline-inner {
       padding: ${Padding.p112} 16px 16px;
