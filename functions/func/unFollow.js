@@ -14,8 +14,16 @@ module.exports = functions.https.onCall(async (data, context) => {
 
   // フォローする側は自分のfollowingに相手の情報を入れる
   // フォローされる側は相手の情報を自分のfollowerに入れる
-  const followingsRef = admin.firestore().doc(`social/${fromUserId}`).collection('followings').doc(toUserId) // followings
-  const followersRef = admin.firestore().doc(`social/${toUserId}`).collection('followers').doc(fromUserId) // followers
+  const followingsRef = admin
+    .firestore()
+    .doc(`social/${fromUserId}`)
+    .collection('followings')
+    .doc(toUserId) // followings
+  const followersRef = admin
+    .firestore()
+    .doc(`social/${toUserId}`)
+    .collection('followers')
+    .doc(fromUserId) // followers
 
   // それぞれのドキュメントを削除する
   batch.delete(followingsRef)
