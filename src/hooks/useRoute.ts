@@ -21,12 +21,13 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
    * ログインしているかどうかで遷移できるRoutingを判断するナビゲーションガード
    */
   const privateRoute = () => {
-    if (firebaseUser) {
-      history.push(location.pathname)
-      // ログインしている状態でSignInページに遷移した場合'/'にリダイレクトする
-      if (location.pathname === Routing.signIn) {
-        history.push(Routing.home)
-      }
+    if (!firebaseUser) {
+      history.push(Routing.signIn)
+    }
+
+    // ログインしている状態でSignInページに遷移した場合'/'にリダイレクトする
+    if (location.pathname === Routing.signIn) {
+      history.push(Routing.home)
     }
   }
 }

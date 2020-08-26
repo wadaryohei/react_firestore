@@ -19,17 +19,11 @@ export const App = () => {
   // hooks
   //----------------------------------
   const authenticate = useAuthenticate()
-
   return (
     <FirebaseAuthContext.Provider value={authenticate.firebaseUser}>
       <Head />
       {authenticate.loading && <Loading text={'Loading...'} />}
-      {!authenticate.loading && (
-        <Route
-          path="/"
-          render={() => <Routes />}
-        />
-      )}
+      {!authenticate.loading && <Route path="/" render={() => <Routes />} />}
     </FirebaseAuthContext.Provider>
   )
 }

@@ -7,7 +7,7 @@ import { UserType } from '../../../model/User/types'
 // props
 //----------------------------------
 export interface UserProps {
-  user: UserType | undefined
+  user: UserType
   firebaseUser: firebase.User | null
   pathClassName?: string
   className?: string
@@ -20,8 +20,8 @@ export interface UserProps {
 export const UserComponent = (props: UserProps) => (
   <div className={props.className}>
     <Image
-      src={props.user?.photoURL}
-      alt={props.user?.photoURL}
+      src={props.user.photoURL}
+      alt={props.user.photoURL}
       width={120}
       height={120}
     />
@@ -29,24 +29,28 @@ export const UserComponent = (props: UserProps) => (
       component={'p'}
       className={`userTypography name ${props.pathClassName}`}
     >
-      {props.user?.name}
+      {props.user.name}
     </Typography>
 
     <div>
-      {props.user?.followingCount !== undefined && (
+      {props.user.followingCount !== undefined && (
         <Typography
           component={'p'}
           className={`userTypography ${props.pathClassName}`}
         >
-          フォロー / <Typography component={'span'}>{props.user?.followingCount}</Typography>
+          フォロー /{' '}
+          <Typography component={'span'}>
+            {props.user.followingCount}
+          </Typography>
         </Typography>
       )}
-      {props.user?.followerCount !== undefined && (
+      {props.user.followerCount !== undefined && (
         <Typography
           component={'p'}
           className={`userTypography ${props.pathClassName}`}
         >
-          フォロワー / <Typography component={'span'}>{props.user?.followerCount}</Typography>
+          フォロワー /{' '}
+          <Typography component={'span'}>{props.user.followerCount}</Typography>
         </Typography>
       )}
     </div>

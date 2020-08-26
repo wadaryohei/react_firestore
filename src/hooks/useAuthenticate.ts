@@ -1,6 +1,7 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
+import { FireModel } from '../model/_shared/FireModel'
 
 //----------------------------------
 // type
@@ -22,16 +23,15 @@ export const useAuthenticate = (): useAuthenticateType => {
   /**
    * ユーザーのドキュメントが存在するか確認する
    */
-  const findUser = useCallback(async (uid: string | undefined): Promise<
+  const findUser = useCallback(async (uid: string): Promise<
     firebase.firestore.DocumentSnapshot | undefined
   > => {
-    const userDoc = await firebase
-      .firestore()
-      .collection('users')
-      .doc(uid)
-      .get()
+    const userModel = new FireModel(`users/${uid}`)
+    const userDoc = await userModel.getDocumentDatas()
     // ドキュメントが存在するかチェック
-    if (userDoc.exists) return userDoc
+    if (userDoc?.exists) {
+      return userDoc
+    }
     return
   }, [])
 
@@ -40,23 +40,19 @@ export const useAuthenticate = (): useAuthenticateType => {
    */
   const writeUser = useCallback(async (user: firebase.User | null) => {
     // ユーザーが存在しないのでDBにユーザー情報をWrite
-    if (user) {
-      await firebase
-        .firestore()
-        .collection('users')
-        .doc(user?.uid)
-        .set(
-          {
-            name: user?.displayName,
-            photoURL: user?.photoURL,
-            followerCount: 0,
-            followingCount: 0,
-            createdAt: firebase.firestore.Timestamp.now(),
-            updatedAt: firebase.firestore.Timestamp.now()
-          },
-          { merge: true }
-        )
-    }
+    await firebase
+      .firestore()
+      .collection('users')
+      .doc(user?.uid)
+      .set(
+        {
+          name: user?.displayName,
+          photoURL: user?.photoURL,
+          createdAt: firebase.firestore.Timestamp.now(),
+          updatedAt: firebase.firestore.Timestamp.now()
+        },
+        { merge: true }
+      )
   }, [])
 
   //----------------------------------
@@ -67,15 +63,13 @@ export const useAuthenticate = (): useAuthenticateType => {
       const result = await firebase.auth().getRedirectResult()
 
       try {
-        if (result.credential) {
-          const theUser = await findUser(result.user?.uid)
-          if (!theUser) {
-            await writeUser(result.user)
-          }
+        if (result.credential && result?.user?.uid) {
+          const theUser = await findUser(result.user.uid)
+          if (!theUser) await writeUser(result.user)
           history.replace('/')
         }
       } catch (e) {
-        alert('ユーザ認証でエラーが発生しました。')
+        alert(`${e} ユーザ認証でエラーが発生しました。`)
       }
 
       if (mounted.current) {
@@ -89,8 +83,7 @@ export const useAuthenticate = (): useAuthenticateType => {
       mounted.current = false
       unsubscribe()
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [findUser, history, writeUser])
 
   return { firebaseUser, loading }
 }

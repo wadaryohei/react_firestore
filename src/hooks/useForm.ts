@@ -22,8 +22,8 @@ export interface useFormType {
 // hooks
 //----------------------------------
 export const useForm = (
-  user: firebase.User | null,
-  collection: string
+  collection: string,
+  user: firebase.User | null
 ): useFormType => {
   /**
    * テキスト入力のステート
@@ -67,8 +67,8 @@ export const useForm = (
    * クリックボタンを押したときフィールドのテキストを保存する
    */
   const onClick = (text: string): void => {
-    setTextData(text).catch((e) => {
-      alert('投稿に失敗しました。')
+    setTextData(text).catch(e => {
+      alert(`${e} 投稿に失敗しました。`)
     })
   }
 
@@ -120,11 +120,13 @@ export const useForm = (
    * フォームのDeleteボタンを押したときDBから削除する
    */
   const onDelete = async (docId: string | undefined): Promise<void> => {
-    const snapShot = firebase
-      .firestore()
-      .collection(collection)
-      .doc(docId)
-    await snapShot.delete()
+    if (docId) {
+      const snapShot = firebase
+        .firestore()
+        .collection(collection)
+        .doc(docId)
+      await snapShot.delete()
+    }
   }
 
   /**

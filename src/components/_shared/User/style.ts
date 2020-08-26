@@ -30,7 +30,6 @@ export const UserStyle = styled(UserComponent)`
       }
     }
 
-
     &.name {
       font-weight: ${FontWeight.bold};
     }
