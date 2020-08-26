@@ -50,9 +50,7 @@ export const UserComponent = (props: UserProps) => (
           className={`userTypography ${props.pathClassName}`}
         >
           フォロワー /{' '}
-          <Typography component={'span'}>
-            {props.user.followerCount}
-          </Typography>
+          <Typography component={'span'}>{props.user.followerCount}</Typography>
         </Typography>
       )}
     </div>
