@@ -2,12 +2,13 @@ import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import dayjs from 'dayjs'
 import { PostType } from '../model/Post/type'
+import { FireModel } from '../model/_shared/FireModel'
 
 //----------------------------------
 // type
 //----------------------------------
 export interface useFetchPostsType {
-  fetchPostDatas: () => PostType[] | undefined
+  fetchPostDatas: () => PostType[]
 }
 
 //----------------------------------
@@ -30,19 +31,15 @@ export const useFetchPosts = (
       .orderBy('createdAt', 'desc')
       .onSnapshot(async snap => {
         const docs = snap.docs.map(async doc => {
-
           // PostsデータのauthorIdを元にUsersデータを取ってくる
-          const _usersdoc = await firebase
-            .firestore()
-            .collection('users')
-            .doc(doc.data().authorId)
-            .get()
+          const usersModel = new FireModel(`users/${doc.data().authorId}`)
+          const usersDocs = await usersModel.getDocumentDatas()
 
           return {
-            docId: doc.id,
-            authorId: _usersdoc.id as string,
-            userName: _usersdoc.data()?.name as string,
-            userImages: _usersdoc.data()?.photoURL as string,
+            docId: doc.id as string,
+            authorId: usersDocs?.id as string,
+            userName: usersDocs?.data()?.name as string,
+            userImages: usersDocs?.data()?.photoURL as string,
             postBody: doc.data().postBody as string,
             createdAt: dayjs(doc.data().createdAt.toDate()).format(
               'YYYY/MM/DD hh:mm:ss'
@@ -50,7 +47,7 @@ export const useFetchPosts = (
           }
         })
         const _datas = await Promise.all(docs)
-        if(mount.current) {
+        if (mount.current) {
           _setFetchPostDatas(_datas)
         }
         return _datas
@@ -60,7 +57,7 @@ export const useFetchPosts = (
   /**
    * DBから取得した全ユーザーのポストデータを返す
    */
-  const fetchPostDatas = (): PostType[] | undefined => {
+  const fetchPostDatas = (): PostType[] => {
     return _fetchPostDatas
   }
 

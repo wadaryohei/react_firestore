@@ -14,8 +14,8 @@ export interface HomePresenter {
 // presenter
 //----------------------------------
 export const useHomePresenter = (
-  _user: UserType | undefined,
-  _posts: PostType[] | undefined
+  _user: UserType,
+  _posts: PostType[]
 ): HomePresenter => {
   /**
    * viewData
@@ -30,15 +30,15 @@ export const useHomePresenter = (
   /**
    * ポストデータを返す
    */
-  const posts = (): PostType[] | undefined => {
-    return _posts?.map((post: PostType) => {
+  const posts = (): PostType[] => {
+    return _posts.map((post: PostType) => {
       return {
-        docId: post?.docId,
-        authorId: post?.authorId,
-        userName: post?.userName,
-        userImages: post?.userImages,
-        postBody: post?.postBody,
-        createdAt: post?.createdAt
+        docId: post.docId,
+        authorId: post.authorId,
+        userName: post.userName,
+        userImages: post.userImages,
+        postBody: post.postBody,
+        createdAt: post.createdAt
       }
     })
   }
@@ -48,11 +48,11 @@ export const useHomePresenter = (
    */
   const user = (): UserType => {
     return {
-      id: _user?.id as string,
-      name: _user?.name as string,
-      followerCount: _user?.followerCount as number,
-      followingCount: _user?.followingCount as number,
-      photoURL: _user?.photoURL as string | undefined
+      id: _user.id as string,
+      name: _user.name as string,
+      followerCount: _user.followerCount as number,
+      followingCount: _user.followingCount as number,
+      photoURL: _user.photoURL as string
     }
   }
 
