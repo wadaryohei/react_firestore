@@ -32,7 +32,7 @@ module.exports = functions.https.onCall(async (data, context) => {
       uid: toUser.userId,
       deleteId: fromUser.userId,
       name: toUser.userDoc.name,
-      photoURL: toUser.userDoc.photoURL,
+      photoURL: toUser.userDoc.photoURL
     },
     { merge: true }
   )
@@ -43,7 +43,7 @@ module.exports = functions.https.onCall(async (data, context) => {
     {
       uid: fromUser.userId,
       name: fromUser.userDoc.name,
-      photoURL: fromUser.userDoc.photoURL,
+      photoURL: fromUser.userDoc.photoURL
     },
     { merge: true }
   )

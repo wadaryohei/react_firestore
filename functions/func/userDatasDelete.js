@@ -55,7 +55,7 @@ module.exports = functions.auth.user().onDelete(async user => {
     batch.delete(doc.ref)
   })
 
-  followersDocs.docs.forEach((doc) => {
+  followersDocs.docs.forEach(doc => {
     batch.delete(doc.ref)
   })
 
