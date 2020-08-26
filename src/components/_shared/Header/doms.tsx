@@ -9,7 +9,7 @@ import { UserType } from '../../../model/User/types'
 // props
 //----------------------------------
 export interface HeaderProps {
-  user: UserType | undefined
+  user: UserType
   className?: string
 }
 
@@ -25,11 +25,11 @@ export const HeaderComponent = (props: HeaderProps) => {
             React × Firebase
           </Typography>
         </Link>
-        <Link to={`/user/${props.user?.id}`}>
+        <Link to={`/user/${props.user.id}`}>
           <Image
             className={'headerImage'}
-            src={props.user?.photoURL}
-            alt={props.user?.photoURL}
+            src={props.user.photoURL}
+            alt={props.user.photoURL}
             width={80}
             height={80}
           />
