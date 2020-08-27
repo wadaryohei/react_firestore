@@ -9,7 +9,7 @@ export interface UserType {
 export interface fromUserType {
   userId: string | undefined
   userDoc: {
-    name: string,
+    name: string
     photoURL: string
   }
 }
@@ -17,7 +17,7 @@ export interface fromUserType {
 export interface toUserType {
   userId: string | undefined
   userDoc: {
-    name: string,
+    name: string
     photoURL: string
   }
 }

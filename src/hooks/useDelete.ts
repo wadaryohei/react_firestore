@@ -37,7 +37,7 @@ export const useDelete = (): useDeleteType => {
     await callUserDelete()
     await firebase.auth().signOut()
 
-    if(mount.current) {
+    if (mount.current) {
       _setDeleteLoading(false)
     }
   }

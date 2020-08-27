@@ -1,20 +1,14 @@
 import { useEffect, useState } from 'react'
-import firebase from '../model/_shared/firebase'
 import { functions } from '../model/_shared/functions'
 import { fromUserType, toUserType } from '../model/User/types'
+import fireModel from '../model/_shared/fireModel'
 
 //----------------------------------
 // type
 //----------------------------------
 export interface useFollowType {
-  follow: (
-    userId: string | undefined,
-    otherUser: string | undefined
-  ) => void
-  unFollow: (
-    userId: string | undefined,
-    otherUser: string | undefined
-  ) => void
+  follow: (userId: string | undefined, otherUser: string | undefined) => void
+  unFollow: (userId: string | undefined, otherUser: string | undefined) => void
   isFollowing: () => boolean
 }
 
@@ -42,16 +36,13 @@ export const useFollow = (
   /**
    * ログイン中のユーザーが他ユーザーをフォローしているかどうか
    */
-  const isFollowingSnapShot = (): () => void => {
-    return firebase
-      .firestore()
-      .collection('social')
-      .doc(otherUserId)
-      .collection('followers')
-      .doc(userId)
-      .onSnapshot((snap) => {
-        snap.exists? setFollowing(true) : setFollowing(false)
-      })
+  const isFollowingSnapShot = (): (() => void) => {
+    const followingRef = fireModel.subDocRef(
+      `social/${otherUserId}/followers/${userId}`
+    )
+    return followingRef.onSnapshot(snap => {
+      snap.exists ? setFollowing(true) : setFollowing(false)
+    })
   }
 
   /**
@@ -68,10 +59,9 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-
     // フォローする側とフォローされる側のusersドキュメントを取得
-    const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
-    const toUserDoc = await firebase.firestore().collection('users').doc(otherUserId).get() // 自分以外
+    const fromUserDoc = await fireModel.doc(`users/${userId}`) // ログイン中の自分
+    const toUserDoc = await fireModel.doc(`users/${otherUserId}`) // 自分以外
 
     // フォローする側のデータ
     const fromUser: fromUserType = {
@@ -101,10 +91,9 @@ export const useFollow = (
     userId: string | undefined,
     otherUserId: string | undefined
   ): Promise<void> => {
-
     // フォローする側とフォローされる側のusersドキュメントを取得
-    const fromUserDoc = await firebase.firestore().collection('users').doc(userId).get() // ログイン中の自分
-    const toUserDoc = await firebase.firestore().collection('users').doc(otherUserId).get() // 自分以外
+    const fromUserDoc = await fireModel.doc(`users/${userId}`) // ログイン中の自分
+    const toUserDoc = await fireModel.doc(`users/${otherUserId}`) // 自分以外
 
     // フォローされる側とフォローする側のデータ
     const fromUserId: string | undefined = fromUserDoc.id
@@ -116,23 +105,33 @@ export const useFollow = (
   /**
    * ユーザーのフォロー・フォロワー処理
    */
-  const callFollow = async (fromUser: fromUserType, toUser: toUserType): Promise<void> => {
+  const callFollow = async (
+    fromUser: fromUserType,
+    toUser: toUserType
+  ): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
     const callFollowFunc = functions.httpsCallable('follow')
-    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch((e: any) => {
-      console.log(e)
-      alert('フォローに失敗しました')
-    })
+    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch(
+      (e: any) => {
+        console.log(e)
+        alert('フォローに失敗しました')
+      }
+    )
   }
-
 
   /**
    * ユーザーのアンフォロー・アンフォロワー処理
    */
-  const callUnFollow = async (fromUserId: string | undefined, toUserId: string | undefined): Promise<void> => {
+  const callUnFollow = async (
+    fromUserId: string | undefined,
+    toUserId: string | undefined
+  ): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
     const callUnFollowFunc = functions.httpsCallable('unFollow')
-    await callUnFollowFunc({ fromUserId: fromUserId, toUserId: toUserId }).catch((e: any) => {
+    await callUnFollowFunc({
+      fromUserId: fromUserId,
+      toUserId: toUserId
+    }).catch((e: any) => {
       console.log(e)
       alert('フォロー解除に失敗しました')
     })

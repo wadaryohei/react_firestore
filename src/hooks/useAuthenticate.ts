@@ -1,6 +1,7 @@
 import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
+import fireModel from '../model/_shared/fireModel'
 
 //----------------------------------
 // type
@@ -25,11 +26,8 @@ export const useAuthenticate = (): useAuthenticateType => {
   const findUser = useCallback(async (uid: string | undefined): Promise<
     firebase.firestore.DocumentSnapshot | undefined
   > => {
-    const userDoc = await firebase
-      .firestore()
-      .collection('users')
-      .doc(uid)
-      .get()
+    const userDoc = await fireModel.doc(`users/${uid}`)
+
     // ドキュメントが存在するかチェック
     if (userDoc.exists) return userDoc
     return
@@ -41,21 +39,16 @@ export const useAuthenticate = (): useAuthenticateType => {
   const writeUser = useCallback(async (user: firebase.User | null) => {
     // ユーザーが存在しないのでDBにユーザー情報をWrite
     if (user) {
-      await firebase
-        .firestore()
-        .collection('users')
-        .doc(user?.uid)
-        .set(
-          {
-            name: user?.displayName,
-            photoURL: user?.photoURL,
-            followerCount: 0,
-            followingCount: 0,
-            createdAt: firebase.firestore.Timestamp.now(),
-            updatedAt: firebase.firestore.Timestamp.now()
-          },
-          { merge: true }
-        )
+      const userDoc = fireModel.docRef(`users/${user?.uid}`)
+      await userDoc.set(
+        {
+          name: user?.displayName,
+          photoURL: user?.photoURL,
+          createdAt: firebase.firestore.Timestamp.now(),
+          updatedAt: firebase.firestore.Timestamp.now()
+        },
+        { merge: true }
+      )
     }
   }, [])
 
@@ -89,8 +82,7 @@ export const useAuthenticate = (): useAuthenticateType => {
       mounted.current = false
       unsubscribe()
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [findUser, history, writeUser])
 
   return { firebaseUser, loading }
 }

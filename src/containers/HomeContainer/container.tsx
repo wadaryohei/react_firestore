@@ -44,13 +44,13 @@ export const HomeContainer = (props: HomeProps) => {
   return (
     <BaseLayout className={props.className} user={presenter.viewDatas().user}>
       <Box className={'l-wrapper'}>
-          <SideBar className={'l-user'}>
-            <User
-              pathClassName={location.pathname}
-              user={presenter.viewDatas().user}
-              firebaseUser={auth}
-            />
-          </SideBar>
+        <SideBar className={'l-user'}>
+          <User
+            pathClassName={location.pathname}
+            user={presenter.viewDatas().user}
+            firebaseUser={auth}
+          />
+        </SideBar>
 
         <Main className={'l-timeline'}>
           <Box className={'l-timeline-inner'}>
