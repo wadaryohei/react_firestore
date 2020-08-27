@@ -1,6 +1,7 @@
-import firebase from '../model/_shared/firebase'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import dayjs from 'dayjs'
+import firebase from '../model/_shared/firebase'
+import fireModel from '../model/_shared/fireModel'
 import { PostType } from '../model/Post/type'
 
 //----------------------------------
@@ -24,36 +25,28 @@ export const useFetchPosts = (
    * 全ユーザーのPostsを取得する
    */
   const fetchPostsOnSnapShot = useCallback((): (() => void) => {
-    return firebase
-      .firestore()
-      .collection(collection)
-      .orderBy('createdAt', 'desc')
-      .onSnapshot(async snap => {
-        const docs = snap.docs.map(async doc => {
-          // PostsデータのauthorIdを元にUsersデータを取ってくる
-          const _usersdoc = await firebase
-            .firestore()
-            .collection('users')
-            .doc(doc.data().authorId)
-            .get()
-
-          return {
-            docId: doc.id,
-            authorId: _usersdoc.id as string,
-            userName: _usersdoc.data()?.name as string,
-            userImages: _usersdoc.data()?.photoURL as string,
-            postBody: doc.data().postBody as string,
-            createdAt: dayjs(doc.data().createdAt.toDate()).format(
-              'YYYY/MM/DD hh:mm:ss'
-            )
-          }
-        })
-        const _datas = await Promise.all(docs)
-        if (mount.current) {
-          _setFetchPostDatas(_datas)
+    const postRef = fireModel.collectionRef(`${collection}`)
+    return postRef.orderBy('createdAt', 'desc').onSnapshot(async snap => {
+      const docs = snap.docs.map(async doc => {
+        // PostsデータのauthorIdを元にUsersデータを取ってくる
+        const _usersDoc = await fireModel.doc(`users/${doc.data().authorId}`)
+        return {
+          docId: doc.id,
+          authorId: _usersDoc.id as string,
+          userName: _usersDoc.data()?.name as string,
+          userImages: _usersDoc.data()?.photoURL as string,
+          postBody: doc.data().postBody as string,
+          createdAt: dayjs(doc.data().createdAt.toDate()).format(
+            'YYYY/MM/DD hh:mm:ss'
+          )
         }
-        return _datas
       })
+      const _datas = await Promise.all(docs)
+      if (mount.current) {
+        _setFetchPostDatas(_datas)
+      }
+      return _datas
+    })
   }, [collection])
 
   /**

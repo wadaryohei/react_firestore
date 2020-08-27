@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { UserType } from '../model/User/types'
-import firebase from '../model/_shared/firebase'
+import fireModel from '../model/_shared/fireModel'
 
 //----------------------------------
 // type
@@ -39,20 +39,9 @@ export const useFetchUsers = (
     uid: string | undefined
   ): (() => void) => {
     // onSnapShotで取得したいcollection先
-    const collectionRef = firebase
-      .firestore()
-      .collection(collection)
-      .doc(uid)
-    const followersRef = firebase
-      .firestore()
-      .collection('social')
-      .doc(uid)
-      .collection('followers')
-    const followingsRef = firebase
-      .firestore()
-      .collection('social')
-      .doc(uid)
-      .collection('followings')
+    const collectionRef = fireModel.docRef(`${collection}/${uid}`)
+    const followersRef = fireModel.subCollectionRef(`social/${uid}/followers`)
+    const followingsRef = fireModel.subCollectionRef(`social/${uid}/followings`)
 
     // コレクションをonSnapShotで監視してusersデータにする
     return collectionRef.onSnapshot(snap => {
