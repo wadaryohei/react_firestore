@@ -92,7 +92,6 @@ export const useFollow = (
     otherUserId: string | undefined
   ): Promise<void> => {
     // フォローする側とフォローされる側のusersドキュメントを取得
-    // フォローする側とフォローされる側のusersドキュメントを取得
     const fromUserDoc = await fireModel.doc(`users/${userId}`) // ログイン中の自分
     const toUserDoc = await fireModel.doc(`users/${otherUserId}`) // 自分以外
 
