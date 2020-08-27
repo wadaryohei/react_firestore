@@ -14,8 +14,16 @@ module.exports = functions.https.onCall(async (data, context) => {
 
   // フォローする側は自分のfollowingに相手の情報を入れる
   // フォローされる側は相手の情報を自分のfollowerに入れる
-  const followingsRef = admin.firestore().doc(`social/${fromUser.userId}`).collection('followings').doc(toUser.userId) // followings
-  const followersRef = admin.firestore().doc(`social/${toUser.userId}`).collection('followers').doc(fromUser.userId) // followers
+  const followingsRef = admin
+    .firestore()
+    .doc(`social/${fromUser.userId}`)
+    .collection('followings')
+    .doc(toUser.userId) // followings
+  const followersRef = admin
+    .firestore()
+    .doc(`social/${toUser.userId}`)
+    .collection('followers')
+    .doc(fromUser.userId) // followers
 
   // フォローされる側の情報を自分のfollowingに入れる
   batch.set(
@@ -24,7 +32,7 @@ module.exports = functions.https.onCall(async (data, context) => {
       uid: toUser.userId,
       deleteId: fromUser.userId,
       name: toUser.userDoc.name,
-      photoURL: toUser.userDoc.photoURL,
+      photoURL: toUser.userDoc.photoURL
     },
     { merge: true }
   )
@@ -35,7 +43,7 @@ module.exports = functions.https.onCall(async (data, context) => {
     {
       uid: fromUser.userId,
       name: fromUser.userDoc.name,
-      photoURL: fromUser.userDoc.photoURL,
+      photoURL: fromUser.userDoc.photoURL
     },
     { merge: true }
   )
