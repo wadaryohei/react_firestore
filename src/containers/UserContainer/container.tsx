@@ -69,18 +69,19 @@ export const UserContainer = (props: UserProps) => {
                   firebaseUser={auth}
                 >
                   {id === auth?.uid && (
-                  <Box mb={Margin.m16} className={'l-user-info'}>
-                    <Button
-                      size={'sm'}
-                      color={'cancel'}
-                      onClick={() => modal.onOpenModal()}
-                    >
-                    アカウントを削除する
-                  </Button>
-                  <Link to={'/signout'}>
-                      {presenter.viewDatas().currentUser?.name}からログアウトする
-                    </Link>
-                  </Box>
+                    <Box mb={Margin.m16} className={'l-user-info'}>
+                      <Button
+                        size={'sm'}
+                        color={'cancel'}
+                        onClick={() => modal.onOpenModal()}
+                      >
+                        アカウントを削除する
+                      </Button>
+                      <Link to={'/signout'}>
+                        {presenter.viewDatas().currentUser?.name}
+                        からログアウトする
+                      </Link>
+                    </Box>
                   )}
 
                   {id !== auth?.uid && (
@@ -89,12 +90,7 @@ export const UserContainer = (props: UserProps) => {
                         <Button
                           size={'sm'}
                           color={'border'}
-                          onClick={() =>
-                            follow.unFollow(
-                              auth?.uid,
-                              id
-                            )
-                          }
+                          onClick={() => follow.unFollow(auth?.uid, id)}
                         >
                           フォロー中
                         </Button>
@@ -103,12 +99,7 @@ export const UserContainer = (props: UserProps) => {
                         <Button
                           size={'sm'}
                           color={'primary'}
-                          onClick={() =>
-                            follow.follow(
-                              auth?.uid,
-                              id
-                            )
-                          }
+                          onClick={() => follow.follow(auth?.uid, id)}
                         >
                           フォローする
                         </Button>

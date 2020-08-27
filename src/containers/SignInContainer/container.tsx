@@ -5,7 +5,7 @@ import { Typography } from '../../components/_shared/Typography'
 import { Button } from '../../components/_shared/Button'
 import { AuthLayout } from '../../components/_shared/AuthLayout'
 import { useAuth } from '../../hooks/useAuth'
-import { ReactPic, FirebasePic} from '../../const/Images'
+import { ReactPic, FirebasePic } from '../../const/Images'
 
 //----------------------------------
 // props
@@ -27,10 +27,15 @@ export const SignInContainer = (props: SignInProps) => {
     <AuthLayout className={`${props.className} signIn`}>
       <Box className={'signInServicesLogo'}>
         <ReactPic height={120} />
-        <FirebasePic  height={120}/>
+        <FirebasePic height={120} />
       </Box>
       <Box>
-        <a className={'signInGitIcon'} rel='noopener noreferrer' href='https://github.com/wadaryohei/react_firestore' target='_blank'>
+        <a
+          className={'signInGitIcon'}
+          rel="noopener noreferrer"
+          href="https://github.com/wadaryohei/react_firestore"
+          target="_blank"
+        >
           <GitHubIcon />
         </a>
       </Box>

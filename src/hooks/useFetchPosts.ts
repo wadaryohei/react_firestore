@@ -30,7 +30,6 @@ export const useFetchPosts = (
       .orderBy('createdAt', 'desc')
       .onSnapshot(async snap => {
         const docs = snap.docs.map(async doc => {
-
           // PostsデータのauthorIdを元にUsersデータを取ってくる
           const _usersdoc = await firebase
             .firestore()
@@ -50,7 +49,7 @@ export const useFetchPosts = (
           }
         })
         const _datas = await Promise.all(docs)
-        if(mount.current) {
+        if (mount.current) {
           _setFetchPostDatas(_datas)
         }
         return _datas
