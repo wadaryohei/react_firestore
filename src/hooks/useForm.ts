@@ -68,7 +68,7 @@ export const useForm = (
    */
   const onClick = (text: string): void => {
     setTextData(text).catch(e => {
-      alert('投稿に失敗しました。')
+      alert(`${e} 投稿に失敗しました。`)
     })
   }
 
