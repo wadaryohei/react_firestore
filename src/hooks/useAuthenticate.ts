@@ -49,8 +49,6 @@ export const useAuthenticate = (): useAuthenticateType => {
           {
             name: user?.displayName,
             photoURL: user?.photoURL,
-            followerCount: 0,
-            followingCount: 0,
             createdAt: firebase.firestore.Timestamp.now(),
             updatedAt: firebase.firestore.Timestamp.now()
           },
@@ -89,8 +87,7 @@ export const useAuthenticate = (): useAuthenticateType => {
       mounted.current = false
       unsubscribe()
     }
-    // eslint-disable-next-line
-  }, [])
+  }, [findUser, history, writeUser])
 
   return { firebaseUser, loading }
 }
