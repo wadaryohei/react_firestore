@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "dayjs": "^1.8.31",
     "dom-helpers": "3.4.0",
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
     "file-loader": "^5.0.2",
@@ -37,7 +38,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx}'",
-    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'"
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "deploy:production": "firebase use production && yarn build && firebase deploy -P production && firebase use development"
   },
   "browserslist": {
     "production": [
