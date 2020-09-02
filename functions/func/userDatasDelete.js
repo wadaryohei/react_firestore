@@ -11,48 +11,54 @@ module.exports = functions.auth.user().onDelete(async user => {
   // 削除したいRefPathを取得
   //----------------------------------
   // UserRef
-  const usersRef = admin.firestore().doc(`users/${user.uid}`)
+  const profilesRef = admin
+    .firestore()
+    .doc(`profiles/v1`)
+    .collection('users')
+    .doc(user.uid)
 
   // SocialRef
-  const socialRef = admin.firestore().doc(`social/${user.uid}`)
+  const socialsRef = admin
+    .firestore()
+    .doc(`socials/v1`)
+    .collection('users')
+    .doc(user.uid)
 
   //----------------------------------
   // Doc毎に削除が必要なものを取得する
   //----------------------------------
-  // followersDocs
-  const followersDocs = await admin
+  // followingsDocs
+  const followingsDocs = await socialsRef.collection('followings').get()
+
+  // followwersDocs
+  const followersDocs = await socialsRef.collection('followers').get()
+
+  // otherUsersFollowingsDocs
+  const otherUsersFollowersDocs = await admin
     .firestore()
     .collectionGroup('followers')
-    .where('uid', '==', user.uid)
+    .where('followersId', '==', user.uid)
     .get()
 
-  // followingsDocs
-  const followingsDocs = await admin
+  // otherUsersFollowingsDocs
+  const otherUsersFollowingsDocs = await admin
     .firestore()
     .collectionGroup('followings')
-    .where('deleteId', '==', user.uid)
-    .get()
-
-  // otherFollowingsDocs
-  const otherFollowingsDocs = await admin
-    .firestore()
-    .collectionGroup('followings')
-    .where('uid', '==', user.uid)
+    .where('followingsId', '==', user.uid)
     .get()
 
   // PostsDocs
   const postsDocs = await admin
     .firestore()
-    .collection('posts')
+    .doc('posts/v1')
+    .collection('users')
     .where('authorId', '==', user.uid)
     .get()
-
   //----------------------------------
   // バッチ処理で一括削除する
   //----------------------------------
-  postsDocs.docs.forEach(doc => {
-    batch.delete(doc.ref)
-  })
+  batch.delete(profilesRef)
+  batch.delete(socialsRef)
 
   followersDocs.docs.forEach(doc => {
     batch.delete(doc.ref)
@@ -62,12 +68,17 @@ module.exports = functions.auth.user().onDelete(async user => {
     batch.delete(doc.ref)
   })
 
-  otherFollowingsDocs.docs.forEach(doc => {
+  otherUsersFollowersDocs.docs.forEach(doc => {
     batch.delete(doc.ref)
   })
 
-  batch.delete(usersRef)
-  batch.delete(socialRef)
+  otherUsersFollowingsDocs.docs.forEach(doc => {
+    batch.delete(doc.ref)
+  })
+
+  postsDocs.docs.forEach(doc => {
+    batch.delete(doc.ref)
+  })
 
   await batch.commit()
 })

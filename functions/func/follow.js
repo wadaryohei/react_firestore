@@ -14,25 +14,33 @@ module.exports = functions.https.onCall(async (data, context) => {
 
   // フォローする側は自分のfollowingに相手の情報を入れる
   // フォローされる側は相手の情報を自分のfollowerに入れる
+  // followings
   const followingsRef = admin
     .firestore()
-    .doc(`social/${fromUser.userId}`)
+    .doc('socials/v1')
+    .collection('users')
+    .doc(fromUser.userId)
     .collection('followings')
-    .doc(toUser.userId) // followings
+    .doc(toUser.userId)
+
+  // followers
   const followersRef = admin
     .firestore()
-    .doc(`social/${toUser.userId}`)
+    .doc('socials/v1')
+    .collection('users')
+    .doc(toUser.userId)
     .collection('followers')
-    .doc(fromUser.userId) // followers
+    .doc(fromUser.userId)
 
   // フォローされる側の情報を自分のfollowingに入れる
   batch.set(
     followingsRef,
     {
-      uid: toUser.userId,
-      deleteId: fromUser.userId,
+      followingsId: toUser.userId,
       name: toUser.userDoc.name,
-      photoURL: toUser.userDoc.photoURL
+      photoURL: toUser.userDoc.photoURL,
+      createdAt: admin.firestore.Timestamp.now(),
+      updatedAt: admin.firestore.Timestamp.now()
     },
     { merge: true }
   )
@@ -41,9 +49,11 @@ module.exports = functions.https.onCall(async (data, context) => {
   batch.set(
     followersRef,
     {
-      uid: fromUser.userId,
+      followersId: fromUser.userId,
       name: fromUser.userDoc.name,
-      photoURL: fromUser.userDoc.photoURL
+      photoURL: fromUser.userDoc.photoURL,
+      createdAt: admin.firestore.Timestamp.now(),
+      updatedAt: admin.firestore.Timestamp.now()
     },
     { merge: true }
   )
