@@ -1,77 +1,45 @@
 import firebase from './firebase'
 
-class fireModel {
+//----------------------------------
+// type
+//----------------------------------
+type FireModelType = {
+  baseReference: (
+    modelName: ModelType
+  ) => firebase.firestore.CollectionReference
+}
+
+type ModelType = 'profiles' | 'posts' | 'socials' | 'followers' | 'followings'
+
+//----------------------------------
+// class
+//----------------------------------
+class FireModel implements FireModelType {
   /**
-   * 特定のコレクション内の特定のドキュメントを取得
+   * modelのバージョンを返す
    */
-  public static async doc(
-    path: string
-  ): Promise<firebase.firestore.DocumentSnapshot> {
-    return await firebase
-      .firestore()
-      .doc(path)
-      .get()
+  private modelVersion(): string {
+    return 'v1'
   }
 
   /**
-   * 特定のコレクション内のドキュメントを全件取得
+   * rootのコレクション名を受け取ってバージョンと合わせたパスを返す
    */
-  public static async collection(
-    path: string
-  ): Promise<firebase.firestore.QuerySnapshot> {
-    return await firebase
-      .firestore()
-      .collection(path)
-      .get()
+  private modelPath(modelName: ModelType): string {
+    return `${modelName}/${this.modelVersion()}`
   }
 
   /**
-   * コレクションのRefを返す
+   * firestoreのベースRefを返す
    */
-  public static collectionRef(
-    path: string
+  public baseReference(
+    modelName: ModelType
   ): firebase.firestore.CollectionReference {
-    const splitPath = path.split('/')
-    return firebase.firestore().collection(splitPath[0])
-  }
-
-  /**
-   * サブコレクションのRefを返す
-   */
-  public static subCollectionRef(
-    path: string
-  ): firebase.firestore.CollectionReference {
-    const splitPath = path.split('/')
     return firebase
       .firestore()
-      .collection(splitPath[0])
-      .doc(splitPath[1])
-      .collection(splitPath[2])
-  }
-
-  /**
-   * コレクション内のドキュメントのRefを返す
-   */
-  public static docRef(path: string): firebase.firestore.DocumentReference {
-    const splitPath = path.split('/')
-    return firebase
-      .firestore()
-      .collection(splitPath[0])
-      .doc(splitPath[1])
-  }
-
-  /**
-   * サブコレクション内のドキュメントのRefを返す
-   */
-  public static subDocRef(path: string): firebase.firestore.DocumentReference {
-    const splitPath = path.split('/')
-    return firebase
-      .firestore()
-      .collection(splitPath[0])
-      .doc(splitPath[1])
-      .collection(splitPath[2])
-      .doc(splitPath[3])
+      .doc(this.modelPath(modelName))
+      .collection('users')
   }
 }
 
-export default fireModel
+export default FireModel
