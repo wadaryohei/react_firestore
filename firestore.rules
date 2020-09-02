@@ -59,12 +59,12 @@ service cloud.firestore {
       }
     }
 
-    // @path socials - followers
+    // @path social - followers
     match /{path=**}/followers/{followersId} {
       allow read; // create, update, delete to cloud functions
     }
 
-    // @path socials - followings
+    // @path social - followings
     match /{path=**}/followings/{followingsId} {
       allow read; // create, update, delete to cloud functions
     }
