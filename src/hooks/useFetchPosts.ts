@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import dayjs from 'dayjs'
-import firebase from '../model/_shared/firebase'
-import fireModel from '../model/_shared/fireModel'
+import FireModel from '../model/_shared/fireModel'
 import { PostType } from '../model/Post/type'
 
 //----------------------------------
@@ -14,27 +13,28 @@ export interface useFetchPostsType {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFetchPosts = (
-  collection: string,
-  user: firebase.User | null
-): useFetchPostsType => {
+export const useFetchPosts = (): useFetchPostsType => {
   const [_fetchPostDatas, _setFetchPostDatas] = useState<PostType[]>([])
   const mount = useRef<boolean>(true)
+  const fireModel = new FireModel()
 
   /**
    * 全ユーザーのPostsを取得する
    */
-  const fetchPostsOnSnapShot = useCallback((): (() => void) => {
-    const postRef = fireModel.collectionRef(`${collection}`)
-    return postRef.orderBy('createdAt', 'desc').onSnapshot(async snap => {
+  const fetchPostsOnSnapShot = (): (() => void) => {
+    const postsRef = fireModel.baseReference('posts')
+    return postsRef.orderBy('createdAt', 'desc').onSnapshot(async snap => {
       const docs = snap.docs.map(async doc => {
         // PostsデータのauthorIdを元にUsersデータを取ってくる
-        const _usersDoc = await fireModel.doc(`users/${doc.data().authorId}`)
+        const profilesRef = await fireModel
+          .baseReference('profiles')
+          .doc(doc.data().authorId)
+          .get()
         return {
           docId: doc.id,
-          authorId: _usersDoc.id as string,
-          userName: _usersDoc.data()?.name as string,
-          userImages: _usersDoc.data()?.photoURL as string,
+          authorId: profilesRef.id as string,
+          userName: profilesRef.data()?.name as string,
+          userImages: profilesRef.data()?.photoURL as string,
           postBody: doc.data().postBody as string,
           createdAt: dayjs(doc.data().createdAt.toDate()).format(
             'YYYY/MM/DD hh:mm:ss'
@@ -47,7 +47,7 @@ export const useFetchPosts = (
       }
       return _datas
     })
-  }, [collection])
+  }
 
   /**
    * DBから取得した全ユーザーのポストデータを返す
@@ -66,7 +66,8 @@ export const useFetchPosts = (
       mount.current = false
       unsubscribe()
     }
-  }, [collection, user, fetchPostsOnSnapShot])
+    // eslint-disable-next-line
+  }, [])
 
   return {
     fetchPostDatas
