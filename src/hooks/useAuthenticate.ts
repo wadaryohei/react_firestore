@@ -3,13 +3,14 @@ import { useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Routing } from '../const/Routing'
 import FireModel from '../model/_shared/fireModel'
+import { useLoad, useLoadType } from './useLoad'
 
 //----------------------------------
 // type
 //----------------------------------
 export interface useAuthenticateType {
   firebaseUser: firebase.User | null
-  loading: boolean
+  loading: useLoadType
 }
 
 //----------------------------------
@@ -17,7 +18,7 @@ export interface useAuthenticateType {
 //----------------------------------
 export const useAuthenticate = (): useAuthenticateType => {
   const [firebaseUser, setFirebaseUser] = useState<firebase.User | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const loading = useLoad(true)
   const mounted = useRef(true)
   const history = useHistory()
   const fireModel = new FireModel()
@@ -81,7 +82,7 @@ export const useAuthenticate = (): useAuthenticateType => {
       if (mounted.current) {
         if (!user) history.push(Routing.signIn)
         setFirebaseUser(user ? user : null)
-        setLoading(false)
+        loading.onLoadEnd()
       }
     })
 

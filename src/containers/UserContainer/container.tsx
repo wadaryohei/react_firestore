@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { CircularProgress, Grid, Container, Box } from '@material-ui/core'
+import { Grid, Container, Box } from '@material-ui/core'
 import { useParams, useLocation } from 'react-router-dom'
 import { BaseLayout } from '../../components/_shared/BaseLayout'
 import { Loading } from '../../components/_shared/Loading'
@@ -49,12 +49,10 @@ export const UserContainer = (props: UserProps) => {
       user={presenter.viewDatas().currentUser}
     >
       <>
-        {deleted.deleteLoading() && (
-          <>
-            <CircularProgress />
-            <Loading text={'ユーザーを削除しています'} />
-          </>
+        {deleted.loading.isLoad() && (
+          <Loading text={'ユーザーを削除しています'} />
         )}
+
         {modal.showModal() && (
           <DeleteModal modal={modal} onDeleteUser={deleted.onDeleteUser} />
         )}
