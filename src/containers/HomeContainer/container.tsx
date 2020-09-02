@@ -33,9 +33,9 @@ export const HomeContainer = (props: HomeProps) => {
   //----------------------------------
   const auth = useContext(FirebaseAuthContext)
   const location = useLocation()
-  const form = useForm(auth, 'posts')
-  const fetchUsers = useFetchUsers('users', auth?.uid)
-  const fetchPosts = useFetchPosts('posts', auth)
+  const form = useForm(auth)
+  const fetchUsers = useFetchUsers(auth?.uid)
+  const fetchPosts = useFetchPosts()
   const presenter = useHomePresenter(
     fetchUsers.fetchUserData(),
     fetchPosts.fetchPostDatas()

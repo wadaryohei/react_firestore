@@ -36,8 +36,8 @@ export const UserContainer = (props: UserProps) => {
   const modal = useModal()
   const follow = useFollow(auth?.uid, id)
   const deleted = useDelete()
-  const otherUser = useFetchUsers('users', id)
-  const currentUser = useFetchUsers('users', auth?.uid)
+  const otherUser = useFetchUsers(id)
+  const currentUser = useFetchUsers(auth?.uid)
   const presenter = useUserPresenter(
     otherUser.fetchUserData(),
     currentUser.fetchUserData()
