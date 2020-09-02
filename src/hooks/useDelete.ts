@@ -1,4 +1,5 @@
 import firebase from '../model/_shared/firebase'
+import { functions } from '../model/_shared/functions'
 import { useState, useRef, useEffect } from 'react'
 
 //----------------------------------
@@ -56,7 +57,7 @@ export const useDelete = (): useDeleteType => {
    */
   const callUserDelete = async (): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const userDeleteFunc = firebase.functions().httpsCallable('userDelete')
+    const userDeleteFunc = functions.httpsCallable('userDelete')
     await userDeleteFunc().catch(e => {
       console.log(`${e}: ユーザーの削除に失敗しました。再度削除してください。`)
     })
