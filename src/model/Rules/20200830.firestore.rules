@@ -1,5 +1,6 @@
 rules_version = '2';
 service cloud.firestore {
+
     //========================================================
     // @memo
     // - read
@@ -9,7 +10,6 @@ service cloud.firestore {
     // writeは原則使用禁止 cerate / update / deleteを書き分ける
     //========================================================
 		match /databases/{database}/documents {
-
     //======================================
     // function
     //======================================
@@ -41,32 +41,33 @@ service cloud.firestore {
     //======================================
     // matchPath
     //======================================
-    // @path profiles
-    match /profiles/{version} {
-      match /users/{userId} {
-        allow read;
-        allow create: if isAuth() && authUid() == reqResourceData().uid;
-        allow update, delete: if authUid() == userId;
-      }
+    // @path users
+    match /users/{userId} {
+      allow read: if isAuth();
+      allow create: if !exists(/databases/$(database)/documents/users/$(userId));
+      allow update, delete: if authUid() == userId;
     }
 
-    // @path posts
-    match /posts/{version} {
-      match /users/{postId} {
-        allow read;
-        allow create: if isAuth() && authUid() == reqResourceData().authorId && validPostData(reqResourceData().postBody, 10);
-        allow update, delete: if authUid() == resourceData().authorId;
-      }
+    // @path social - social
+    match /social/{userId} {
+    	allow read: if isAuth();  // create, update, delete to cloud functions
     }
 
-    // @path socials - followers
+    // @path social - followers
     match /{path=**}/followers/{followersId} {
       allow read; // create, update, delete to cloud functions
     }
 
-    // @path socials - followings
+    // @path social - following
     match /{path=**}/followings/{followingsId} {
       allow read; // create, update, delete to cloud functions
+    }
+
+    // @path posts
+    match /posts/{postId} {
+      allow read;
+      allow update, delete: if isAuth() && authUid() == resourceData().authorId;
+    	allow create: if isAuth() && reqResourceData().authorId == authUid() && validPostData(reqResourceData().postBody, 10);
     }
   }
 }
