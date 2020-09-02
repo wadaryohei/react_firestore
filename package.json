@@ -39,6 +39,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "deploy:development": "firebase use development && yarn build && firebase deploy -P development",
     "deploy:production": "firebase use production && yarn build && firebase deploy -P production && firebase use development"
   },
   "browserslist": {
