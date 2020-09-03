@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import firebase from '../model/_shared/firebase'
-import nanoid from 'nanoid'
+import { nanoid } from 'nanoid'
 import fireModel from '../model/_shared/fireModel'
 
 //----------------------------------
