@@ -1,10 +1,11 @@
-const functions = require('firebase-functions').region('asia-northeast1')
-const admin = require('firebase-admin')
+import * as firebaseFunctions from 'firebase-functions'
+import * as admin from 'firebase-admin'
+const functions = firebaseFunctions.region('asia-northeast1')
 
 /**
  * ユーザーが削除されたとき関連データを全削除する
  */
-module.exports = functions.auth.user().onDelete(async user => {
+export const userDatasDelete = functions.auth.user().onDelete(async user => {
   const batch = admin.firestore().batch()
 
   //----------------------------------

@@ -1,10 +1,11 @@
-const functions = require('firebase-functions').region('asia-northeast1')
-const admin = require('firebase-admin')
+import * as firebaseFunctions from 'firebase-functions'
+import * as admin from 'firebase-admin'
+const functions = firebaseFunctions.region('asia-northeast1')
 
 /**
  * ユーザーのフォロー時の処理
  */
-module.exports = functions.https.onCall(async (data, context) => {
+export const follow = functions.https.onCall(async (data, context) => {
   // バッチ処理を準備
   const batch = admin.firestore().batch()
 
