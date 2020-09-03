@@ -1,6 +1,16 @@
 {
   "name": "react-typescipt-app",
   "version": "0.1.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "deploy:development": "firebase use development && yarn build && firebase deploy -P development",
+    "deploy:production": "firebase use production && yarn build && firebase deploy -P production && firebase use development"
+  },
   "dependencies": {
     "@google-cloud/functions-framework": "^1.6.0",
     "@material-ui/core": "^4.11.0",
@@ -35,16 +45,6 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/shortid": "0.0.29",
     "@types/styled-components": "^5.1.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
-    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
-    "deploy:development": "firebase use development && yarn build && firebase deploy -P development",
-    "deploy:production": "firebase use production && yarn build && firebase deploy -P production && firebase use development"
   },
   "browserslist": {
     "production": [
