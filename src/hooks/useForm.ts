@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import firebase from '../model/_shared/firebase'
 import nanoid from 'nanoid'
+import fireModel from '../model/_shared/fireModel'
 
 //----------------------------------
 // type
@@ -21,10 +22,7 @@ export interface useFormType {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useForm = (
-  user: firebase.User | null,
-  collection: string
-): useFormType => {
+export const useForm = (user: firebase.User | null): useFormType => {
   /**
    * テキスト入力のステート
    */
@@ -32,6 +30,7 @@ export const useForm = (
   const [_error, _setErrorText] = useState<string>('')
   const [_disabled, _setDisabled] = useState<boolean>(false)
   const maxLen = 10
+  const path = new fireModel()
 
   /**
    * フィールドに入力されたテキストをチェックする
@@ -88,20 +87,17 @@ export const useForm = (
     // フォームが10文字以下だったら保存する
     if (text.length <= maxLen) {
       _setDisabled(true)
-      await firebase
-        .firestore()
-        .collection(collection)
-        .doc(nanoid())
-        .set(
-          {
-            authorId: user?.uid,
-            postBody: text,
-            isPublished: true,
-            createdAt: firebase.firestore.Timestamp.now(),
-            updatedAt: firebase.firestore.Timestamp.now()
-          },
-          { merge: true }
-        )
+      const postsPath = path.baseReference('posts').doc(nanoid())
+      await postsPath.set(
+        {
+          authorId: user?.uid,
+          postBody: text,
+          isPublished: true,
+          createdAt: firebase.firestore.Timestamp.now(),
+          updatedAt: firebase.firestore.Timestamp.now()
+        },
+        { merge: true }
+      )
     }
     _setText('')
     _setDisabled(false)
@@ -120,11 +116,8 @@ export const useForm = (
    * フォームのDeleteボタンを押したときDBから削除する
    */
   const onDelete = async (docId: string | undefined): Promise<void> => {
-    const snapShot = firebase
-      .firestore()
-      .collection(collection)
-      .doc(docId)
-    await snapShot.delete()
+    const postsPath = path.baseReference('posts').doc(docId)
+    await postsPath.delete()
   }
 
   /**

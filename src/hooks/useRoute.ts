@@ -14,7 +14,6 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
    */
   const privateRoute = useCallback(() => {
     if (firebaseUser) {
-      history.push(location.pathname)
       // ログインしている状態でSignInページに遷移した場合'/'にリダイレクトする
       if (location.pathname === Routing.signIn) {
         history.push(Routing.home)
@@ -29,5 +28,6 @@ export const useRoute = (firebaseUser: firebase.User | null) => {
   //----------------------------------
   useEffect(() => {
     privateRoute()
-  }, [privateRoute])
+    // eslint-disable-next-line
+  }, [])
 }

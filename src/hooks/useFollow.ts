@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { functions } from '../model/_shared/functions'
 import { fromUserType, toUserType } from '../model/User/types'
-import fireModel from '../model/_shared/fireModel'
+import FireModel from '../model/_shared/fireModel'
 
 //----------------------------------
 // type
@@ -20,6 +20,8 @@ export const useFollow = (
   otherUserId: string | undefined
 ): useFollowType => {
   const [_isFollowing, setFollowing] = useState<boolean>(false)
+  const fireModel = new FireModel()
+  const mounted = useRef(true)
 
   //----------------------------------
   // useEffect
@@ -28,6 +30,7 @@ export const useFollow = (
     const unsubscribe = isFollowingSnapShot()
 
     return () => {
+      mounted.current = false
       unsubscribe()
     }
     // eslint-disable-next-line
@@ -37,11 +40,15 @@ export const useFollow = (
    * ログイン中のユーザーが他ユーザーをフォローしているかどうか
    */
   const isFollowingSnapShot = (): (() => void) => {
-    const followingRef = fireModel.subDocRef(
-      `social/${otherUserId}/followers/${userId}`
-    )
+    const followingRef = fireModel
+      .baseReference('socials')
+      .doc(otherUserId)
+      .collection('followers')
+      .doc(userId)
     return followingRef.onSnapshot(snap => {
-      snap.exists ? setFollowing(true) : setFollowing(false)
+      if (mounted.current) {
+        setFollowing(snap.exists ? true : false)
+      }
     })
   }
 
@@ -60,8 +67,15 @@ export const useFollow = (
     otherUserId: string | undefined
   ): Promise<void> => {
     // フォローする側とフォローされる側のusersドキュメントを取得
-    const fromUserDoc = await fireModel.doc(`users/${userId}`) // ログイン中の自分
-    const toUserDoc = await fireModel.doc(`users/${otherUserId}`) // 自分以外
+
+    const fromUserDoc = await fireModel
+      .baseReference('profiles')
+      .doc(userId)
+      .get() // ログイン中の自分
+    const toUserDoc = await fireModel
+      .baseReference('profiles')
+      .doc(otherUserId)
+      .get() // 自分以外
 
     // フォローする側のデータ
     const fromUser: fromUserType = {
@@ -92,8 +106,14 @@ export const useFollow = (
     otherUserId: string | undefined
   ): Promise<void> => {
     // フォローする側とフォローされる側のusersドキュメントを取得
-    const fromUserDoc = await fireModel.doc(`users/${userId}`) // ログイン中の自分
-    const toUserDoc = await fireModel.doc(`users/${otherUserId}`) // 自分以外
+    const fromUserDoc = await fireModel
+      .baseReference('profiles')
+      .doc(userId)
+      .get() // ログイン中の自分
+    const toUserDoc = await fireModel
+      .baseReference('profiles')
+      .doc(otherUserId)
+      .get() // 自分以外
 
     // フォローされる側とフォローする側のデータ
     const fromUserId: string | undefined = fromUserDoc.id

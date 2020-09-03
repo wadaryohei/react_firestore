@@ -17,6 +17,9 @@ if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'unFollow') {
   exports.userDelete = require('./func/userDelete')
 }
 
-if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'userDatasDelete') {
+if (
+  !process.env.FUNCTION_NAME ||
+  process.env.FUNCTION_NAME === 'userDatasDelete'
+) {
   exports.userDatasDelete = require('./func/userDatasDelete')
 }

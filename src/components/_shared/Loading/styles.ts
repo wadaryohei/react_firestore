@@ -15,6 +15,7 @@ export const LoadingStyle = styled(LoadingComponent)`
   justify-content: center;
   align-items: center;
   color: ${Colors.white};
+  background-color: ${Colors.gray};
 
   > div {
     margin-top: ${Margin.m8};

@@ -1,19 +1,21 @@
 import firebase from '../model/_shared/firebase'
-import { useState, useRef, useEffect } from 'react'
+import { functions } from '../model/_shared/functions'
+import { useRef, useEffect } from 'react'
+import { useLoad, useLoadType } from './useLoad'
 
 //----------------------------------
 // type
 //----------------------------------
 export interface useDeleteType {
   onDeleteUser: () => Promise<void>
-  deleteLoading: () => boolean
+  loading: useLoadType
 }
 
 //----------------------------------
 // hooks
 //----------------------------------
 export const useDelete = (): useDeleteType => {
-  const [_deleteLoading, _setDeleteLoading] = useState<boolean>(false)
+  const loading = useLoad(false)
   const mount = useRef<boolean>(true)
 
   useEffect(() => {
@@ -33,20 +35,12 @@ export const useDelete = (): useDeleteType => {
    * ユーザーを削除するメソッド
    */
   const deleteUser = async (): Promise<void> => {
-    _setDeleteLoading(true)
+    loading.onLoadStart()
     await callUserDelete()
     await firebase.auth().signOut()
-
     if (mount.current) {
-      _setDeleteLoading(false)
+      loading.onLoadEnd()
     }
-  }
-
-  /**
-   * ローディング状態を返す
-   */
-  const deleteLoading = (): boolean => {
-    return _deleteLoading
   }
 
   /**
@@ -56,7 +50,7 @@ export const useDelete = (): useDeleteType => {
    */
   const callUserDelete = async (): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
-    const userDeleteFunc = firebase.functions().httpsCallable('userDelete')
+    const userDeleteFunc = functions.httpsCallable('userDelete')
     await userDeleteFunc().catch(e => {
       console.log(`${e}: ユーザーの削除に失敗しました。再度削除してください。`)
     })
@@ -64,6 +58,6 @@ export const useDelete = (): useDeleteType => {
 
   return {
     onDeleteUser,
-    deleteLoading
+    loading
   }
 }
