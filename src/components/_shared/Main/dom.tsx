@@ -11,6 +11,4 @@ export interface MainProps {
 //----------------------------------
 // component
 //----------------------------------
-export const MainComponent = (props: MainProps) => (
-  <main className={props.className}>{props.children}</main>
-)
+export const MainComponent = (props: MainProps) => <main className={props.className}>{props.children}</main>

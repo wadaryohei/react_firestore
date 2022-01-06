@@ -23,25 +23,19 @@ export const useFetchUsers = (uid: string | undefined): userFetchUsersType => {
   const userSnapShot = (uid: string | undefined): (() => void) => {
     // onSnapShotで取得したいcollection先
     const profilesRef = fireModel.baseReference('profiles').doc(uid)
-    const followersRef = fireModel
-      .baseReference('socials')
-      .doc(uid)
-      .collection('followers')
-    const followingsRef = fireModel
-      .baseReference('socials')
-      .doc(uid)
-      .collection('followings')
+    const followersRef = fireModel.baseReference('socials').doc(uid).collection('followers')
+    const followingsRef = fireModel.baseReference('socials').doc(uid).collection('followings')
 
     // コレクションをonSnapShotで監視してusersデータにする
-    return profilesRef.onSnapshot(snap => {
-      followersRef.onSnapshot(followersSnap => {
-        followingsRef.onSnapshot(followingsSnap => {
+    return profilesRef.onSnapshot((snap) => {
+      followersRef.onSnapshot((followersSnap) => {
+        followingsRef.onSnapshot((followingsSnap) => {
           const _datas = {
             id: snap.data()?.uid,
             name: snap.data()?.name as string,
             followerCount: followersSnap.size as number,
             followingCount: followingsSnap.size as number,
-            photoURL: snap.data()?.photoURL as string
+            photoURL: snap.data()?.photoURL as string,
           }
           if (mount.current) {
             _setFetchUser(_datas)
@@ -72,6 +66,6 @@ export const useFetchUsers = (uid: string | undefined): userFetchUsersType => {
   }, [])
 
   return {
-    fetchUserData
+    fetchUserData,
   }
 }

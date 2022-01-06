@@ -30,12 +30,7 @@ export const SignInContainer = (props: SignInProps) => {
         <FirebasePic height={120} />
       </Box>
       <Box>
-        <a
-          className={'signInGitIcon'}
-          rel="noopener noreferrer"
-          href="https://github.com/wadaryohei/react_firestore"
-          target="_blank"
-        >
+        <a className={'signInGitIcon'} rel="noopener noreferrer" href="https://github.com/wadaryohei/react_firestore" target="_blank">
           <GitHubIcon />
         </a>
       </Box>

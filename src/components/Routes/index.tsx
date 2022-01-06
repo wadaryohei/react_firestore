@@ -32,11 +32,7 @@ export const Routes = () => {
       <Route exact path={Routing.home} render={() => <HomeContainer />} />
 
       {/** @Route User */}
-      <Route
-        key={location.pathname}
-        path={Routing.userId}
-        render={() => <UserContainer />}
-      />
+      <Route key={location.pathname} path={Routing.userId} render={() => <UserContainer />} />
     </>
   )
 }

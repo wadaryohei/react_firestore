@@ -50,10 +50,7 @@ export const useForm = (user: firebase.User | null): useFormType => {
   /**
    * 押したキーがエンターだった場合フィールドのテキストを保存する
    */
-  const onKeyPress = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    text: string
-  ): void => {
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, text: string): void => {
     // キーがエンターだった場合
     if (e.which === 13) {
       e.preventDefault()
@@ -66,7 +63,7 @@ export const useForm = (user: firebase.User | null): useFormType => {
    * クリックボタンを押したときフィールドのテキストを保存する
    */
   const onClick = (text: string): void => {
-    setTextData(text).catch(e => {
+    setTextData(text).catch((e) => {
       alert(`${e} 投稿に失敗しました。`)
     })
   }
@@ -94,7 +91,7 @@ export const useForm = (user: firebase.User | null): useFormType => {
           postBody: text,
           isPublished: true,
           createdAt: firebase.firestore.Timestamp.now(),
-          updatedAt: firebase.firestore.Timestamp.now()
+          updatedAt: firebase.firestore.Timestamp.now(),
         },
         { merge: true }
       )
@@ -158,6 +155,6 @@ export const useForm = (user: firebase.User | null): useFormType => {
     text,
     error,
     disabled,
-    setTextData
+    setTextData,
   }
 }

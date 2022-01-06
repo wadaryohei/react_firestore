@@ -4,12 +4,10 @@ import firebase from './firebase'
 // type
 //----------------------------------
 type FireModelType = {
-  baseReference: (
-    modelName: ModelType
-  ) => firebase.firestore.CollectionReference
+  baseReference: (modelName: ModelType) => firebase.firestore.CollectionReference
 }
 
-type ModelType = 'profiles' | 'posts' | 'socials' | 'followers' | 'followings'
+type ModelType = 'profiles' | 'posts' | 'socials' | 'followers' | 'followings' | 'following'
 
 //----------------------------------
 // class
@@ -32,13 +30,8 @@ class FireModel implements FireModelType {
   /**
    * firestoreのベースRefを返す
    */
-  public baseReference(
-    modelName: ModelType
-  ): firebase.firestore.CollectionReference {
-    return firebase
-      .firestore()
-      .doc(this.modelPath(modelName))
-      .collection('users')
+  public baseReference(modelName: ModelType): firebase.firestore.CollectionReference {
+    return firebase.firestore().doc(this.modelPath(modelName)).collection('users')
   }
 }
 

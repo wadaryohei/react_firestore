@@ -11,6 +11,4 @@ export interface ModalActionsProps {
 //----------------------------------
 // component
 //----------------------------------
-export const ModalActionsComponent = (props: ModalActionsProps) => (
-  <DialogActions>{props.children}</DialogActions>
-)
+export const ModalActionsComponent = (props: ModalActionsProps) => <DialogActions>{props.children}</DialogActions>

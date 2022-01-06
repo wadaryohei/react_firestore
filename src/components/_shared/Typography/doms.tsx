@@ -16,10 +16,7 @@ export interface TypographyProps {
 // component
 //----------------------------------
 export const TypographyComponent = (props: TypographyProps) => (
-  <Typography
-    component={props.component}
-    className={`${props.component} ${props.className} ${props.color}`}
-  >
+  <Typography component={props.component} className={`${props.component} ${props.className} ${props.color}`}>
     {props.children}
   </Typography>
 )
@@ -28,5 +25,5 @@ export const TypographyComponent = (props: TypographyProps) => (
 // defaultProps
 //----------------------------------
 TypographyComponent.defaultProps = {
-  color: 'black'
+  color: 'black',
 }

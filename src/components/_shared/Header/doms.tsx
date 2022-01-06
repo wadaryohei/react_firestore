@@ -26,13 +26,7 @@ export const HeaderComponent = (props: HeaderProps) => {
           </Typography>
         </Link>
         <Link to={`/user/${props.user?.id}`}>
-          <Image
-            className={'headerImage'}
-            src={props.user?.photoURL}
-            alt={props.user?.photoURL}
-            width={80}
-            height={80}
-          />
+          <Image className={'headerImage'} src={props.user?.photoURL} alt={props.user?.photoURL} width={80} height={80} />
         </Link>
       </Container>
     </header>

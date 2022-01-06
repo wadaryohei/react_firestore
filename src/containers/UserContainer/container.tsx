@@ -31,48 +31,30 @@ export const UserContainer = (props: UserProps) => {
   //  hooks
   //----------------------------------
   const auth = useContext(FirebaseAuthContext)
-  const { id } = useParams()
+  const params = useParams<{ id: string }>()
   const location = useLocation()
   const modal = useModal()
-  const follow = useFollow(auth?.uid, id)
+  const follow = useFollow(auth?.uid, params.id)
   const deleted = useDelete()
-  const otherUser = useFetchUsers(id)
+  const otherUser = useFetchUsers(params.id)
   const currentUser = useFetchUsers(auth?.uid)
-  const presenter = useUserPresenter(
-    otherUser.fetchUserData(),
-    currentUser.fetchUserData()
-  )
+  const presenter = useUserPresenter(otherUser.fetchUserData(), currentUser.fetchUserData())
 
   return (
-    <BaseLayout
-      className={props.className}
-      user={presenter.viewDatas().currentUser}
-    >
+    <BaseLayout className={props.className} user={presenter.viewDatas().currentUser}>
       <>
-        {deleted.loading.isLoad() && (
-          <Loading text={'ユーザーを削除しています'} />
-        )}
+        {deleted.loading.isLoad() && <Loading text={'ユーザーを削除しています'} />}
 
-        {modal.showModal() && (
-          <DeleteModal modal={modal} onDeleteUser={deleted.onDeleteUser} />
-        )}
+        {modal.showModal() && <DeleteModal modal={modal} onDeleteUser={deleted.onDeleteUser} />}
 
         <Container maxWidth={'sm'}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
               <Card className={'l-user'}>
-                <User
-                  pathClassName={location.pathname}
-                  user={presenter.viewDatas().user}
-                  firebaseUser={auth}
-                >
-                  {id === auth?.uid && (
+                <User pathClassName={location.pathname} user={presenter.viewDatas().user} firebaseUser={auth}>
+                  {params.id === auth?.uid && (
                     <Box mb={Margin.m16} className={'l-user-info'}>
-                      <Button
-                        size={'sm'}
-                        color={'cancel'}
-                        onClick={() => modal.onOpenModal()}
-                      >
+                      <Button size={'sm'} color={'cancel'} onClick={() => modal.onOpenModal()}>
                         アカウントを削除する
                       </Button>
                       <Link to={'/signout'}>
@@ -82,23 +64,15 @@ export const UserContainer = (props: UserProps) => {
                     </Box>
                   )}
 
-                  {id !== auth?.uid && (
+                  {params.id !== auth?.uid && (
                     <Box my={Margin.m8}>
                       {follow.isFollowing() && (
-                        <Button
-                          size={'sm'}
-                          color={'border'}
-                          onClick={() => follow.unFollow(auth?.uid, id)}
-                        >
+                        <Button size={'sm'} color={'border'} onClick={() => follow.unFollow(auth?.uid, params.id)}>
                           フォロー中
                         </Button>
                       )}
                       {!follow.isFollowing() && (
-                        <Button
-                          size={'sm'}
-                          color={'primary'}
-                          onClick={() => follow.follow(auth?.uid, id)}
-                        >
+                        <Button size={'sm'} color={'primary'} onClick={() => follow.follow(auth?.uid, params.id)}>
                           フォローする
                         </Button>
                       )}

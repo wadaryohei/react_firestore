@@ -6,11 +6,10 @@ import { userDatasDelete } from './userDatasDelete'
 admin.initializeApp()
 
 export { follow, unFollow, userDelete, userDatasDelete }
-
-// /**
-//  * @see https://tech.ginco.io/post/ginco-engineer-meetup-2018-cloud-functions/
-//  * firebase特有のコールドスタート対策
-//  */
+/**
+ * @see https://tech.ginco.io/post/ginco-engineer-meetup-2018-cloud-functions/
+ * firebase特有のコールドスタート対策
+ */
 // if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'follow') {
 //   exports.follow = require('./follow')
 // }
@@ -23,9 +22,6 @@ export { follow, unFollow, userDelete, userDatasDelete }
 //   exports.userDelete = require('./userDelete')
 // }
 
-// if (
-//   !process.env.FUNCTION_NAME ||
-//   process.env.FUNCTION_NAME === 'userDatasDelete'
-// ) {
+// if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === 'userDatasDelete') {
 //   exports.userDatasDelete = require('./userDatasDelete')
 // }

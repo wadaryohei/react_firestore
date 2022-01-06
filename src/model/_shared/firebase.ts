@@ -9,7 +9,7 @@ const configDev = {
   storageBucket: process.env.REACT_APP_DEV_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_DEV_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_DEV_APP_ID,
-  measurementId: process.env.REACT_APP_DEV_MEASURENT_ID
+  measurementId: process.env.REACT_APP_DEV_MEASURENT_ID,
 }
 
 // # Production
@@ -21,7 +21,7 @@ const configProd = {
   storageBucket: process.env.REACT_APP_PROD_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_PROD_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_PROD_APP_ID,
-  measurementId: process.env.REACT_APP_PROD_MEASURENT_ID
+  measurementId: process.env.REACT_APP_PROD_MEASURENT_ID,
 }
 
 /**

@@ -16,5 +16,5 @@ export const Padding = {
   p112: '112px',
   p120: '120px',
   p128: '128px',
-  p160: '160px'
+  p160: '160px',
 } as const

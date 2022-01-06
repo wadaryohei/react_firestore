@@ -11,6 +11,4 @@ export interface ModalContentProps {
 //----------------------------------
 // component
 //----------------------------------
-export const ModalContentComponent = (props: ModalContentProps) => (
-  <DialogContent>{props.children}</DialogContent>
-)
+export const ModalContentComponent = (props: ModalContentProps) => <DialogContent>{props.children}</DialogContent>
