@@ -11,6 +11,4 @@ export interface ModalHeaderProps {
 //----------------------------------
 // component
 //----------------------------------
-export const ModalHeaderComponent = (props: ModalHeaderProps) => (
-  <DialogTitle className={'title'}>{props.title}</DialogTitle>
-)
+export const ModalHeaderComponent = (props: ModalHeaderProps) => <DialogTitle className={'title'}>{props.title}</DialogTitle>

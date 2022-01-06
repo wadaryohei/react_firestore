@@ -15,10 +15,7 @@ export interface useFollowType {
 //----------------------------------
 // hooks
 //----------------------------------
-export const useFollow = (
-  userId: string | undefined,
-  otherUserId: string | undefined
-): useFollowType => {
+export const useFollow = (userId: string | undefined, otherUserId: string | undefined): useFollowType => {
   const [_isFollowing, setFollowing] = useState<boolean>(false)
   const fireModel = new FireModel()
   const mounted = useRef(true)
@@ -34,18 +31,14 @@ export const useFollow = (
       unsubscribe()
     }
     // eslint-disable-next-line
-  },[])
+  }, [])
 
   /**
    * ログイン中のユーザーが他ユーザーをフォローしているかどうか
    */
   const isFollowingSnapShot = (): (() => void) => {
-    const followingRef = fireModel
-      .baseReference('socials')
-      .doc(otherUserId)
-      .collection('followers')
-      .doc(userId)
-    return followingRef.onSnapshot(snap => {
+    const followingRef = fireModel.baseReference('socials').doc(otherUserId).collection('followers').doc(userId)
+    return followingRef.onSnapshot((snap) => {
       if (mounted.current) {
         setFollowing(snap.exists ? true : false)
       }
@@ -62,28 +55,19 @@ export const useFollow = (
   /**
    * フォローをするときの処理
    */
-  const follow = async (
-    userId: string | undefined,
-    otherUserId: string | undefined
-  ): Promise<void> => {
+  const follow = async (userId: string | undefined, otherUserId: string | undefined): Promise<void> => {
     // フォローする側とフォローされる側のusersドキュメントを取得
 
-    const fromUserDoc = await fireModel
-      .baseReference('profiles')
-      .doc(userId)
-      .get() // ログイン中の自分
-    const toUserDoc = await fireModel
-      .baseReference('profiles')
-      .doc(otherUserId)
-      .get() // 自分以外
+    const fromUserDoc = await fireModel.baseReference('profiles').doc(userId).get() // ログイン中の自分
+    const toUserDoc = await fireModel.baseReference('profiles').doc(otherUserId).get() // 自分以外
 
     // フォローする側のデータ
     const fromUser: fromUserType = {
       userId: fromUserDoc.id,
       userDoc: {
         name: fromUserDoc.data()?.name,
-        photoURL: fromUserDoc.data()?.photoURL
-      }
+        photoURL: fromUserDoc.data()?.photoURL,
+      },
     }
 
     // フォローされる側のデータ
@@ -91,8 +75,8 @@ export const useFollow = (
       userId: toUserDoc.id,
       userDoc: {
         name: toUserDoc.data()?.name,
-        photoURL: toUserDoc.data()?.photoURL
-      }
+        photoURL: toUserDoc.data()?.photoURL,
+      },
     }
 
     await callFollow(fromUser, toUser)
@@ -101,19 +85,10 @@ export const useFollow = (
   /**
    * アンフォローをするときの処理
    */
-  const unFollow = async (
-    userId: string | undefined,
-    otherUserId: string | undefined
-  ): Promise<void> => {
+  const unFollow = async (userId: string | undefined, otherUserId: string | undefined): Promise<void> => {
     // フォローする側とフォローされる側のusersドキュメントを取得
-    const fromUserDoc = await fireModel
-      .baseReference('profiles')
-      .doc(userId)
-      .get() // ログイン中の自分
-    const toUserDoc = await fireModel
-      .baseReference('profiles')
-      .doc(otherUserId)
-      .get() // 自分以外
+    const fromUserDoc = await fireModel.baseReference('profiles').doc(userId).get() // ログイン中の自分
+    const toUserDoc = await fireModel.baseReference('profiles').doc(otherUserId).get() // 自分以外
 
     // フォローされる側とフォローする側のデータ
     const fromUserId: string | undefined = fromUserDoc.id
@@ -125,33 +100,38 @@ export const useFollow = (
   /**
    * ユーザーのフォロー・フォロワー処理
    */
-  const callFollow = async (
-    fromUser: fromUserType,
-    toUser: toUserType
-  ): Promise<void> => {
+  const callFollow = async (fromUser: fromUserType, toUser: toUserType): Promise<void> => {
+    // followした人をfollowingに保存する
+    await fireModel.baseReference('followings').doc(fromUser.userId).collection('userFollowings').doc(toUser.userId).set({})
+
     // cloud functionsのfunctionをアプリ側からcall
     const callFollowFunc = functions.httpsCallable('follow')
-    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch(
-      (e: any) => {
-        console.log(e)
-        alert('フォローに失敗しました')
-      }
-    )
+    await callFollowFunc({ fromUser: fromUser, toUser: toUser }).catch((e) => {
+      console.log(e)
+
+      // 失敗した場合削除する
+      fireModel.baseReference('followings').doc(fromUser.userId).collection('userFollowings').doc(toUser.userId).delete()
+
+      alert('フォローに失敗しました')
+    })
   }
 
   /**
    * ユーザーのアンフォロー・アンフォロワー処理
    */
-  const callUnFollow = async (
-    fromUserId: string | undefined,
-    toUserId: string | undefined
-  ): Promise<void> => {
+  const callUnFollow = async (fromUserId: string | undefined, toUserId: string | undefined): Promise<void> => {
+    // followした人をfollowingから削除する
+    fireModel.baseReference('followings').doc(fromUserId).collection('userFollowings').doc(toUserId).delete()
+
     // cloud functionsのfunctionをアプリ側からcall
     const callUnFollowFunc = functions.httpsCallable('unFollow')
     await callUnFollowFunc({
       fromUserId: fromUserId,
-      toUserId: toUserId
-    }).catch((e: any) => {
+      toUserId: toUserId,
+    }).catch((e) => {
+      // 失敗した場合登録状態に戻す
+      fireModel.baseReference('followings').doc(fromUserId).collection('userFollowings').doc(toUserId).set({})
+
       console.log(e)
       alert('フォロー解除に失敗しました')
     })

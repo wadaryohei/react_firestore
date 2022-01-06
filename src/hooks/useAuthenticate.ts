@@ -26,13 +26,8 @@ export const useAuthenticate = (): useAuthenticateType => {
   /**
    * ユーザーのドキュメントが存在するか確認する
    */
-  const findUser = async (
-    uid: string | undefined
-  ): Promise<firebase.firestore.DocumentSnapshot | undefined> => {
-    const profilesPath = await fireModel
-      .baseReference('profiles')
-      .doc(uid)
-      .get()
+  const findUser = async (uid: string | undefined): Promise<firebase.firestore.DocumentSnapshot | undefined> => {
+    const profilesPath = await fireModel.baseReference('profiles').doc(uid).get()
     // ドキュメントが存在するかチェック
     if (profilesPath?.exists) {
       return profilesPath
@@ -53,7 +48,7 @@ export const useAuthenticate = (): useAuthenticateType => {
           name: user?.displayName,
           photoURL: user?.photoURL,
           createdAt: firebase.firestore.Timestamp.now(),
-          updatedAt: firebase.firestore.Timestamp.now()
+          updatedAt: firebase.firestore.Timestamp.now(),
         },
         { merge: true }
       )
@@ -64,7 +59,7 @@ export const useAuthenticate = (): useAuthenticateType => {
   // lifeCycle
   //----------------------------------
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(async user => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       const result = await firebase.auth().getRedirectResult()
       try {
         if (result.credential) {

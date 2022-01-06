@@ -51,13 +51,13 @@ export const useDelete = (): useDeleteType => {
   const callUserDelete = async (): Promise<void> => {
     // cloud functionsのfunctionをアプリ側からcall
     const userDeleteFunc = functions.httpsCallable('userDelete')
-    await userDeleteFunc().catch(e => {
+    await userDeleteFunc().catch((e) => {
       console.log(`${e}: ユーザーの削除に失敗しました。再度削除してください。`)
     })
   }
 
   return {
     onDeleteUser,
-    loading
+    loading,
   }
 }

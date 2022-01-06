@@ -39,26 +39,17 @@ export const SignOutContainer = (props: SignOutProps) => {
 
         <Box my={Margin.m16}>
           <Typography component={'p'} className={'signOutLead'}>
-            いつでもログインし直すことができます。
-            別アカウントでログインする場合はログイン画面で別アカウントの情報を入力してログインしてください。
+            いつでもログインし直すことができます。 別アカウントでログインする場合はログイン画面で別アカウントの情報を入力してログインしてください。
           </Typography>
         </Box>
         <Box display={'flex'} justifyContent={'center'}>
           <Box my={Margin.m8} mx={Margin.m4}>
-            <Button
-              size={'sm'}
-              color={'default'}
-              onClick={() => history.goBack()}
-            >
+            <Button size={'sm'} color={'default'} onClick={() => history.goBack()}>
               キャンセルする
             </Button>
           </Box>
           <Box my={Margin.m8} mx={Margin.m4}>
-            <Button
-              size={'sm'}
-              color={'primary'}
-              onClick={() => auth.signOut()}
-            >
+            <Button size={'sm'} color={'primary'} onClick={() => auth.signOut()}>
               ログアウトする
             </Button>
           </Box>

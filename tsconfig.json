@@ -3,7 +3,6 @@
     "react-hooks"
   ],
   "compilerOptions": {
-
     /* Basic Options */
     "target": "es5",
     "lib": [
@@ -21,7 +20,6 @@
     "jsx": "react",
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
-
     /* Strict Type-Checking Options */
     "strict": true,
     "strictNullChecks": true,
@@ -29,14 +27,20 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "resolveJsonModule": true,
-
     /* Additional Checks */
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
   },
   "include": [
-    "src"
+    "src/",
+    "functions/src/"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "functions"
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",

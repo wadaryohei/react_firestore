@@ -33,8 +33,8 @@ export const ModalComponent = (props: ModalProps) => (
       style: {
         width: '320px',
         margin: '16px',
-        padding: '0'
-      }
+        padding: '0',
+      },
     }}
   >
     {props.children}

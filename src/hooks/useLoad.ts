@@ -47,6 +47,6 @@ export const useLoad = (isInitLoad: boolean): useLoadType => {
     isLoad,
     onLoadStart,
     onLoadEnd,
-    onSetLoad
+    onSetLoad,
   }
 }

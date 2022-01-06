@@ -11,17 +11,14 @@ export interface UserPresenter {
 //----------------------------------
 // presenter
 //----------------------------------
-export const useUserPresenter = (
-  _user: UserType | undefined,
-  _currentUser: UserType | undefined
-): UserPresenter => {
+export const useUserPresenter = (_user: UserType | undefined, _currentUser: UserType | undefined): UserPresenter => {
   /**
    * viewData
    */
   const viewDatas = (): UserPresenterViewData => {
     return {
       user: user(),
-      currentUser: currentUser()
+      currentUser: currentUser(),
     }
   }
 
@@ -34,7 +31,7 @@ export const useUserPresenter = (
       name: _user?.name as string,
       followerCount: followerCount() as number,
       followingCount: followingCount() as number,
-      photoURL: _user?.photoURL as string | undefined
+      photoURL: _user?.photoURL as string | undefined,
     }
   }
 
@@ -47,7 +44,7 @@ export const useUserPresenter = (
       name: _currentUser?.name as string,
       followerCount: followerCount() as number,
       followingCount: followingCount() as number,
-      photoURL: _currentUser?.photoURL as string | undefined
+      photoURL: _currentUser?.photoURL as string | undefined,
     }
   }
 
@@ -66,6 +63,6 @@ export const useUserPresenter = (
   }
 
   return {
-    viewDatas
+    viewDatas,
   }
 }

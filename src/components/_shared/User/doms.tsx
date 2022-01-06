@@ -19,40 +19,20 @@ export interface UserProps {
 //----------------------------------
 export const UserComponent = (props: UserProps) => (
   <div className={props.className}>
-    <Image
-      src={props.user?.photoURL}
-      alt={props.user?.photoURL}
-      width={120}
-      height={120}
-    />
-    <Typography
-      component={'p'}
-      className={`userTypography name ${props.pathClassName}`}
-    >
+    <Image src={props.user?.photoURL} alt={props.user?.photoURL} width={120} height={120} />
+    <Typography component={'p'} className={`userTypography name ${props.pathClassName}`}>
       {props.user?.name}
     </Typography>
 
     <div>
       {props.user?.followingCount !== undefined && (
-        <Typography
-          component={'p'}
-          className={`userTypography ${props.pathClassName}`}
-        >
-          フォロー /{' '}
-          <Typography component={'span'}>
-            {props.user?.followingCount}
-          </Typography>
+        <Typography component={'p'} className={`userTypography ${props.pathClassName}`}>
+          フォロー / <Typography component={'span'}>{props.user?.followingCount}</Typography>
         </Typography>
       )}
       {props.user?.followerCount !== undefined && (
-        <Typography
-          component={'p'}
-          className={`userTypography ${props.pathClassName}`}
-        >
-          フォロワー /{' '}
-          <Typography component={'span'}>
-            {props.user?.followerCount}
-          </Typography>
+        <Typography component={'p'} className={`userTypography ${props.pathClassName}`}>
+          フォロワー / <Typography component={'span'}>{props.user?.followerCount}</Typography>
         </Typography>
       )}
     </div>

@@ -24,9 +24,7 @@ export const App = () => {
     <FirebaseAuthContext.Provider value={authenticate.firebaseUser}>
       <Head />
       {authenticate.loading.isLoad() && <Loading text={'Loading...'} />}
-      {!authenticate.loading.isLoad() && (
-        <Route path="/" render={() => <Routes />} />
-      )}
+      {!authenticate.loading.isLoad() && <Route path="/" render={() => <Routes />} />}
     </FirebaseAuthContext.Provider>
   )
 }

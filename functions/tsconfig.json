@@ -3,20 +3,21 @@
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "./lib",
-    "skipLibCheck": true,
-    "sourceMap": false,
+    "outDir": "lib",
+    "sourceMap": true,
     "strict": true,
+    "experimentalDecorators": true,
     "target": "es2017",
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "allowJs": true
   },
   "compileOnSave": true,
   "include": [
-    "src/*.ts"
+    "src"
   ],
   "exclude": [
-    "node_modeles"
+    "node_module"
   ]
 }

@@ -23,22 +23,17 @@ export const useFetchPosts = (): useFetchPostsType => {
    */
   const fetchPostsOnSnapShot = (): (() => void) => {
     const postsRef = fireModel.baseReference('posts')
-    return postsRef.orderBy('createdAt', 'desc').onSnapshot(async snap => {
-      const docs = snap.docs.map(async doc => {
+    return postsRef.orderBy('createdAt', 'desc').onSnapshot(async (snap) => {
+      const docs = snap.docs.map(async (doc) => {
         // PostsデータのauthorIdを元にUsersデータを取ってくる
-        const profilesRef = await fireModel
-          .baseReference('profiles')
-          .doc(doc.data().authorId)
-          .get()
+        const profilesRef = await fireModel.baseReference('profiles').doc(doc.data().authorId).get()
         return {
           docId: doc.id,
           authorId: profilesRef.id as string,
           userName: profilesRef.data()?.name as string,
           userImages: profilesRef.data()?.photoURL as string,
           postBody: doc.data().postBody as string,
-          createdAt: dayjs(doc.data().createdAt.toDate()).format(
-            'YYYY/MM/DD hh:mm:ss'
-          )
+          createdAt: dayjs(doc.data().createdAt.toDate()).format('YYYY/MM/DD hh:mm:ss'),
         }
       })
       const _datas = await Promise.all(docs)
@@ -70,6 +65,6 @@ export const useFetchPosts = (): useFetchPostsType => {
   }, [])
 
   return {
-    fetchPostDatas
+    fetchPostDatas,
   }
 }

@@ -13,17 +13,14 @@ export interface HomePresenter {
 //----------------------------------
 // presenter
 //----------------------------------
-export const useHomePresenter = (
-  _user: UserType | undefined,
-  _posts: PostType[] | undefined
-): HomePresenter => {
+export const useHomePresenter = (_user: UserType | undefined, _posts: PostType[] | undefined): HomePresenter => {
   /**
    * viewData
    */
   const viewDatas = (): HomePresenterViewData => {
     return {
       posts: posts(),
-      user: user()
+      user: user(),
     }
   }
 
@@ -38,7 +35,7 @@ export const useHomePresenter = (
         userName: post?.userName,
         userImages: post?.userImages,
         postBody: post?.postBody,
-        createdAt: post?.createdAt
+        createdAt: post?.createdAt,
       }
     })
   }
@@ -52,7 +49,7 @@ export const useHomePresenter = (
       name: _user?.name as string,
       followerCount: _user?.followerCount as number,
       followingCount: _user?.followingCount as number,
-      photoURL: _user?.photoURL as string | undefined
+      photoURL: _user?.photoURL as string | undefined,
     }
   }
 
@@ -65,6 +62,6 @@ export const useHomePresenter = (
 
   return {
     viewDatas,
-    isExsistsPosts
+    isExsistsPosts,
   }
 }

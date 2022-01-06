@@ -36,40 +36,24 @@ export const HomeContainer = (props: HomeProps) => {
   const form = useForm(auth)
   const fetchUsers = useFetchUsers(auth?.uid)
   const fetchPosts = useFetchPosts()
-  const presenter = useHomePresenter(
-    fetchUsers.fetchUserData(),
-    fetchPosts.fetchPostDatas()
-  )
+  const presenter = useHomePresenter(fetchUsers.fetchUserData(), fetchPosts.fetchPostDatas())
 
   return (
     <BaseLayout className={props.className} user={presenter.viewDatas().user}>
       <Box className={'l-wrapper'}>
         <SideBar className={'l-user'}>
-          <User
-            pathClassName={location.pathname}
-            user={presenter.viewDatas().user}
-            firebaseUser={auth}
-          />
+          <User pathClassName={location.pathname} user={presenter.viewDatas().user} firebaseUser={auth} />
         </SideBar>
 
         <Main className={'l-timeline'}>
           <Box className={'l-timeline-inner'}>
-            {!presenter.isExsistsPosts() && (
-              <Typography component={'p'}>投稿がまだありません</Typography>
-            )}
+            {!presenter.isExsistsPosts() && <Typography component={'p'}>投稿がまだありません</Typography>}
             {presenter.isExsistsPosts() &&
-              presenter
-                .viewDatas()
-                .posts?.map((post: PostType, index: number) => (
-                  <Box key={index} mb={Margin.m32}>
-                    <Post
-                      post={post}
-                      form={form}
-                      user={auth}
-                      className={'l-timeline-post'}
-                    />
-                  </Box>
-                ))}
+              presenter.viewDatas().posts?.map((post: PostType, index: number) => (
+                <Box key={index} mb={Margin.m32}>
+                  <Post post={post} form={form} user={auth} className={'l-timeline-post'} />
+                </Box>
+              ))}
             <Box py={Padding.p16}>
               <PostForm form={form} />
             </Box>

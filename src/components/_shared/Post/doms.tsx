@@ -23,13 +23,7 @@ export const PostComponent = (props: PostProps) => (
   <div className={props.className}>
     <div>
       <Link to={`/user/${props.post.authorId}`}>
-        <Image
-          className={'postImage'}
-          src={props.post?.userImages}
-          alt={props.post?.userImages}
-          width={80}
-          height={80}
-        />
+        <Image className={'postImage'} src={props.post?.userImages} alt={props.post?.userImages} width={80} height={80} />
       </Link>
     </div>
 
@@ -48,11 +42,7 @@ export const PostComponent = (props: PostProps) => (
       <div className={'actionWrapper'}>
         {props.user?.uid === props.post.authorId && (
           <Typography component={'p'}>
-            <Button
-              size={'sm'}
-              color={'cancel'}
-              onClick={() => props.form.onDelete(props.post?.docId)}
-            >
+            <Button size={'sm'} color={'cancel'} onClick={() => props.form.onDelete(props.post?.docId)}>
               削除する
             </Button>
           </Typography>

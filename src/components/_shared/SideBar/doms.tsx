@@ -11,6 +11,4 @@ export interface SideBarProps {
 //----------------------------------
 // component
 //----------------------------------
-export const SideBarComponent = (props: SideBarProps) => (
-  <div className={props.className}>{props.children}</div>
-)
+export const SideBarComponent = (props: SideBarProps) => <div className={props.className}>{props.children}</div>

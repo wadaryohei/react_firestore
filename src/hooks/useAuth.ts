@@ -16,11 +16,9 @@ export const useAuth = (): useAuthType => {
    * ログイン処理
    */
   const signIn = async (): Promise<void> => {
-    const provider = new firebase.auth.GoogleAuthProvider().setCustomParameters(
-      {
-        prompt: 'select_account'
-      }
-    )
+    const provider = new firebase.auth.GoogleAuthProvider().setCustomParameters({
+      prompt: 'select_account',
+    })
     await firebase.auth().signInWithRedirect(provider)
   }
 
@@ -33,6 +31,6 @@ export const useAuth = (): useAuthType => {
 
   return {
     signIn,
-    signOut
+    signOut,
   }
 }

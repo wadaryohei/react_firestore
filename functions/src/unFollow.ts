@@ -15,22 +15,10 @@ export const unFollow = functions.https.onCall(async (data, context) => {
 
   // フォローする側は自分のfollowingに相手の情報を入れる
   // フォローされる側は相手の情報を自分のfollowerに入れる
-  const followingsRef = admin
-    .firestore()
-    .doc('socials/v1')
-    .collection('users')
-    .doc(fromUserId)
-    .collection('followings')
-    .doc(toUserId)
+  const followingsRef = admin.firestore().doc('socials/v1').collection('users').doc(fromUserId).collection('followings').doc(toUserId)
 
   // followers
-  const followersRef = admin
-    .firestore()
-    .doc('socials/v1')
-    .collection('users')
-    .doc(toUserId)
-    .collection('followers')
-    .doc(fromUserId)
+  const followersRef = admin.firestore().doc('socials/v1').collection('users').doc(toUserId).collection('followers').doc(fromUserId)
 
   // それぞれのドキュメントを削除する
   batch.delete(followingsRef)

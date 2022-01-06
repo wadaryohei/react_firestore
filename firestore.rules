@@ -14,23 +14,23 @@ service cloud.firestore {
     // function
     //======================================
   	// @func ログインしているかどうか
-  	function isAuth() {
-    	return request.auth.uid != null
+    function isAuth() {
+      return request.auth.uid != null
     }
 
     // @func リクエストしているuidを返す
     function authUid() {
-    	return request.auth.uid;
+      return request.auth.uid;
 		}
 
     // @func 更新が期待される未来のフィールドを返す */
     function reqResourceData() {
-    	return request.resource.data;
+      return request.resource.data;
     }
 
     // @func 現在の存在するフィールドを返す
     function resourceData() {
-    	return resource.data;
+      return resource.data;
     }
 
     // @func postの本文の文字数制限をする
@@ -56,6 +56,16 @@ service cloud.firestore {
         allow read;
         allow create: if isAuth() && authUid() == reqResourceData().authorId && validPostData(reqResourceData().postBody, 10);
         allow update, delete: if authUid() == resourceData().authorId;
+      }
+    }
+
+    // @path following
+    match /followings/{version} {
+      match /users/{userId} {
+        match /userFollowings/{followingsId} {
+          allow read;
+          allow create, delete: if isAuth() && authUid() == userId;
+        }
       }
     }
 
